@@ -1,0 +1,4 @@
+@Entity('UserAccount')
+export default class FollowingUserAccount {
+  ...Pick<UserAccount, '_id' | 'displayName' | 'city' | 'imageDataUri'>;
+}

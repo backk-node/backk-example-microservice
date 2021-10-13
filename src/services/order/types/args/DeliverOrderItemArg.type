@@ -1,0 +1,10 @@
+import { ArrayMinSize, ArrayMaxSize } from "backk";
+import OrderItemForDelivery from './OrderItemForDelivery';
+
+export default class DeliverOrderItemArg {
+  ...Pick<Order, '_id' | 'version'>
+
+  @ArrayMinSize(1)
+  @ArrayMaxSize(1)
+  orderItems!: OrderItemForDelivery[];
+}

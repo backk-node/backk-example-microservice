@@ -1,0 +1,18 @@
+- given: sales item exists
+  serviceFunctionName: salesItemService.createSalesItem
+  responseTests:
+    - pm.collectionVariables.set('salesItemId', body.data._id)
+
+- given: sales item reserved in shopping cart
+  serviceFunctionName: shoppingCartService.addToShoppingCart
+
+- when: try to add sales item to shopping cart again
+  serviceFunctionName: shoppingCartService.addToShoppingCart
+  responseStatusCode: 400
+  responseTests:
+    - pm.expect(body.errorCode).to.eql('shoppingCartService.1')
+
+- cleanup: no sales items exists
+  serviceFunctionName: salesItemService.deleteAllSalesItems
+
+

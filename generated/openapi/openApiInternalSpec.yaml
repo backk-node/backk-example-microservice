@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: backk-example-project API
+  description: ""
+  version: 1.0.45
+servers:
+  - url: http://localhost:3000/vitja
+    description: Local development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas: {}
+security:
+  - bearerAuth: []
+paths: {}

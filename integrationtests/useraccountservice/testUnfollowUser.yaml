@@ -1,0 +1,16 @@
+- then: user account does not follow user accounts
+  serviceFunctionName: userAccountService.getUserAccount
+  responseTests:
+    - pm.expect(body.data.followedUserAccounts).to.eql([])
+
+- then: another user account has no following user accounts
+  serviceFunctionName: userAccountService.getUserAccount
+  authJwtSubject: user2
+  responseTests:
+    - pm.expect(body.data.followingUserAccounts).to.eql([])
+
+- then: remove followed user account
+  serviceFunctionName: userAccountService.deleteUserAccount
+  authJwtSubject: user2
+  argument:
+    _id: '{{followedUserAccountId}}'

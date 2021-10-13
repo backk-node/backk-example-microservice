@@ -1,0 +1,4491 @@
+openapi: 3.0.3
+info:
+  title: backk-example-project API
+  description: ""
+  version: 1.0.45
+servers:
+  - url: http://localhost:3000/vitja
+    description: Local development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    BackkError:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        errorCode:
+          type: string
+        message:
+          type: string
+        stackTrace:
+          type: string
+      required:
+        - statusCode
+        - message
+    Tag:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        name:
+          type: string
+          maxLength: 64
+      required:
+        - _id
+        - name
+    TagName:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 64
+      required:
+        - name
+    UserAccount:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        captchaToken:
+          type: string
+          maxLength: 512
+          format: isAscii()
+        subject:
+          type: string
+          maxLength: 255
+          format: isSubject()
+        displayName:
+          type: string
+          maxLength: 128
+        firstName:
+          type: string
+          maxLength: 64
+        lastName:
+          type: string
+          maxLength: 64
+        email:
+          type: string
+          maxLength: 320
+          format: isEmail()
+        streetAddress:
+          description: this is an example of property documentation
+          type: string
+          maxLength: 512
+        postalCode:
+          type: string
+          maxLength: 32
+          format: isPostalCode(FI)
+        city:
+          type: string
+          maxLength: 256
+          format: isOneOf(userAccountsService.getCities, Tampere)
+        phoneNumber:
+          type: string
+          maxLength: 32
+          format: isPhoneNumber(FI)
+        commissionDiscountPercentage:
+          type: number
+          enum:
+            - 0
+            - 25
+            - 50
+        imageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+        paymentMethods:
+          type: array
+          items:
+            $ref: "#/components/schemas/PaymentMethod"
+          minItems: 0
+          maxItems: 10
+        favoriteSalesItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/FavoriteSalesItem"
+        ownSalesItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/OwnSalesItem"
+        orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/Order"
+        followedUserAccounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/FollowedUserAccount"
+        followingUserAccounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/FollowingUserAccount"
+      required:
+        - _id
+        - captchaToken
+        - subject
+        - displayName
+        - firstName
+        - lastName
+        - email
+        - streetAddress
+        - postalCode
+        - city
+        - phoneNumber
+        - commissionDiscountPercentage
+        - imageDataUri
+        - paymentMethods
+        - favoriteSalesItems
+        - ownSalesItems
+        - orders
+        - followedUserAccounts
+        - followingUserAccounts
+    GetUserAccountArg:
+      type: object
+      properties:
+        includeResponseFields:
+          type: array
+          items:
+            type: string
+            maxLength: 512
+            pattern: ^[a-zA-Z_]([a-zA-Z0-9_.])+$
+          minItems: 0
+          maxItems: 500
+          uniqueItems: true
+        excludeResponseFields:
+          type: array
+          items:
+            type: string
+            maxLength: 512
+            pattern: ^[a-zA-Z_]([a-zA-Z0-9_.])+$
+          minItems: 0
+          maxItems: 500
+          uniqueItems: true
+        sortBys:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortBy"
+          minItems: 0
+          maxItems: 25
+        paginations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pagination"
+          minItems: 0
+          maxItems: 25
+        currentPageTokens:
+          type: array
+          items:
+            $ref: "#/components/schemas/CurrentPageToken"
+          minItems: 0
+          maxItems: 25
+      required:
+        - includeResponseFields
+        - excludeResponseFields
+        - sortBys
+        - paginations
+        - currentPageTokens
+    _IdAndFollowedUserAccountId:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        followedUserAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - _id
+        - followedUserAccountId
+    _IdAndSalesItemId:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        salesItemId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - _id
+        - salesItemId
+    _Id:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - _id
+    Value:
+      type: object
+      properties: {}
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        isDefault:
+          type: boolean
+        paymentMethodType:
+          type: string
+          enum:
+            - creditCard
+        creditCardNumber:
+          type: string
+          maxLength: 19
+          format: isCreditCard()
+        creditCardExpiration:
+          type: string
+          maxLength: 7
+          format: isCreditCardExpiration()
+        cardVerificationCode:
+          type: string
+          maxLength: 4
+          format: isCardVerificationCode()
+      required:
+        - id
+        - isDefault
+        - paymentMethodType
+        - creditCardNumber
+        - creditCardExpiration
+        - cardVerificationCode
+    FavoriteSalesItem:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        price:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        previousPrice:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        title:
+          type: string
+          maxLength: 64
+        primaryImageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+      required:
+        - _id
+        - price
+        - previousPrice
+        - title
+        - primaryImageDataUri
+    OwnSalesItem:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        createdAtTimestamp:
+          type: string
+          format: date-time
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+        price:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        previousPrice:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        title:
+          type: string
+          maxLength: 64
+        primaryImageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+        primaryImageThumbnailDataUri:
+          type: string
+          maxLength: 1048576
+          format: isDataUri()
+        state:
+          type: string
+          enum:
+            - forSale
+            - reserved
+            - sold
+      required:
+        - _id
+        - createdAtTimestamp
+        - lastModifiedTimestamp
+        - price
+        - previousPrice
+        - title
+        - primaryImageDataUri
+        - primaryImageThumbnailDataUri
+        - state
+    Order:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        version:
+          type: string
+          minimum: -1
+          maximum: 9007199254740991
+        createdAtTimestamp:
+          type: string
+          format: date-time
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        paymentAmount:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        orderItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+          minItems: 1
+          maxItems: 50
+        paymentGateway:
+          type: string
+          enum:
+            - Paytrail
+            - PayPal
+            - Klarna
+        transactionId:
+          type: string
+          maxLength: 256
+          nullable: true
+          format: isAlphanumeric()
+        transactionTimestamp:
+          type: string
+          nullable: true
+          format: date-time
+      required:
+        - _id
+        - version
+        - createdAtTimestamp
+        - lastModifiedTimestamp
+        - userAccountId
+        - paymentAmount
+        - orderItems
+        - paymentGateway
+        - transactionId
+        - transactionTimestamp
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        salesItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShoppingCartOrOrderSalesItem"
+          minItems: 1
+          maxItems: 1
+        deliveryTimestamp:
+          type: string
+          nullable: true
+          format: date-time
+        state:
+          type: string
+          enum:
+            - toBeDelivered
+            - delivering
+            - delivered
+            - returning
+            - returned
+        trackingUrl:
+          type: string
+          maxLength: 3072
+          nullable: true
+          format: isUrl()
+      required:
+        - id
+        - salesItems
+        - deliveryTimestamp
+        - state
+        - trackingUrl
+    ShoppingCartOrOrderSalesItem:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        price:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        shippingCost:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        title:
+          type: string
+          maxLength: 64
+        primaryImageThumbnailDataUri:
+          type: string
+          maxLength: 1048576
+          format: isDataUri()
+      required:
+        - _id
+        - price
+        - shippingCost
+        - title
+        - primaryImageThumbnailDataUri
+    FollowedUserAccount:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        displayName:
+          type: string
+          maxLength: 128
+        city:
+          type: string
+          maxLength: 256
+          format: isOneOf(userAccountsService.getCities, Tampere)
+        imageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+        ownSalesItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/OwnSalesItem"
+      required:
+        - _id
+        - displayName
+        - city
+        - imageDataUri
+        - ownSalesItems
+    FollowingUserAccount:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        displayName:
+          type: string
+          maxLength: 128
+        city:
+          type: string
+          maxLength: 256
+          format: isOneOf(userAccountsService.getCities, Tampere)
+        imageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+      required:
+        - _id
+        - displayName
+        - city
+        - imageDataUri
+    SortBy:
+      type: object
+      properties:
+        subEntityPath:
+          type: string
+          maxLength: 2048
+          pattern: ^([a-zA-Z_][a-zA-Z0-9_.]*|\*|)$
+        fieldName:
+          type: string
+          maxLength: 512
+          pattern: ^[a-zA-Z_][a-zA-Z0-9_.]*$
+        sortDirection:
+          type: string
+          enum:
+            - ASC
+            - DESC
+      required:
+        - subEntityPath
+        - fieldName
+        - sortDirection
+    Pagination:
+      type: object
+      properties:
+        subEntityPath:
+          type: string
+          maxLength: 2048
+          pattern: ^([a-zA-Z_][a-zA-Z0-9_.]*|\*|)$
+        pageNumber:
+          type: integer
+          minimum: 1
+          maximum: 100
+        pageSize:
+          type: integer
+          minimum: 1
+          maximum: 100
+      required:
+        - subEntityPath
+        - pageNumber
+        - pageSize
+    CurrentPageToken:
+      type: object
+      properties:
+        subEntityPath:
+          type: string
+          maxLength: 2048
+          pattern: ^([a-zA-Z_][a-zA-Z0-9_.]*|\*|)$
+        currentPageToken:
+          type: string
+          maxLength: 64
+          format: isAlphanumeric()
+      required:
+        - subEntityPath
+        - currentPageToken
+    GetUsersArg:
+      type: object
+      properties:
+        includeResponseFields:
+          type: array
+          items:
+            type: string
+            maxLength: 512
+            pattern: ^[a-zA-Z_]([a-zA-Z0-9_.])+$
+          minItems: 0
+          maxItems: 500
+          uniqueItems: true
+        excludeResponseFields:
+          type: array
+          items:
+            type: string
+            maxLength: 512
+            pattern: ^[a-zA-Z_]([a-zA-Z0-9_.])+$
+          minItems: 0
+          maxItems: 500
+          uniqueItems: true
+        sortBys:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortBy"
+          minItems: 0
+          maxItems: 25
+        paginations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pagination"
+          minItems: 0
+          maxItems: 25
+        currentPageTokens:
+          type: array
+          items:
+            $ref: "#/components/schemas/CurrentPageToken"
+          minItems: 0
+          maxItems: 25
+        displayNameFilter:
+          type: string
+          maxLength: 256
+      required:
+        - includeResponseFields
+        - excludeResponseFields
+        - sortBys
+        - paginations
+        - currentPageTokens
+        - displayNameFilter
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        displayName:
+          type: string
+          maxLength: 128
+        city:
+          type: string
+          maxLength: 256
+          format: isOneOf(userAccountsService.getCities, Tampere)
+        imageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+        ownSalesItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/OwnSalesItem"
+        followedUserAccounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/FollowedUserAccount"
+        followingUserAccounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/FollowingUserAccount"
+      required:
+        - _id
+        - displayName
+        - city
+        - imageDataUri
+        - ownSalesItems
+        - followedUserAccounts
+        - followingUserAccounts
+    SalesItem:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        version:
+          type: string
+          minimum: -1
+          maximum: 9007199254740991
+        createdAtTimestamp:
+          type: string
+          format: date-time
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        price:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        previousPrice:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        shippingCost:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        likeCount:
+          type: integer
+          minimum: 0
+          maximum: 2147483647
+        title:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 1024
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tag"
+          minItems: 0
+          maxItems: 25
+        area:
+          type: string
+          enum:
+            - Area1
+            - Area2
+            - Area3
+        productDepartment:
+          type: string
+          enum:
+            - Vehicles
+            - Clothes
+        productCategory:
+          type: string
+          enum:
+            - Vehicles
+            - Clothes
+        productSubCategory:
+          type: string
+          enum:
+            - Vehicles
+            - Clothes
+        primaryImageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+        primaryImageThumbnailDataUri:
+          type: string
+          maxLength: 1048576
+          format: isDataUri()
+        secondaryImageDataUris:
+          type: array
+          items:
+            type: string
+            maxLength: 10485760
+            format: "isDataUri({ each: true })"
+          minItems: 0
+          maxItems: 10
+        state:
+          type: string
+          enum:
+            - forSale
+            - reserved
+            - sold
+      required:
+        - _id
+        - version
+        - createdAtTimestamp
+        - lastModifiedTimestamp
+        - userAccountId
+        - price
+        - previousPrice
+        - shippingCost
+        - likeCount
+        - title
+        - description
+        - tags
+        - area
+        - productDepartment
+        - productCategory
+        - productSubCategory
+        - primaryImageDataUri
+        - primaryImageThumbnailDataUri
+        - secondaryImageDataUris
+        - state
+    GetSalesItemsArg:
+      type: object
+      properties:
+        sortBys:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortBy"
+          minItems: 0
+          maxItems: 25
+        paginations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pagination"
+          minItems: 0
+          maxItems: 25
+        minPrice:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        maxPrice:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        textFilter:
+          type: string
+          maxLength: 512
+        areas:
+          type: array
+          items:
+            type: string
+            enum:
+              - Area1
+              - Area2
+              - Area3
+          minItems: 0
+          maxItems: 10
+          uniqueItems: true
+        productDepartments:
+          type: array
+          items:
+            type: string
+            enum:
+              - Vehicles
+              - Clothes
+          minItems: 0
+          maxItems: 10
+          uniqueItems: true
+        productCategories:
+          type: array
+          items:
+            type: string
+            enum:
+              - Vehicles
+              - Clothes
+          minItems: 0
+          maxItems: 10
+          uniqueItems: true
+        productSubCategories:
+          type: array
+          items:
+            type: string
+            enum:
+              - Vehicles
+              - Clothes
+          minItems: 0
+          maxItems: 10
+          uniqueItems: true
+      required:
+        - sortBys
+        - paginations
+    GetSalesItemsByUserDefinedFiltersArg:
+      type: object
+      properties:
+        filters:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserDefinedFilter"
+          minItems: 1
+          maxItems: 10
+      required:
+        - filters
+    UserAccountId:
+      type: object
+      properties:
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - userAccountId
+    FollowedUserSalesItem:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        price:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        previousPrice:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        title:
+          type: string
+          maxLength: 64
+        primaryImageDataUri:
+          type: string
+          maxLength: 10485760
+          format: isDataUri()
+        displayName:
+          type: string
+          maxLength: 128
+      required:
+        - _id
+        - price
+        - previousPrice
+        - userAccountId
+        - title
+        - primaryImageDataUri
+        - displayName
+    _IdAndUserAccountId:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - _id
+        - userAccountId
+    UserDefinedFilter:
+      type: object
+      properties:
+        subEntityPath:
+          type: string
+          maxLength: 2048
+          pattern: ^([a-zA-Z_][a-zA-Z0-9_.]*|\*|)$
+        fieldName:
+          type: string
+          maxLength: 512
+          pattern: ^[a-zA-Z_][a-zA-Z0-9_.]*$
+        fieldFunction:
+          type: string
+          enum:
+            - ABS
+            - CEILING
+            - FLOOR
+            - ROUND
+            - LENGTH
+            - LOWER
+            - LTRIM
+            - RTRIM
+            - TRIM
+            - UPPER
+            - DAY
+            - HOUR
+            - MINUTE
+            - MONTH
+            - QUARTER
+            - SECOND
+            - WEEK
+            - WEEKDAY
+            - YEAR
+        operator:
+          type: string
+          enum:
+            - =
+            - "!="
+            - ">"
+            - <
+            - ">="
+            - <=
+            - IN
+            - NOT IN
+            - LIKE
+            - NOT LIKE
+            - IS NULL
+            - IS NOT NULL
+            - OR
+        orFilters:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrFilter"
+          minItems: 2
+          maxItems: 10
+      required:
+        - subEntityPath
+        - fieldName
+        - fieldFunction
+        - operator
+        - orFilters
+    OrFilter:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          maxLength: 512
+          pattern: ^[a-zA-Z_][a-zA-Z0-9_.]*$
+        fieldFunction:
+          type: string
+          enum:
+            - ABS
+            - CEILING
+            - FLOOR
+            - ROUND
+            - LENGTH
+            - LOWER
+            - LTRIM
+            - RTRIM
+            - TRIM
+            - UPPER
+            - DAY
+            - HOUR
+            - MINUTE
+            - MONTH
+            - QUARTER
+            - SECOND
+            - WEEK
+            - WEEKDAY
+            - YEAR
+        operator:
+          type: string
+          enum:
+            - =
+            - "!="
+            - ">"
+            - <
+            - ">="
+            - <=
+            - IN
+            - NOT IN
+            - LIKE
+            - NOT LIKE
+            - IS NULL
+            - IS NOT NULL
+            - OR
+      required:
+        - fieldName
+        - fieldFunction
+        - operator
+    ShoppingCart:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        salesItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShoppingCartOrOrderSalesItem"
+          minItems: 0
+          maxItems: 50
+      required:
+        - _id
+        - userAccountId
+        - salesItems
+    UserAccountIdAndSalesItemId:
+      type: object
+      properties:
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        salesItemId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - userAccountId
+        - salesItemId
+    PlaceOrderArg:
+      type: object
+      properties:
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        paymentGateway:
+          type: string
+          enum:
+            - Paytrail
+            - PayPal
+            - Klarna
+        shoppingCartId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        iAgreeWithTermsAndConditions:
+          type: boolean
+        uiRedirectUrl:
+          type: string
+          maxLength: 4096
+          format: isUrl()
+      required:
+        - userAccountId
+        - paymentGateway
+        - shoppingCartId
+        - iAgreeWithTermsAndConditions
+        - uiRedirectUrl
+    PayOrderArg:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        paymentAmount:
+          type: number
+          minimum: 0
+          maximum: 1000000000
+        paymentGateway:
+          type: string
+          enum:
+            - Paytrail
+            - PayPal
+            - Klarna
+        transactionId:
+          type: string
+          maxLength: 256
+          format: isAlphanumeric()
+        transactionTimestamp:
+          type: string
+          format: date-time
+      required:
+        - _id
+        - paymentAmount
+        - paymentGateway
+        - transactionId
+        - transactionTimestamp
+    RemoveOrderItemArg:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        version:
+          type: string
+          minimum: -1
+          maximum: 9007199254740991
+        userAccountId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        orderItemId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - _id
+        - version
+        - userAccountId
+        - orderItemId
+    DeliverOrderItemArg:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        version:
+          type: string
+          minimum: -1
+          maximum: 9007199254740991
+        orderItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItemForDelivery"
+          minItems: 1
+          maxItems: 1
+      required:
+        - _id
+        - version
+        - orderItems
+    _IdAndOrderItemId:
+      type: object
+      properties:
+        _id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        version:
+          type: string
+          minimum: -1
+          maximum: 9007199254740991
+        orderItemId:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+      required:
+        - _id
+        - version
+        - orderItemId
+    OrderItemForDelivery:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 24
+          pattern: ^[a-f\d]{1,24}$
+        deliveryTimestamp:
+          type: string
+          nullable: true
+          format: date-time
+        trackingUrl:
+          type: string
+          maxLength: 3072
+          nullable: true
+          format: isUrl()
+      required:
+        - id
+        - deliveryTimestamp
+        - trackingUrl
+security:
+  - bearerAuth: []
+paths:
+  /livenessCheckService.isMicroserviceAlive:
+    post:
+      summary: livenessCheckService.isMicroserviceAlive
+      tags:
+        - livenessCheckService
+      responses:
+        "200":
+          description: Successful operation
+  /startupCheckService.isMicroserviceStarted:
+    post:
+      summary: startupCheckService.isMicroserviceStarted
+      tags:
+        - startupCheckService
+      responses:
+        "200":
+          description: Successful operation
+  /tagService.deleteAllTags:
+    post:
+      summary: tagService.deleteAllTags
+      tags:
+        - tagService
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a1
+                errorCode: "17"
+                message: User is not authenticated
+                statusCode: 401
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a2
+                errorCode: "6"
+                message: Service function call not authorized
+                statusCode: 403
+  /tagService.createTag:
+    post:
+      summary: tagService.createTag
+      tags:
+        - tagService
+      requestBody:
+        description: Tag
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tag"
+            example:
+              name: abc
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tag"
+              example:
+                _id: "{{tagId}}"
+                name: abc
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a3
+                errorCode: "5"
+                message: "Invalid argument: "
+                statusCode: 400
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a4
+                errorCode: "10"
+                message: Missing service function argument
+                statusCode: 406
+        "409":
+          description: "3: Duplicate entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a7
+                errorCode: "3"
+                message: Duplicate entity
+                statusCode: 409
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a5
+                errorCode: "16"
+                message: Request is too long
+                statusCode: 413
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a6
+                errorCode: "7"
+                message: Maximum sub-entity count reached. Cannot add new sub-entity
+                statusCode: 422
+  /tagService.getTagsByName:
+    post:
+      summary: tagService.getTagsByName
+      tags:
+        - tagService
+      requestBody:
+        description: TagName
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TagName"
+            example:
+              name: abc
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tag"
+              example:
+                _id: "{{tagId}}"
+                name: abc
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a8
+                errorCode: "4"
+                message: Entity not found
+                statusCode: 404
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.deleteAllUserAccounts:
+    post:
+      summary: userAccountService.deleteAllUserAccounts
+      tags:
+        - userAccountService
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+  /userAccountService.createUserAccount:
+    post:
+      summary: userAccountService.createUserAccount
+      tags:
+        - userAccountService
+      requestBody:
+        description: UserAccount
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccount"
+            example:
+              captchaToken: abc
+              subject: fbdb4e4a-6e93-4b08-a1e7-0b7bd08520a6
+              displayName: abc
+              firstName: abc
+              lastName: abc
+              email: test@test.com
+              streetAddress: abc
+              postalCode: "35828"
+              city: Tampere
+              phoneNumber: 041 2345678
+              imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+              paymentMethods:
+                - id: "0"
+                  isDefault: true
+                  paymentMethodType: creditCard
+                  creditCardNumber: 4111 1111 1111 1111
+                  creditCardExpiration: 11/99
+                  cardVerificationCode: "345"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserAccount"
+              example:
+                _id: "{{userAccountId}}"
+                displayName: abc
+                firstName: abc
+                lastName: abc
+                email: test@test.com
+                streetAddress: abc
+                postalCode: "35828"
+                city: Tampere
+                phoneNumber: 041 2345678
+                commissionDiscountPercentage: 0
+                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                paymentMethods:
+                  - id: "0"
+                    isDefault: true
+                    paymentMethodType: creditCard
+                    creditCardNumber: 4111 1111 1111 1111
+                    creditCardExpiration: 11/99
+                    cardVerificationCode: "345"
+                favoriteSalesItems:
+                  - _id: "{{favoriteSalesItemId}}"
+                    price: 0
+                    previousPrice: null
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                ownSalesItems:
+                  - _id: "{{ownSalesItemId}}"
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2021-10-08T07:31:43.787Z
+                    price: 0
+                    previousPrice: null
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    state: forSale
+                orders:
+                  - _id: "{{orderId}}"
+                    version: 1
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2021-10-08T07:31:43.808Z
+                    userAccountId: "{{userAccountId}}"
+                    paymentAmount: null
+                    orderItems:
+                      - id: "0"
+                        salesItems:
+                          - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                            price: 0
+                            shippingCost: 0
+                            title: abc
+                            primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        deliveryTimestamp: null
+                        state: toBeDelivered
+                        trackingUrl: null
+                    paymentGateway: Paytrail
+                    transactionId: null
+                    transactionTimestamp: null
+                followedUserAccounts:
+                  - _id: "{{followedUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    ownSalesItems:
+                      - _id: "{{ownSalesItemId}}"
+                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                        lastModifiedTimestamp: 2021-10-08T07:31:43.843Z
+                        price: 0
+                        previousPrice: null
+                        title: abc
+                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        state: forSale
+                followingUserAccounts:
+                  - _id: "{{followingUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "3: Duplicate entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a7
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.getUserAccount:
+    post:
+      summary: userAccountService.getUserAccount
+      tags:
+        - userAccountService
+      requestBody:
+        description: GetUserAccountArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetUserAccountArg"
+            example:
+              includeResponseFields: []
+              excludeResponseFields:
+                - ownSalesItems.primaryImageDataUri
+                - followedUserAccounts.ownSalesItems
+              sortBys:
+                - subEntityPath: "*"
+                  fieldName: _id
+                  sortDirection: ASC
+                - subEntityPath: "*"
+                  fieldName: id
+                  sortDirection: ASC
+                - subEntityPath: paymentMethods
+                  fieldName: isDefault
+                  sortDirection: DESC
+                - subEntityPath: ownSalesItems
+                  fieldName: state
+                  sortDirection: ASC
+              paginations:
+                - subEntityPath: "*"
+                  pageNumber: 1
+                  pageSize: 50
+              currentPageTokens: []
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserAccount"
+              example:
+                _id: "{{userAccountId}}"
+                displayName: abc
+                firstName: abc
+                lastName: abc
+                email: test@test.com
+                streetAddress: abc
+                postalCode: "35828"
+                city: Tampere
+                phoneNumber: 041 2345678
+                commissionDiscountPercentage: 0
+                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                paymentMethods:
+                  - id: "0"
+                    isDefault: true
+                    paymentMethodType: creditCard
+                    creditCardNumber: 4111 1111 1111 1111
+                    creditCardExpiration: 11/99
+                    cardVerificationCode: "345"
+                favoriteSalesItems:
+                  - _id: "{{favoriteSalesItemId}}"
+                    price: 0
+                    previousPrice: null
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                ownSalesItems:
+                  - _id: "{{ownSalesItemId}}"
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2021-10-08T07:31:44.022Z
+                    price: 0
+                    previousPrice: null
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    state: forSale
+                orders:
+                  - _id: "{{orderId}}"
+                    version: 1
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2021-10-08T07:31:44.042Z
+                    userAccountId: "{{userAccountId}}"
+                    paymentAmount: null
+                    orderItems:
+                      - id: "0"
+                        salesItems:
+                          - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                            price: 0
+                            shippingCost: 0
+                            title: abc
+                            primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        deliveryTimestamp: null
+                        state: toBeDelivered
+                        trackingUrl: null
+                    paymentGateway: Paytrail
+                    transactionId: null
+                    transactionTimestamp: null
+                followedUserAccounts:
+                  - _id: "{{followedUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    ownSalesItems:
+                      - _id: "{{ownSalesItemId}}"
+                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                        lastModifiedTimestamp: 2021-10-08T07:31:44.079Z
+                        price: 0
+                        previousPrice: null
+                        title: abc
+                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        state: forSale
+                followingUserAccounts:
+                  - _id: "{{followingUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.followUser:
+    post:
+      summary: userAccountService.followUser
+      tags:
+        - userAccountService
+      requestBody:
+        description: _IdAndFollowedUserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndFollowedUserAccountId"
+            example:
+              _id: "{{userAccountId}}"
+              followedUserAccountId: "{{followedUserAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a9
+                errorCode: "1"
+                message: Entity version conflict. Entity was updated before this request, please
+                  re-fetch the entity and try update again
+                statusCode: 409
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.unfollowUser:
+    post:
+      summary: userAccountService.unfollowUser
+      tags:
+        - userAccountService
+      requestBody:
+        description: _IdAndFollowedUserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndFollowedUserAccountId"
+            example:
+              _id: "{{userAccountId}}"
+              followedUserAccountId: "{{followedUserAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.addToFavoriteSalesItems:
+    post:
+      summary: userAccountService.addToFavoriteSalesItems
+      tags:
+        - userAccountService
+      requestBody:
+        description: _IdAndSalesItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndSalesItemId"
+            example:
+              _id: "{{userAccountId}}"
+              salesItemId: "{{salesItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.removeFromFavoriteSalesItems:
+    post:
+      summary: userAccountService.removeFromFavoriteSalesItems
+      tags:
+        - userAccountService
+      requestBody:
+        description: _IdAndSalesItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndSalesItemId"
+            example:
+              _id: "{{userAccountId}}"
+              salesItemId: "{{salesItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.updateUserAccount:
+    post:
+      summary: userAccountService.updateUserAccount
+      tags:
+        - userAccountService
+      requestBody:
+        description: UserAccount
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccount"
+            example:
+              _id: "{{userAccountId}}"
+              displayName: abc
+              firstName: abc
+              lastName: abc
+              email: test@test.com
+              streetAddress: abc
+              postalCode: "35828"
+              city: Tampere
+              phoneNumber: 041 2345678
+              imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+              paymentMethods:
+                - id: "0"
+                  isDefault: true
+                  paymentMethodType: creditCard
+                  creditCardNumber: 4111 1111 1111 1111
+                  creditCardExpiration: 11/99
+                  cardVerificationCode: "345"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.deleteUserAccount:
+    post:
+      summary: userAccountService.deleteUserAccount
+      tags:
+        - userAccountService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userAccountService.getCities:
+    post:
+      summary: userAccountService.getCities
+      tags:
+        - userAccountService
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Value"
+              example: {}
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+  /userService.getUsers:
+    post:
+      summary: userService.getUsers
+      tags:
+        - userService
+      requestBody:
+        description: GetUsersArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetUsersArg"
+            example:
+              includeResponseFields: []
+              excludeResponseFields: []
+              sortBys:
+                - subEntityPath: "*"
+                  fieldName: _id
+                  sortDirection: ASC
+                - subEntityPath: "*"
+                  fieldName: id
+                  sortDirection: ASC
+              paginations:
+                - subEntityPath: "*"
+                  pageNumber: 1
+                  pageSize: 50
+              currentPageTokens: []
+              displayNameFilter: abc
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+              example:
+                _id: "{{userId}}"
+                displayName: abc
+                city: Tampere
+                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                ownSalesItems:
+                  - _id: "{{ownSalesItemId}}"
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2021-10-08T07:31:44.281Z
+                    price: 0
+                    previousPrice: null
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    state: forSale
+                followedUserAccounts:
+                  - _id: "{{followedUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    ownSalesItems:
+                      - _id: "{{ownSalesItemId}}"
+                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                        lastModifiedTimestamp: 2021-10-08T07:31:44.322Z
+                        price: 0
+                        previousPrice: null
+                        title: abc
+                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        state: forSale
+                followingUserAccounts:
+                  - _id: "{{followingUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /userService.getUser:
+    post:
+      summary: userService.getUser
+      tags:
+        - userService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                _id: "{{userId}}"
+                displayName: abc
+                city: Tampere
+                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                ownSalesItems:
+                  - _id: "{{ownSalesItemId}}"
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2021-10-08T07:31:44.376Z
+                    price: 0
+                    previousPrice: null
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    state: forSale
+                followedUserAccounts:
+                  - _id: "{{followedUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    ownSalesItems:
+                      - _id: "{{ownSalesItemId}}"
+                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                        lastModifiedTimestamp: 2021-10-08T07:31:44.412Z
+                        price: 0
+                        previousPrice: null
+                        title: abc
+                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        state: forSale
+                followingUserAccounts:
+                  - _id: "{{followingUserAccountId}}"
+                    displayName: abc
+                    city: Tampere
+                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.deleteAllSalesItems:
+    post:
+      summary: salesItemService.deleteAllSalesItems
+      tags:
+        - salesItemService
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+  /salesItemService.createSalesItem:
+    post:
+      summary: salesItemService.createSalesItem
+      tags:
+        - salesItemService
+      requestBody:
+        description: SalesItem
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SalesItem"
+            example:
+              userAccountId: "{{userAccountId}}"
+              price: 0
+              shippingCost: 0
+              title: abc
+              description: abc
+              tags:
+                - _id: "{{tagId}}"
+                  name: abc
+              area: Area1
+              productDepartment: Vehicles
+              productCategory: Vehicles
+              productSubCategory: Vehicles
+              primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+              secondaryImageDataUris:
+                - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalesItem"
+              example:
+                _id: "{{salesItemId}}"
+                version: 1
+                createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                lastModifiedTimestamp: 2021-10-08T07:31:44.485Z
+                userAccountId: "{{userAccountId}}"
+                price: 0
+                previousPrice: null
+                shippingCost: 0
+                likeCount: 0
+                title: abc
+                description: abc
+                tags:
+                  - _id: "{{tagId}}"
+                    name: abc
+                area: Area1
+                productDepartment: Vehicles
+                productCategory: Vehicles
+                productSubCategory: Vehicles
+                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                secondaryImageDataUris:
+                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                state: forSale
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "3: Duplicate entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a7
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.getSalesItems:
+    post:
+      summary: salesItemService.getSalesItems
+      tags:
+        - salesItemService
+      requestBody:
+        description: GetSalesItemsArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSalesItemsArg"
+            example:
+              sortBys:
+                - fieldName: _id
+                  sortDirection: DESC
+                - subEntityPath: "*"
+                  fieldName: _id
+                  sortDirection: ASC
+                - subEntityPath: "*"
+                  fieldName: id
+                  sortDirection: ASC
+              paginations:
+                - subEntityPath: "*"
+                  pageNumber: 1
+                  pageSize: 50
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SalesItem"
+              example:
+                _id: "{{salesItemId}}"
+                version: 1
+                createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                lastModifiedTimestamp: 2021-10-08T07:31:44.565Z
+                userAccountId: "{{userAccountId}}"
+                price: 0
+                previousPrice: null
+                shippingCost: 0
+                likeCount: 0
+                title: abc
+                description: abc
+                tags:
+                  - _id: "{{tagId}}"
+                    name: abc
+                area: Area1
+                productDepartment: Vehicles
+                productCategory: Vehicles
+                productSubCategory: Vehicles
+                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                secondaryImageDataUris:
+                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                state: forSale
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.getSalesItemsByUserDefinedFilters:
+    post:
+      summary: salesItemService.getSalesItemsByUserDefinedFilters
+      tags:
+        - salesItemService
+      requestBody:
+        description: GetSalesItemsByUserDefinedFiltersArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSalesItemsByUserDefinedFiltersArg"
+            example:
+              filters:
+                - fieldName: title
+                  operator: =
+                  value: abc
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SalesItem"
+              example:
+                _id: "{{salesItemId}}"
+                version: 1
+                createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                lastModifiedTimestamp: 2021-10-08T07:31:44.609Z
+                userAccountId: "{{userAccountId}}"
+                price: 0
+                previousPrice: null
+                shippingCost: 0
+                likeCount: 0
+                title: abc
+                description: abc
+                tags:
+                  - _id: "{{tagId}}"
+                    name: abc
+                area: Area1
+                productDepartment: Vehicles
+                productCategory: Vehicles
+                productSubCategory: Vehicles
+                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                secondaryImageDataUris:
+                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                state: forSale
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.getFollowedUsersSalesItems:
+    post:
+      summary: salesItemService.getFollowedUsersSalesItems
+      tags:
+        - salesItemService
+      requestBody:
+        description: UserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccountId"
+            example:
+              userAccountId: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FollowedUserSalesItem"
+              example:
+                _id: "{{salesItemId}}"
+                price: 0
+                previousPrice: null
+                userAccountId: "{{userAccountId}}"
+                title: abc
+                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                displayName: abc
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.getSalesItem:
+    post:
+      summary: salesItemService.getSalesItem
+      tags:
+        - salesItemService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{salesItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalesItem"
+              example:
+                _id: "{{salesItemId}}"
+                version: 1
+                createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                lastModifiedTimestamp: 2021-10-08T07:31:44.674Z
+                userAccountId: "{{userAccountId}}"
+                price: 0
+                previousPrice: null
+                shippingCost: 0
+                likeCount: 0
+                title: abc
+                description: abc
+                tags:
+                  - _id: "{{tagId}}"
+                    name: abc
+                area: Area1
+                productDepartment: Vehicles
+                productCategory: Vehicles
+                productSubCategory: Vehicles
+                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                secondaryImageDataUris:
+                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                state: forSale
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.followSalesItemPriceChange:
+    post:
+      summary: salesItemService.followSalesItemPriceChange
+      tags:
+        - salesItemService
+      requestBody:
+        description: _IdAndUserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndUserAccountId"
+            example:
+              _id: "{{salesItemId}}"
+              userAccountId: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.unfollowSalesItemPriceChange:
+    post:
+      summary: salesItemService.unfollowSalesItemPriceChange
+      tags:
+        - salesItemService
+      requestBody:
+        description: _IdAndUserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndUserAccountId"
+            example:
+              _id: "{{salesItemId}}"
+              userAccountId: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.toggleLikeSalesItem:
+    post:
+      summary: salesItemService.toggleLikeSalesItem
+      tags:
+        - salesItemService
+      requestBody:
+        description: _IdAndUserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndUserAccountId"
+            example:
+              _id: "{{salesItemId}}"
+              userAccountId: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.updateSalesItem:
+    post:
+      summary: salesItemService.updateSalesItem
+      tags:
+        - salesItemService
+      requestBody:
+        description: SalesItem
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SalesItem"
+            example:
+              _id: "{{salesItemId}}"
+              version: -1
+              userAccountId: "{{userAccountId}}"
+              price: 0
+              shippingCost: 0
+              title: abc
+              description: abc
+              tags:
+                - _id: "{{tagId}}"
+                  name: abc
+              area: Area1
+              productDepartment: Vehicles
+              productCategory: Vehicles
+              productSubCategory: Vehicles
+              primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+              secondaryImageDataUris:
+                - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /salesItemService.deleteSalesItem:
+    post:
+      summary: salesItemService.deleteSalesItem
+      tags:
+        - salesItemService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{salesItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /shoppingCartService.deleteAllShoppingCarts:
+    post:
+      summary: shoppingCartService.deleteAllShoppingCarts
+      tags:
+        - shoppingCartService
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+  /shoppingCartService.getShoppingCart:
+    post:
+      summary: shoppingCartService.getShoppingCart
+      tags:
+        - shoppingCartService
+      requestBody:
+        description: UserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccountId"
+            example:
+              userAccountId: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCart"
+              example:
+                _id: "{{shoppingCartId}}"
+                userAccountId: "{{userAccountId}}"
+                salesItems:
+                  - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                    price: 0
+                    shippingCost: 0
+                    title: abc
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /shoppingCartService.addToShoppingCart:
+    post:
+      summary: shoppingCartService.addToShoppingCart
+      tags:
+        - shoppingCartService
+      requestBody:
+        description: UserAccountIdAndSalesItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccountIdAndSalesItemId"
+            example:
+              userAccountId: "{{userAccountId}}"
+              salesItemId: "{{salesItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /shoppingCartService.removeFromShoppingCart:
+    post:
+      summary: shoppingCartService.removeFromShoppingCart
+      tags:
+        - shoppingCartService
+      requestBody:
+        description: UserAccountIdAndSalesItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccountIdAndSalesItemId"
+            example:
+              userAccountId: "{{userAccountId}}"
+              salesItemId: "{{salesItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /shoppingCartService.emptyShoppingCart:
+    post:
+      summary: shoppingCartService.emptyShoppingCart
+      tags:
+        - shoppingCartService
+      requestBody:
+        description: UserAccountId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAccountId"
+            example:
+              userAccountId: "{{userAccountId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.deleteAllOrders:
+    post:
+      summary: orderService.deleteAllOrders
+      tags:
+        - orderService
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+  /orderService.placeOrder:
+    post:
+      summary: orderService.placeOrder
+      tags:
+        - orderService
+      requestBody:
+        description: PlaceOrderArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaceOrderArg"
+            example:
+              userAccountId: "{{userAccountId}}"
+              paymentGateway: Paytrail
+              shoppingCartId: "{{shoppingCartId}}"
+              iAgreeWithTermsAndConditions: true
+              uiRedirectUrl: https://www.google.com
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+              example:
+                _id: "{{orderId}}"
+                version: 1
+                createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                lastModifiedTimestamp: 2021-10-08T07:31:44.790Z
+                userAccountId: "{{userAccountId}}"
+                paymentAmount: null
+                orderItems:
+                  - id: "0"
+                    salesItems:
+                      - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                        price: 0
+                        shippingCost: 0
+                        title: abc
+                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    deliveryTimestamp: null
+                    state: toBeDelivered
+                    trackingUrl: null
+                paymentGateway: Paytrail
+                transactionId: null
+                transactionTimestamp: null
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "3: Duplicate entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a7
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.getOrder:
+    post:
+      summary: orderService.getOrder
+      tags:
+        - orderService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{orderId}}"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+              example:
+                _id: "{{orderId}}"
+                version: 1
+                createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                lastModifiedTimestamp: 2021-10-08T07:31:44.814Z
+                userAccountId: "{{userAccountId}}"
+                paymentAmount: null
+                orderItems:
+                  - id: "0"
+                    salesItems:
+                      - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                        price: 0
+                        shippingCost: 0
+                        title: abc
+                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    deliveryTimestamp: null
+                    state: toBeDelivered
+                    trackingUrl: null
+                paymentGateway: Paytrail
+                transactionId: null
+                transactionTimestamp: null
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.discardUnpaidOrder:
+    post:
+      summary: orderService.discardUnpaidOrder
+      tags:
+        - orderService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{orderId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.payOrder:
+    post:
+      summary: orderService.payOrder
+      tags:
+        - orderService
+      requestBody:
+        description: PayOrderArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PayOrderArg"
+            example:
+              _id: "{{orderId}}"
+              paymentAmount: 0
+              paymentGateway: Paytrail
+              transactionId: abc
+              transactionTimestamp: 1970-01-01T00:01:00.000Z
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.removeUndeliveredOrderItem:
+    post:
+      summary: orderService.removeUndeliveredOrderItem
+      tags:
+        - orderService
+      requestBody:
+        description: RemoveOrderItemArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RemoveOrderItemArg"
+            example:
+              _id: "{{orderId}}"
+              version: -1
+              userAccountId: "{{userAccountId}}"
+              orderItemId: "{{orderItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.deleteUndeliveredPaidOrder:
+    post:
+      summary: orderService.deleteUndeliveredPaidOrder
+      tags:
+        - orderService
+      requestBody:
+        description: _Id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_Id"
+            example:
+              _id: "{{orderId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.deliverOrderItem:
+    post:
+      summary: orderService.deliverOrderItem
+      tags:
+        - orderService
+      requestBody:
+        description: DeliverOrderItemArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeliverOrderItemArg"
+            example:
+              _id: "{{orderId}}"
+              version: -1
+              orderItems:
+                - id: "0"
+                  deliveryTimestamp: null
+                  trackingUrl: null
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.receiveOrderItem:
+    post:
+      summary: orderService.receiveOrderItem
+      tags:
+        - orderService
+      requestBody:
+        description: _IdAndOrderItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndOrderItemId"
+            example:
+              _id: "{{orderId}}"
+              version: -1
+              orderItemId: "{{orderItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.returnOrderItem:
+    post:
+      summary: orderService.returnOrderItem
+      tags:
+        - orderService
+      requestBody:
+        description: _IdAndOrderItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndOrderItemId"
+            example:
+              _id: "{{orderId}}"
+              version: -1
+              orderItemId: "{{orderItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.receiveReturnedOrderItem:
+    post:
+      summary: orderService.receiveReturnedOrderItem
+      tags:
+        - orderService
+      requestBody:
+        description: _IdAndOrderItemId
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/_IdAndOrderItemId"
+            example:
+              _id: "{{orderId}}"
+              version: -1
+              orderItemId: "{{orderItemId}}"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "401":
+          description: "17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "403":
+          description: "6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "404":
+          description: "4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a8
+        "406":
+          description: "10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a9
+        "413":
+          description: "16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "7: Maximum sub-entity count reached. Cannot add new sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6

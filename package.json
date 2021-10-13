@@ -1,0 +1,118 @@
+{
+  "name": "backk-example-microservice",
+  "version": "1.0.53",
+  "description": "Example Backk microservice",
+  "author": {
+    "name": "Petri Silen",
+    "email": "petri.silen@silensoft.com"
+  },
+  "engines": {
+    "node": ">= 12.19"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/backk-node/backk-example-microservice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/backk-node/backk-example-microservice/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf build && copyfiles resources/* build",
+    "generateTypes": "node node_modules/backk/lib/typescript/generator/generateTypescriptFilesFromTypeDefinitionFiles.js",
+    "generateDoc": "node node_modules/backk/lib/documentation/generateServicesDocumentation.js",
+    "generateApiSpecs": "env-cmd -f .env.dev node build/main --generateApiSpecsOnly | dev-null",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prestart": "copyfiles resources/*",
+    "start:dev": "env-cmd -f .env.dev nodemon",
+    "start:debug": "env-cmd -f .env.dev nodemon --inspect",
+    "start:ci": "env-cmd -f .env.ci nodemon --inspect",
+    "start:prod": "env-cmd -f .env.prod node build/main",
+    "lint": "eslint \"src/**/*.ts\" --fix --cache",
+    "test": "env-cmd -f .env.dev jest --passWithNoTests",
+    "test:watch": "env-cmd -f .env.dev jest --watch",
+    "test:coverage": "env-cmd -f .env.dev jest --coverage",
+    "test:debug": "env-cmd -f .env.dev --use-shell node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "integrationtest:dev": "env-cmd -f .env.dev newman run generated/integrationtests/postmanCollection.json",
+    "integrationtest:ci": "runIntegrationTestsInCi.sh",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@opentelemetry/exporter-jaeger": "0.12.0",
+    "@opentelemetry/exporter-prometheus": "0.12.0",
+    "@opentelemetry/metrics": "0.12.0",
+    "@opentelemetry/node": "0.12.0",
+    "@opentelemetry/plugin-dns": "0.11.0",
+    "@opentelemetry/plugin-http": "0.12.0",
+    "@opentelemetry/plugin-https": "0.12.0",
+    "@opentelemetry/plugin-ioredis": "0.11.0",
+    "@opentelemetry/plugin-mongodb": "0.11.0",
+    "@opentelemetry/plugin-mysql": "0.11.0",
+    "@opentelemetry/plugin-pg": "0.11.0",
+    "@opentelemetry/plugin-pg-pool": "0.11.0",
+    "backk": "^1.0.0-alpha.239",
+    "dayjs": "^1.10.4",
+    "ioredis": "^4.19.2",
+    "jsonpath-plus": "^5.0.7",
+    "kafkajs": "1.15.0",
+    "lodash": "^4.17.21",
+    "mongodb": "3.6.6",
+    "mysql2": "2.2.5",
+    "pg": "^8.0.2",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.4"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^4.17.7",
+    "@types/jest": "25.1.2",
+    "@types/lodash": "^4.14.169",
+    "@types/mongodb": "^3.5.2",
+    "@types/node": "^13.1.6",
+    "@types/pg": "^7.14.3",
+    "@types/tapable": "^1.0.6",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "copyfiles": "^2.4.1",
+    "dev-null-cli": "^1.0.0",
+    "env-cmd": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.19.1",
+    "husky": "^7.0.2",
+    "jest": "^24.9.0",
+    "lint-staged": "^11.1.2",
+    "newman": "^5.2.4",
+    "nodemon": "^2.0.12",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "25.2.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.0",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "3.9.9"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run generateApiSpecs",
+      "npm run lint",
+      "npm run format",
+      "npm test"
+    ]
+  }
+}

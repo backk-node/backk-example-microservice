@@ -1,0 +1,6 @@
+{
+  "watch": ["src", "integrationtests", "resources"],
+  "ext": "ts,json,yaml",
+  "ignore": ["generated"],
+  "exec": "copyfiles resources/* build && tsc && node build/main"
+}

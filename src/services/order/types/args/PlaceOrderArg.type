@@ -1,0 +1,11 @@
+import { IsUrl, MaxLength, Lengths } from "backk";
+
+export default class PlaceOrderArg {
+  ...Pick<Order, 'userAccountId' | 'paymentGateway'>
+  shoppingCartId!: string;
+  iAgreeWithTermsAndConditions!: boolean;
+
+  @MaxLength(Lengths._4K)
+  @IsUrl()
+  uiRedirectUrl!: string;
+}

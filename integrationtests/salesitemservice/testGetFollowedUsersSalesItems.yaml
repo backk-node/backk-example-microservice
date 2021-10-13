@@ -1,0 +1,28 @@
+- given: user account to follow exists
+  serviceFunctionName: userAccountService.createUserAccount
+  authJwtSubject: user2
+  argument:
+    subject: user2
+    displayName: followed user
+  responseTests:
+    - pm.collectionVariables.set('followedUserAccountId', body.data._id)
+
+- given: user account is followed
+  serviceFunctionName: userAccountService.followUser
+
+- given: sales item for followed user account exists
+  serviceFunctionName: salesItemService.createSalesItem
+  authJwtSubject: user2
+  argument:
+    userAccountId: '{{followedUserAccountId}}'
+  responseTests:
+    - pm.collectionVariables.set('followedUserSalesItemId', body.data._id)
+
+- when: get followed users sales items
+  serviceFunctionName: salesItemService.getFollowedUsersSalesItems
+  responseTests:
+    - pm.expect(body.data[0]._id).to.eql(pm.collectionVariables.get('followedUserSalesItemId'))
+    - pm.expect(body.data[0].userAccountId).to.eql(pm.collectionVariables.get('followedUserAccountId'))
+    - pm.expect(body.data[0].displayName).to.eql('followed user')
+    - pm.expect(body.data[0].price).to.eql(0)
+    - pm.expect(body.data[0].title).to.eql('abc')

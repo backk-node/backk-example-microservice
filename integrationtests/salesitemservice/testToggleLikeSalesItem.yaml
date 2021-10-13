@@ -1,0 +1,4 @@
+- then: sales item like count is 1
+  serviceFunctionName: salesItemService.getSalesItem
+  responseTests:
+    - pm.expect(body.data.likeCount).to.eql(1)

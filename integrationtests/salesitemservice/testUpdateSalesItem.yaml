@@ -1,0 +1,5 @@
+- then: previous price is updated
+  serviceFunctionName: salesItemService.getSalesItem
+  responseTests:
+    - pm.expect(body.data.previousPrice).to.eql(0)
+

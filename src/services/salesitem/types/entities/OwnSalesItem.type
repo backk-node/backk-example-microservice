@@ -1,0 +1,6 @@
+import Entity from 'backk';
+
+@Entity('SalesItem')
+export default class OwnSalesItem {
+  ...Pick<SalesItem, '_id' | 'primaryImageDataUri' | 'primaryImageThumbnailDataUri' | 'title' | 'price' | 'previousPrice' | 'state' | 'createdAtTimestamp' | 'lastModifiedTimestamp'>
+}
