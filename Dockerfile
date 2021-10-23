@@ -9,6 +9,7 @@ RUN groupadd -g 2000 microservice && \
 WORKDIR /microservice
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm ci --only=production
+RUN npm run build
 COPY build build/
 USER 1000
 CMD [ "node", "build/main" ]

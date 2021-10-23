@@ -6,7 +6,7 @@ import { shoppingCartServiceErrors } from './errors/shoppingCartServiceErrors';
 import {
   AbstractDataStore,
   AllowForEveryUserForOwnResources,
-  AllowForServiceInternalUse,
+  AllowForMicroserviceInternalUse,
   AllowForTests,
   AllowServiceForUserRoles,
   DefaultPostQueryOperations,
@@ -102,12 +102,12 @@ export default class ShoppingCartServiceImpl extends ShoppingCartService {
     );
   }
 
-  @AllowForServiceInternalUse()
+  @AllowForMicroserviceInternalUse()
   deleteShoppingCart({ userAccountId }: UserAccountId): PromiseErrorOr<null> {
     return this.dataStore.deleteEntitiesByFilters(ShoppingCart, { userAccountId });
   }
 
-  @AllowForServiceInternalUse()
+  @AllowForMicroserviceInternalUse()
   getShoppingCartOrErrorIfEmpty(userAccountId: string, error: ErrorDef): PromiseErrorOr<One<ShoppingCart>> {
     return this.dataStore.getEntityByFilters(
       ShoppingCart,

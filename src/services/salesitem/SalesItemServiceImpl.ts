@@ -4,7 +4,7 @@ import {
   AbstractDataStore,
   AllowForEveryUser,
   AllowForEveryUserForOwnResources,
-  AllowForServiceInternalUse,
+  AllowForMicroserviceInternalUse,
   AllowForTests,
   AllowServiceForUserRoles,
   CronJob,
@@ -354,7 +354,7 @@ export default class SalesItemServiceImpl extends SalesItemService {
     return this.dataStore.deleteEntityById(SalesItem, _id);
   }
 
-  @AllowForServiceInternalUse()
+  @AllowForMicroserviceInternalUse()
   updateSalesItemStates(
     salesItems: ShoppingCartOrOrderSalesItem[],
     newState: SalesItemState,
@@ -366,7 +366,7 @@ export default class SalesItemServiceImpl extends SalesItemService {
     );
   }
 
-  @AllowForServiceInternalUse()
+  @AllowForMicroserviceInternalUse()
   updateSalesItemState(
     _id: string,
     newState: SalesItemState,
@@ -397,7 +397,7 @@ export default class SalesItemServiceImpl extends SalesItemService {
     );
   }
 
-  @AllowForServiceInternalUse()
+  @AllowForMicroserviceInternalUse()
   updateSalesItemStatesByFilters(
     salesItemIds: string[],
     newState: SalesItemState,

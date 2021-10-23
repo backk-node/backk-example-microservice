@@ -39,10 +39,10 @@ deployment:
         production:
           limits:
             cpu: 1
-            memory: 512Mi
+            memory: 768Mi
           requests:
             cpu: 1
-            memory: 512Mi
+            memory: 384Mi
     nodeSelector: {}
     tolerations: []
     affinity: {}

@@ -38,4 +38,5 @@ class MicroserviceImpl extends Microservice {
   }
 }
 
-export const microservice = new MicroserviceImpl();
+const microservice = new MicroserviceImpl();
+export default microservice;

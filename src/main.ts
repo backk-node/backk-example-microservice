@@ -1,12 +1,12 @@
 import 'reflect-metadata';
-import { initialize, initializeDefaultJaegerTracing, startHttpServerFor } from 'backk';
-import { microservice } from './microservice';
+import { initializeDefaultJaegerTracing } from 'backk';
+import microservice from './microservice';
 
 initializeDefaultJaegerTracing();
 
 async function startMicroservice() {
-  await initialize(microservice, process.argv);
-  await startHttpServerFor(microservice);
+  await microservice.initialize(process.argv);
+  await microservice.startHttpServer();
 }
 // noinspection JSIgnoredPromiseFromCall
 startMicroservice();
