@@ -22,7 +22,7 @@ import {
   SqlInExpression,
   Update
 } from 'backk';
-import {JSONPath} from 'jsonpath-plus';
+import { JSONPath } from 'jsonpath-plus';
 import dayjs from 'dayjs';
 import SalesItemService from '../salesitem/SalesItemService';
 import OrderService from './OrderService';
@@ -30,10 +30,10 @@ import PlaceOrderArg from './types/args/PlaceOrderArg';
 import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
 import Order from './types/entities/Order';
 import ShoppingCartService from '../shoppingcart/ShoppingCartService';
-import {OrderItemState} from './types/enum/OrderItemState';
-import {PaymentGateway} from './types/enum/PaymentGateway';
+import { OrderItemState } from './types/enum/OrderItemState';
+import { PaymentGateway } from './types/enum/PaymentGateway';
 import PayOrderArg from './types/args/PayOrderArg';
-import {orderServiceErrors} from './errors/orderServiceErrors';
+import { orderServiceErrors } from './errors/orderServiceErrors';
 import RemoveOrderItemArg from './types/args/RemoveOrderItemArg';
 import DeleteUnpaidOrdersArg from './types/args/DeleteUnpaidOrdersArg';
 import _IdAndOrderItemId from './types/args/_IdAndOrderItemId';

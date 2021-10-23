@@ -27,15 +27,14 @@ import dayjs from 'dayjs';
 import SalesItemService from './SalesItemService';
 import GetSalesItemsArg from './types/args/GetSalesItemsArg';
 import SalesItem from './types/entities/SalesItem';
-import {SalesItemState} from './types/enums/SalesItemState';
+import { SalesItemState } from './types/enums/SalesItemState';
 import GetSalesItemsByUserDefinedFiltersArg from './types/args/GetSalesItemsByUserDefinedFiltersArg';
 import DeleteOldUnsoldSalesItemsArg from './types/args/DeleteOldUnsoldSalesItemsArg';
 import User from '../user/types/entities/User';
 import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 import ShoppingCartOrOrderSalesItem from '../shoppingcart/types/entities/ShoppingCartOrOrderSalesItem';
-import ChangeExpiredReservedSalesItemStatesToForSaleArg
-  from './types/args/ChangeExpiredReservedSalesItemStatesToForSaleArg';
-import {salesItemServiceErrors} from './errors/salesItemServiceErrors';
+import ChangeExpiredReservedSalesItemStatesToForSaleArg from './types/args/ChangeExpiredReservedSalesItemStatesToForSaleArg';
+import { salesItemServiceErrors } from './errors/salesItemServiceErrors';
 import getThumbnailImageDataUri from '../common/utils/getThumbnailImageDataUri';
 
 @AllowServiceForUserRoles(['vitjaAdmin'])
