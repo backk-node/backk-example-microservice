@@ -8,5 +8,6 @@ async function startMicroservice() {
   await microservice.initialize(process.argv);
   await microservice.startHttpServer();
 }
+ 
 // noinspection JSIgnoredPromiseFromCall
 startMicroservice();
