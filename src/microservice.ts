@@ -1,4 +1,4 @@
-import { JwtAuthorizationServiceImpl, MySqlDataStore, StartupCheckServiceImpl } from 'backk';
+import { JwtAuthorizationServiceImpl, MongoDbDataStore, StartupCheckServiceImpl } from 'backk';
 import Microservice from 'backk/lib/microservice/Microservice';
 import CaptchaVerificationServiceImpl from './services/captchaverification/CaptchaVerificationServiceImpl';
 import ResponseCacheConfigServiceImpl from './services/responsecacheconfig/ResponseCacheConfigServiceImpl';
@@ -11,7 +11,7 @@ import SalesItemServiceImpl from './services/salesitem/SalesItemServiceImpl';
 import ShoppingCartServiceImpl from './services/shoppingcart/ShoppingCartServiceImpl';
 import LivenessCheckServiceImpl from './services/livenesscheck/LivenessCheckServiceImpl';
 
-const dataStore = new MySqlDataStore();
+const dataStore = new MongoDbDataStore();
 
 // noinspection JSUnusedLocalSymbols
 class MicroserviceImpl extends Microservice {

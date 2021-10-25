@@ -6,7 +6,7 @@ initializeDefaultJaegerTracing();
 
 async function startMicroservice() {
   await microservice.initialize(process.argv);
-  await microservice.startHttpServer();
+  microservice.startHttpServer();
 }
 
 // noinspection JSIgnoredPromiseFromCall
