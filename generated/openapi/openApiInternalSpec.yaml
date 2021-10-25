@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: backk-example-project API
+  title: backk-example-microservice API
   description: ""
-  version: 1.0.45
+  version: 1.0.54
 servers:
   - url: http://localhost:3000/vitja
     description: Local development server
