@@ -2,5 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx lint-staged
-git add generated/openapi/openApiInternalSpec.yaml
-git add generated/openapi/openApiPublicSpec.yaml
+
