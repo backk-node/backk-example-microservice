@@ -22,6 +22,7 @@
     "generateTypes": "node node_modules/backk/lib/typescript/generator/generateTypescriptFilesFromTypeDefinitionFiles.js",
     "generateDoc": "node node_modules/backk/lib/documentation/generateServicesDocumentation.js",
     "generateClientsOnly": "env-cmd -f .env.dev node build/main --generateClientsOnly | dev-null",
+    "generateClientsOnlyIfNeeded": "env-cmd -f .env.dev node build/main --generateClientsOnlyIfNeeded | dev-null",
     "generateApiSpecs": "env-cmd -f .env.dev node build/main --generateApiSpecsOnly | dev-null",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -40,6 +41,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "backk": "^1.0.0-alpha.297",
     "@opentelemetry/exporter-jaeger": "0.12.0",
     "@opentelemetry/exporter-prometheus": "0.12.0",
     "@opentelemetry/metrics": "0.12.0",
@@ -52,7 +54,6 @@
     "@opentelemetry/plugin-mysql": "0.11.0",
     "@opentelemetry/plugin-pg": "0.11.0",
     "@opentelemetry/plugin-pg-pool": "0.11.0",
-    "backk": "^1.0.0-alpha.297",
     "dayjs": "^1.10.4",
     "ioredis": "^4.19.2",
     "jsonpath-plus": "^5.0.7",
@@ -111,6 +112,8 @@
   },
   "lint-staged": {
     "*.ts": [
+      "npm run generateClientsOnlyIfNeeded",
+      "git add generated/clients",
       "npm run generateApiSpecs",
       "git add generated/openapi/openApiInternalSpec.yaml",
       "git add generated/openapi/openApiPublicSpec.yaml",
