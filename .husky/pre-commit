@@ -4,6 +4,8 @@
 npx lint-staged
 
 # Remove below if you want to disable automatic client generation
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
 if [[ $BRANCH == main ]] || [[ $BRANCH == master ]]; then
   echo 'Generating clients...'
   echo 'If you want to disable automatic client generation, remove client generation section in .husky/pre-commit'
