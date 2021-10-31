@@ -7,8 +7,8 @@ npx lint-staged
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ $BRANCH == main ]] || [[ $BRANCH == master ]]; then
-  echo 'Generating clients...'
+  echo 'Generating clients...This might take a while.'
   echo 'If you want to disable automatic client generation, remove client generation section in .husky/pre-commit'
-  npm run generateClientsOnly
-  git add generated/clients
+  npm run generateClientsOnly > /dev/null
+  git add generated/clients > /dev/null
 fi
