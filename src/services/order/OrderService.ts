@@ -1,5 +1,4 @@
-import { One, PromiseErrorOr, _Id } from 'backk';
-import { Service } from 'backk/lib/services/Service';
+import { One, PromiseErrorOr, Service, _Id } from 'backk';
 import DeleteUnpaidOrdersArg from './types/args/DeleteUnpaidOrdersArg';
 import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
 import PayOrderArg from './types/args/PayOrderArg';

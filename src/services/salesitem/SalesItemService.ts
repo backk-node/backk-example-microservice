@@ -1,4 +1,4 @@
-import { Many, One, PromiseErrorOr, UserAccountId, _Id, _IdAndUserAccountId } from 'backk';
+import { Many, One, PromiseErrorOr, Service, UserAccountId, _Id, _IdAndUserAccountId } from 'backk';
 import ShoppingCartOrOrderSalesItem from '../shoppingcart/types/entities/ShoppingCartOrOrderSalesItem';
 import ChangeExpiredReservedSalesItemStatesToForSaleArg from './types/args/ChangeExpiredReservedSalesItemStatesToForSaleArg';
 import DeleteOldUnsoldSalesItemsArg from './types/args/DeleteOldUnsoldSalesItemsArg';
@@ -8,7 +8,7 @@ import SalesItem from './types/entities/SalesItem';
 import { SalesItemState } from './types/enums/SalesItemState';
 import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 
-export interface SalesItemService {
+export interface SalesItemService extends Service {
   deleteAllSalesItems(): PromiseErrorOr<null>;
   createSalesItem(arg: SalesItem): PromiseErrorOr<One<SalesItem>>;
   getSalesItems(arg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>>;
