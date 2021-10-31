@@ -1,6 +1,6 @@
 import { ResponseCacheConfigService } from 'backk';
 
-export default class ResponseCacheConfigServiceImpl implements ResponseCacheConfigService {
+export default class ResponseCacheConfigServiceImpl extends ResponseCacheConfigService {
   getCachingDurationInSecs(): number {
     return 60;
   }

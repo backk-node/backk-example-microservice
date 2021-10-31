@@ -1,23 +1,24 @@
-import { _Id, _IdAndUserAccountId, CrudEntityService, One, PromiseErrorOr } from 'backk';
-import PlaceOrderArg from './types/args/PlaceOrderArg';
-import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
-import Order from './types/entities/Order';
-import PayOrderArg from './types/args/PayOrderArg';
-import RemoveOrderItemArg from './types/args/RemoveOrderItemArg';
+import { One, PromiseErrorOr, _Id } from 'backk';
+import { Service } from 'backk/lib/services/Service';
 import DeleteUnpaidOrdersArg from './types/args/DeleteUnpaidOrdersArg';
+import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
+import PayOrderArg from './types/args/PayOrderArg';
+import PlaceOrderArg from './types/args/PlaceOrderArg';
+import RemoveOrderItemArg from './types/args/RemoveOrderItemArg';
 import _IdAndOrderItemId from './types/args/_IdAndOrderItemId';
+import Order from './types/entities/Order';
 
-export default abstract class OrderService extends CrudEntityService {
-  abstract deleteAllOrders(): PromiseErrorOr<null>;
-  abstract placeOrder(arg: PlaceOrderArg): PromiseErrorOr<One<Order>>;
-  abstract getOrder(arg: _Id): PromiseErrorOr<One<Order>>;
-  abstract discardUnpaidOrder(arg: _Id): PromiseErrorOr<null>;
-  abstract payOrder(arg: PayOrderArg): PromiseErrorOr<null>;
-  abstract removeUndeliveredOrderItem(arg: RemoveOrderItemArg): PromiseErrorOr<null>;
-  abstract deleteUndeliveredPaidOrder(arg: _Id): PromiseErrorOr<null>;
-  abstract deliverOrderItem(arg: DeliverOrderItemArg): PromiseErrorOr<null>;
-  abstract receiveOrderItem(arg: _IdAndOrderItemId): PromiseErrorOr<null>;
-  abstract returnOrderItem(arg: _IdAndOrderItemId): PromiseErrorOr<null>;
-  abstract receiveReturnedOrderItem(arg: _IdAndOrderItemId): PromiseErrorOr<null>;
-  abstract deleteUnpaidOrders(arg: DeleteUnpaidOrdersArg): PromiseErrorOr<null>;
+export interface OrderService extends Service {
+  deleteAllOrders(): PromiseErrorOr<null>;
+  placeOrder(arg: PlaceOrderArg): PromiseErrorOr<One<Order>>;
+  getOrder(arg: _Id): PromiseErrorOr<One<Order>>;
+  discardUnpaidOrder(arg: _Id): PromiseErrorOr<null>;
+  payOrder(arg: PayOrderArg): PromiseErrorOr<null>;
+  removeUndeliveredOrderItem(arg: RemoveOrderItemArg): PromiseErrorOr<null>;
+  deleteUndeliveredPaidOrder(arg: _Id): PromiseErrorOr<null>;
+  deliverOrderItem(arg: DeliverOrderItemArg): PromiseErrorOr<null>;
+  receiveOrderItem(arg: _IdAndOrderItemId): PromiseErrorOr<null>;
+  returnOrderItem(arg: _IdAndOrderItemId): PromiseErrorOr<null>;
+  receiveReturnedOrderItem(arg: _IdAndOrderItemId): PromiseErrorOr<null>;
+  deleteUnpaidOrders(arg: DeleteUnpaidOrdersArg): PromiseErrorOr<null>;
 }

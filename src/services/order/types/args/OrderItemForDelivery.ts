@@ -10,7 +10,7 @@ import {
   MaxLengthAndMatches,
   NotUnique,
   ReadWrite,
-  ShouldBeTrueForObject
+  ShouldBeTrueForObject,
 } from 'backk';
 import OrderItem from '../entities/OrderItem';
 

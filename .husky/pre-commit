@@ -3,3 +3,10 @@
 
 npx lint-staged
 
+# Remove below if you want to disable automatic client generation
+if [[ $BRANCH == main ]] || [[ $BRANCH == master ]]; then
+  echo 'Generating clients...'
+  echo 'If you want to disable automatic client generation, remove client generation section in .husky/pre-commit'
+  npm run generateClientsOnly
+  git add generated/clients
+fi

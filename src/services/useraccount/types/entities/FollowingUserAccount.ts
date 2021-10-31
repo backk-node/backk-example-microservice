@@ -15,20 +15,20 @@ import {
   NotEncrypted,
   NotUnique,
   ReadUpdate,
-  ReadWrite
+  ReadWrite,
 } from 'backk';
 import getCities from '../../validation/getCities';
 
 @Entity('UserAccount')
 export default class FollowingUserAccount {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;

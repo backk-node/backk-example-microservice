@@ -17,18 +17,18 @@ import {
   ReadOnly,
   ReadUpdate,
   ReadWrite,
-  Values
+  Values,
 } from 'backk';
 
 export default class FollowedUserSalesItem {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;
@@ -56,13 +56,13 @@ export default class FollowedUserSalesItem {
   primaryImageDataUri!: string;
 
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   userAccountId!: string;

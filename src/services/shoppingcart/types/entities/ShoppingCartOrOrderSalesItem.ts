@@ -19,20 +19,20 @@ import {
   ReadOnly,
   ReadUpdate,
   ReadWrite,
-  Values
+  Values,
 } from 'backk';
 import { SalesItemState } from '../../../salesitem/types/enums/SalesItemState';
 
 @Entity('SalesItem')
 export default class ShoppingCartOrOrderSalesItem {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;

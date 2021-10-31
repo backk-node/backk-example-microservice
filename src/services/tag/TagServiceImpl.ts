@@ -1,7 +1,8 @@
 import {
-  AbstractDataStore,
   AllowForEveryUser,
   AllowForTests,
+  CrudEntityService,
+  DataStore,
   DbTableVersion,
   DefaultPostQueryOperations,
   ExecuteOnStartUp,
@@ -10,14 +11,14 @@ import {
   One,
   PromiseErrorOr,
   SqlExpression,
-  tryGetSeparatedValuesFromTextFile
+  tryGetSeparatedValuesFromTextFile,
 } from 'backk';
-import TagService from './TagService';
-import Tag from './entities/Tag';
 import TagName from './args/TagName';
+import Tag from './entities/Tag';
+import { TagService } from './TagService';
 
-export default class TagServiceImpl extends TagService {
-  constructor(dataStore: AbstractDataStore) {
+export default class TagServiceImpl extends CrudEntityService implements TagService {
+  constructor(dataStore: DataStore) {
     super({}, dataStore);
   }
 
@@ -38,11 +39,11 @@ export default class TagServiceImpl extends TagService {
                 this.dataStore.createEntities(
                   Tag,
                   tryGetSeparatedValuesFromTextFile('resources/tags1.txt').map((tagName) => ({
-                    name: tagName
+                    name: tagName,
                   }))
-                )
+                ),
             }
-          )
+          ),
       }
     );
   }
@@ -63,11 +64,11 @@ export default class TagServiceImpl extends TagService {
                   this.dataStore.createEntities(
                     Tag,
                     tryGetSeparatedValuesFromTextFile('resources/tags2.txt').map((tag) => ({
-                      name: tag
+                      name: tag,
                     }))
-                  )
+                  ),
               })
-            : true
+            : true,
       }
     );
   }
@@ -86,7 +87,7 @@ export default class TagServiceImpl extends TagService {
   @AllowForEveryUser()
   getTagsByName({ name }: TagName): PromiseErrorOr<Many<Tag>> {
     const filters = this.dataStore.getFilters<Tag>({ name: new RegExp(name) }, [
-      new SqlExpression('name LIKE :name', { name: `%${name}%` })
+      new SqlExpression('name LIKE :name', { name: `%${name}%` }),
     ]);
 
     return this.dataStore.getEntitiesByFilters(Tag, filters, new DefaultPostQueryOperations(), false);

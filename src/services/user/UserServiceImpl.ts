@@ -1,21 +1,22 @@
 import {
-  _Id,
-  AbstractDataStore,
   AllowForEveryUser,
   AllowServiceForUserRoles,
+  CrudEntityService,
+  DataStore,
   DefaultPostQueryOperations,
   Many,
   One,
   PromiseErrorOr,
-  SqlExpression
+  SqlExpression,
+  _Id,
 } from 'backk';
 import GetUsersArg from './/types/args/GetUsersArg';
 import User from './types/entities/User';
-import UserService from './UserService';
+import { UserService } from './UserService';
 
 @AllowServiceForUserRoles(['vitjaAdmin'])
-export default class UserServiceImpl extends UserService {
-  constructor(dataStore: AbstractDataStore) {
+export default class UserServiceImpl extends CrudEntityService implements UserService {
+  constructor(dataStore: DataStore) {
     super({}, dataStore);
   }
 
@@ -23,12 +24,12 @@ export default class UserServiceImpl extends UserService {
   getUsers({ displayNameFilter, ...postQueryOperations }: GetUsersArg): PromiseErrorOr<Many<User>> {
     const filters = this.dataStore.getFilters<User>(
       {
-        displayName: new RegExp(displayNameFilter)
+        displayName: new RegExp(displayNameFilter),
       },
       [
         new SqlExpression('displayName LIKE :displayNameFilter', {
-          displayNameFilter: `%${displayNameFilter}%`
-        })
+          displayNameFilter: `%${displayNameFilter}%`,
+        }),
       ]
     );
 
@@ -37,7 +38,7 @@ export default class UserServiceImpl extends UserService {
       filters,
       {
         ...postQueryOperations,
-        includeResponseFields: ['_id', 'displayName', 'city', 'imageDataUri']
+        includeResponseFields: ['_id', 'displayName', 'city', 'imageDataUri'],
       },
       false
     );

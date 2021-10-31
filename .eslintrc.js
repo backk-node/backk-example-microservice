@@ -1,4 +1,5 @@
 module.exports = {
+  ignorePatterns: ['generated/clients/**/*.ts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',

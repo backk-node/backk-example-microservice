@@ -14,19 +14,19 @@ import {
   MinMax,
   ReadUpdate,
   ReadWrite,
-  Values
+  Values,
 } from 'backk';
 import { PaymentGateway } from '../enum/PaymentGateway';
 
 export default class PayOrderArg {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;

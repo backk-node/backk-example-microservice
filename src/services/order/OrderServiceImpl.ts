@@ -1,11 +1,11 @@
 import {
-  _Id,
-  AbstractDataStore,
   AllowForEveryUserForOwnResources,
   AllowForTests,
   AllowForUserRoles,
   AllowServiceForUserRoles,
   Create,
+  CrudEntityService,
+  DataStore,
   DefaultPostQueryOperations,
   Delete,
   EntityPreHook,
@@ -20,35 +20,36 @@ import {
   SqlEquals,
   SqlExpression,
   SqlInExpression,
-  Update
+  Update,
+  _Id,
 } from 'backk';
-import { JSONPath } from 'jsonpath-plus';
+import CronJob from 'backk/lib/decorators/service/function/CronJob';
 import dayjs from 'dayjs';
-import SalesItemService from '../salesitem/SalesItemService';
-import OrderService from './OrderService';
-import PlaceOrderArg from './types/args/PlaceOrderArg';
+import { JSONPath } from 'jsonpath-plus';
+import { SalesItemService } from '../salesitem/SalesItemService';
+import SalesItem from '../salesitem/types/entities/SalesItem';
+import { ShoppingCartService } from '../shoppingcart/ShoppingCartService';
+import { orderServiceErrors } from './errors/orderServiceErrors';
+import { OrderService } from './OrderService';
+import DeleteUnpaidOrdersArg from './types/args/DeleteUnpaidOrdersArg';
 import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
+import PayOrderArg from './types/args/PayOrderArg';
+import PlaceOrderArg from './types/args/PlaceOrderArg';
+import RemoveOrderItemArg from './types/args/RemoveOrderItemArg';
+import _IdAndOrderItemId from './types/args/_IdAndOrderItemId';
 import Order from './types/entities/Order';
-import ShoppingCartService from '../shoppingcart/ShoppingCartService';
 import { OrderItemState } from './types/enum/OrderItemState';
 import { PaymentGateway } from './types/enum/PaymentGateway';
-import PayOrderArg from './types/args/PayOrderArg';
-import { orderServiceErrors } from './errors/orderServiceErrors';
-import RemoveOrderItemArg from './types/args/RemoveOrderItemArg';
-import DeleteUnpaidOrdersArg from './types/args/DeleteUnpaidOrdersArg';
-import _IdAndOrderItemId from './types/args/_IdAndOrderItemId';
-import SalesItem from '../salesitem/types/entities/SalesItem';
-import CronJob from 'backk/lib/decorators/service/function/CronJob';
 
 @AllowServiceForUserRoles(['vitjaAdmin'])
-export default class OrderServiceImpl extends OrderService {
+export default class OrderServiceImpl extends CrudEntityService implements OrderService {
   private readonly isPaidOrderPreHook: EntityPreHook<Order> = {
     shouldSucceedOrBeTrue: ({ transactionId }) => transactionId !== null,
-    error: orderServiceErrors.cannotUpdateOrderWhichIsNotPaid
+    error: orderServiceErrors.cannotUpdateOrderWhichIsNotPaid,
   };
 
   constructor(
-    dataStore: AbstractDataStore,
+    dataStore: DataStore,
     private readonly salesItemService: SalesItemService,
     private readonly shoppingCartService: ShoppingCartService
   ) {
@@ -66,12 +67,12 @@ export default class OrderServiceImpl extends OrderService {
   @ResponseStatusCode(HttpStatusCodes.MOVED_PERMANENTLY)
   @ResponseHeaders<PlaceOrderArg, Order>({
     Location: ({ paymentGateway, uiRedirectUrl }, { _id }) =>
-      OrderServiceImpl.getLocationHeaderUrl(paymentGateway, _id, uiRedirectUrl)
+      OrderServiceImpl.getLocationHeaderUrl(paymentGateway, _id, uiRedirectUrl),
   })
   placeOrder({
     userAccountId,
     iAgreeWithTermsAndConditions,
-    paymentGateway
+    paymentGateway,
   }: PlaceOrderArg): PromiseErrorOr<One<Order>> {
     return this.dataStore.executeInsideTransaction(async () => {
       const [shoppingCart, error] = await this.shoppingCartService.getShoppingCartOrErrorIfEmpty(
@@ -89,18 +90,18 @@ export default class OrderServiceImpl extends OrderService {
                 state: 'toBeDelivered',
                 trackingUrl: null,
                 deliveryTimestamp: null,
-                salesItems: [salesItem]
+                salesItems: [salesItem],
               })),
               paymentGateway,
               transactionId: null,
               transactionTimestamp: null,
-              paymentAmount: null
+              paymentAmount: null,
             },
             {
               preHooks: [
                 {
                   shouldSucceedOrBeTrue: () => iAgreeWithTermsAndConditions,
-                  error: orderServiceErrors.notAgreedWithTermsAndConditions
+                  error: orderServiceErrors.notAgreedWithTermsAndConditions,
                 },
                 () =>
                   this.salesItemService.updateSalesItemStates(
@@ -108,8 +109,8 @@ export default class OrderServiceImpl extends OrderService {
                     'sold',
                     'reserved',
                     userAccountId
-                  )
-              ]
+                  ),
+              ],
             }
           )
         : [null, error];
@@ -131,7 +132,7 @@ export default class OrderServiceImpl extends OrderService {
           'reserved',
           'sold',
           order.userAccountId
-        )
+        ),
     });
   }
 
@@ -146,8 +147,8 @@ export default class OrderServiceImpl extends OrderService {
           ({ userAccountId }) => this.shoppingCartService.deleteShoppingCart({ userAccountId }),
           {
             shouldSucceedOrBeTrue: ({ transactionId }) => transactionId === null,
-            error: orderServiceErrors.orderAlreadyPaid
-          }
+            error: orderServiceErrors.orderAlreadyPaid,
+          },
         ],
         postHook: () =>
           sendToRemoteService(
@@ -155,9 +156,9 @@ export default class OrderServiceImpl extends OrderService {
             'notification-service',
             'orderNotificationsService.sendOrderCreateNotifications',
             {
-              orderId: _id
+              orderId: _id,
             }
-          )
+          ),
       }
     );
   }
@@ -172,11 +173,11 @@ export default class OrderServiceImpl extends OrderService {
           shouldSucceedOrBeTrue: (order) =>
             JSONPath({ json: order, path: `orderItems[?(@.id == '${orderItemId}')].state` })[0] ===
             'toBeDelivered',
-          error: orderServiceErrors.cannotRemoveDeliveredOrderItem
+          error: orderServiceErrors.cannotRemoveDeliveredOrderItem,
         },
-        (order) => this.updateSalesItemStateToForSale(order, orderItemId)
+        (order) => this.updateSalesItemStateToForSale(order, orderItemId),
       ],
-      postHook: () => OrderServiceImpl.refundOrderItem(_id, orderItemId)
+      postHook: () => OrderServiceImpl.refundOrderItem(_id, orderItemId),
     });
   }
 
@@ -188,18 +189,18 @@ export default class OrderServiceImpl extends OrderService {
         {
           shouldSucceedOrBeTrue: (order) =>
             JSONPath({ json: order, path: 'orderItems[?(@.state != "toBeDelivered")]' }).length === 0,
-          error: orderServiceErrors.deliveredOrderDeleteNotAllowed
+          error: orderServiceErrors.deliveredOrderDeleteNotAllowed,
         },
         (order) =>
           this.salesItemService.updateSalesItemStates(
             JSONPath({ json: order, path: 'orderItems[*].salesItems[*]' }),
             'forSale'
-          )
+          ),
       ],
       postHook: () =>
         sendToRemoteService('kafka', 'refund-service', `refundService.refundOrder`, {
-          orderId: _id
-        })
+          orderId: _id,
+        }),
     });
   }
 
@@ -213,7 +214,7 @@ export default class OrderServiceImpl extends OrderService {
       {
         version,
         _id,
-        orderItems: [{ ...orderItem, state: 'delivering' }]
+        orderItems: [{ ...orderItem, state: 'delivering' }],
       },
       {
         entityPreHooks: [
@@ -221,8 +222,8 @@ export default class OrderServiceImpl extends OrderService {
           {
             shouldSucceedOrBeTrue: (order) =>
               OrderServiceImpl.hasOrderItemState(order, orderItem.id, 'toBeDelivered'),
-            error: orderServiceErrors.orderItemAlreadyDelivered
-          }
+            error: orderServiceErrors.orderItemAlreadyDelivered,
+          },
         ],
         postHook: () =>
           sendToRemoteService(
@@ -231,9 +232,9 @@ export default class OrderServiceImpl extends OrderService {
             'orderNotificationsService.sendOrderItemDeliveryNotification',
             {
               orderId: _id,
-              orderItem
+              orderItem,
             }
-          )
+          ),
       }
     );
   }
@@ -246,7 +247,7 @@ export default class OrderServiceImpl extends OrderService {
       {
         _id,
         version,
-        orderItems: [{ id: orderItemId, state: 'delivered' }]
+        orderItems: [{ id: orderItemId, state: 'delivered' }],
       },
       {
         entityPreHooks: [
@@ -254,9 +255,9 @@ export default class OrderServiceImpl extends OrderService {
           {
             shouldSucceedOrBeTrue: (order) =>
               OrderServiceImpl.hasOrderItemState(order, orderItemId, 'delivering'),
-            error: orderServiceErrors.invalidOrderItemCurrentState
-          }
-        ]
+            error: orderServiceErrors.invalidOrderItemCurrentState,
+          },
+        ],
       }
     );
   }
@@ -269,7 +270,7 @@ export default class OrderServiceImpl extends OrderService {
       {
         _id,
         version,
-        orderItems: [{ id: orderItemId, state: 'returning' }]
+        orderItems: [{ id: orderItemId, state: 'returning' }],
       },
       {
         entityPreHooks: [
@@ -277,9 +278,9 @@ export default class OrderServiceImpl extends OrderService {
           {
             shouldSucceedOrBeTrue: (order) =>
               OrderServiceImpl.hasOrderItemState(order, orderItemId, 'delivered'),
-            error: orderServiceErrors.invalidOrderItemCurrentState
-          }
-        ]
+            error: orderServiceErrors.invalidOrderItemCurrentState,
+          },
+        ],
       }
     );
   }
@@ -292,7 +293,7 @@ export default class OrderServiceImpl extends OrderService {
       {
         _id,
         version,
-        orderItems: [{ id: orderItemId, state: 'returned' }]
+        orderItems: [{ id: orderItemId, state: 'returned' }],
       },
       {
         entityPreHooks: [
@@ -301,10 +302,10 @@ export default class OrderServiceImpl extends OrderService {
           {
             shouldSucceedOrBeTrue: (order) =>
               OrderServiceImpl.hasOrderItemState(order, orderItemId, 'returning'),
-            error: orderServiceErrors.invalidOrderItemCurrentState
-          }
+            error: orderServiceErrors.invalidOrderItemCurrentState,
+          },
         ],
-        postHook: () => OrderServiceImpl.refundOrderItem(_id, orderItemId)
+        postHook: () => OrderServiceImpl.refundOrderItem(_id, orderItemId),
       }
     );
   }
@@ -315,16 +316,14 @@ export default class OrderServiceImpl extends OrderService {
       {
         transactionId: null,
         lastModifiedTimestamp: {
-          $lte: dayjs()
-            .subtract(unpaidOrderTimeToLiveInMinutes, 'minutes')
-            .toDate()
-        }
+          $lte: dayjs().subtract(unpaidOrderTimeToLiveInMinutes, 'minutes').toDate(),
+        },
       },
       [
         new SqlEquals({ transactionId: null }),
         new SqlExpression(
           `lastmodifiedtimestamp <= current_timestamp - INTERVAL '${unpaidOrderTimeToLiveInMinutes}' minute`
-        )
+        ),
       ]
     );
 
@@ -334,24 +333,24 @@ export default class OrderServiceImpl extends OrderService {
         unpaidOrderFilters,
         {
           includeResponseFields: ['orderItems.salesItems._id'],
-          paginations: [{ subEntityPath: '*', pageSize: 1000, pageNumber: 1 }]
+          paginations: [{ subEntityPath: '*', pageSize: 1000, pageNumber: 1 }],
         },
         false,
         {
           postHook: (unpaidOrders) => {
             const salesItemIdsToUpdate = JSONPath({
               json: unpaidOrders ?? null,
-              path: '$[*].orderItems[*].salesItems[*]._id'
+              path: '$[*].orderItems[*].salesItems[*]._id',
             });
 
             const salesItemFilters = this.dataStore.getFilters({ _id: { $in: salesItemIdsToUpdate } }, [
-              new SqlInExpression('_id', salesItemIdsToUpdate)
+              new SqlInExpression('_id', salesItemIdsToUpdate),
             ]);
 
             return salesItemIdsToUpdate.length > 0
               ? this.dataStore.updateEntitiesByFilters(SalesItem, salesItemFilters, { state: 'forSale' })
               : true;
-          }
+          },
         }
       );
 
@@ -362,7 +361,7 @@ export default class OrderServiceImpl extends OrderService {
   private static refundOrderItem(orderId: string, orderItemId: string): PromiseErrorOr<null> {
     return sendToRemoteService('kafka', 'refund-service', `refundService.refundOrderItem`, {
       orderId,
-      orderItemId
+      orderItemId,
     });
   }
 
@@ -417,7 +416,7 @@ export default class OrderServiceImpl extends OrderService {
     return (
       JSONPath({
         json: order,
-        path: `orderItems[?(@.id == '${orderItemId}')].state`
+        path: `orderItems[?(@.id == '${orderItemId}')].state`,
       })[0] === requiredState
     );
   }
@@ -426,7 +425,7 @@ export default class OrderServiceImpl extends OrderService {
     return this.salesItemService.updateSalesItemState(
       JSONPath({
         json: order,
-        path: `orderItems[?(@.id == '${orderItemId}')].salesItems[0]._id`
+        path: `orderItems[?(@.id == '${orderItemId}')].salesItems[0]._id`,
       })[0],
       'forSale'
     );

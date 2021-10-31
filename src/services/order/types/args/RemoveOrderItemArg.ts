@@ -2,7 +2,6 @@
 // DO NOT MODIFY THIS FILE! Updates should be made to the respective .type file only
 // This file can be generated from the respective .type file by running npm script 'generateTypes'
 
-// eslint-disable-next-line @typescript-eslint/class-name-casing
 import {
   IsBigInt,
   IsStringOrObjectId,
@@ -13,27 +12,27 @@ import {
   NotUnique,
   ReadUpdate,
   ReadWrite,
-  Values
+  Values,
 } from 'backk';
 
 export default class RemoveOrderItemArg {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;
 
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsBigInt({
-    groups: ['__backk_none__']
+    groups: ['__backk_none__'],
   })
   @NotUnique()
   @Min(-1)

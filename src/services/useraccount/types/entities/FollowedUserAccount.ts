@@ -17,7 +17,7 @@ import {
   OneToMany,
   ReadOnly,
   ReadUpdate,
-  ReadWrite
+  ReadWrite,
 } from 'backk';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import getCities from '../../validation/getCities';
@@ -25,13 +25,13 @@ import getCities from '../../validation/getCities';
 @Entity('UserAccount')
 export default class FollowedUserAccount {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;

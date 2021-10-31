@@ -9,7 +9,7 @@ import {
   MaxLength,
   MaxLengthAndMatches,
   NotUnique,
-  ReadWrite
+  ReadWrite,
 } from 'backk';
 import { PaymentGateway } from '../enum/PaymentGateway';
 

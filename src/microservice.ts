@@ -1,24 +1,24 @@
-import { JwtAuthorizationServiceImpl, MongoDbDataStore, StartupCheckServiceImpl } from 'backk';
+import { JwtAuthorizationServiceImpl, MySqlDataStore, StartupCheckServiceImpl } from 'backk';
 import Microservice from 'backk/lib/microservice/Microservice';
-import CaptchaVerificationServiceImpl from './services/captchaverification/CaptchaVerificationServiceImpl';
-import ResponseCacheConfigServiceImpl from './services/responsecacheconfig/ResponseCacheConfigServiceImpl';
 import AuditLoggingServiceImpl from './services/auditlogging/AuditLoggingServiceImpl';
-import TagServiceImpl from './services/tag/TagServiceImpl';
-import UserAccountServiceImpl from './services/useraccount/UserAccountServiceImpl';
+import CaptchaVerificationServiceImpl from './services/captchaverification/CaptchaVerificationServiceImpl';
+import LivenessCheckServiceImpl from './services/livenesscheck/LivenessCheckServiceImpl';
 import OrderServiceImpl from './services/order/OrderServiceImpl';
-import UserServiceImpl from './services/user/UserServiceImpl';
+import ResponseCacheConfigServiceImpl from './services/responsecacheconfig/ResponseCacheConfigServiceImpl';
 import SalesItemServiceImpl from './services/salesitem/SalesItemServiceImpl';
 import ShoppingCartServiceImpl from './services/shoppingcart/ShoppingCartServiceImpl';
-import LivenessCheckServiceImpl from './services/livenesscheck/LivenessCheckServiceImpl';
+import TagServiceImpl from './services/tag/TagServiceImpl';
+import UserServiceImpl from './services/user/UserServiceImpl';
+import UserAccountServiceImpl from './services/useraccount/UserAccountServiceImpl';
 
-const dataStore = new MongoDbDataStore();
+const dataStore = new MySqlDataStore();
 
 // noinspection JSUnusedLocalSymbols
 class MicroserviceImpl extends Microservice {
   private readonly auditLoggingService = new AuditLoggingServiceImpl();
   private readonly authorizationService = new JwtAuthorizationServiceImpl();
   private readonly captchaVerifyService = new CaptchaVerificationServiceImpl();
-  private readonly livenessCheckService = new LivenessCheckServiceImpl(dataStore);
+  private readonly livenessCheckService = new LivenessCheckServiceImpl();
   private readonly responseCacheConfigService = new ResponseCacheConfigServiceImpl();
   private readonly startupCheckService = new StartupCheckServiceImpl(dataStore);
 

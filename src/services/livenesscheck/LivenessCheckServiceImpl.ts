@@ -1,8 +1,8 @@
-import { AbstractDataStore, AllowForEveryUser, LivenessCheckService, PromiseErrorOr } from 'backk';
+import { AllowForEveryUser, LivenessCheckService, PromiseErrorOr } from 'backk';
 
 export default class LivenessCheckServiceImpl extends LivenessCheckService {
-  constructor(dataStore: AbstractDataStore) {
-    super({}, dataStore);
+  constructor() {
+    super({});
   }
 
   @AllowForEveryUser()

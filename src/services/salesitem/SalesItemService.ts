@@ -1,51 +1,51 @@
-import { _Id, _IdAndUserAccountId, CrudEntityService, Many, One, PromiseErrorOr, UserAccountId } from 'backk';
-import GetSalesItemsArg from './types/args/GetSalesItemsArg';
-import SalesItem from './types/entities/SalesItem';
-import GetSalesItemsByUserDefinedFiltersArg from './types/args/GetSalesItemsByUserDefinedFiltersArg';
-import { SalesItemState } from './types/enums/SalesItemState';
-import DeleteOldUnsoldSalesItemsArg from './types/args/DeleteOldUnsoldSalesItemsArg';
-import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
+import { Many, One, PromiseErrorOr, UserAccountId, _Id, _IdAndUserAccountId } from 'backk';
 import ShoppingCartOrOrderSalesItem from '../shoppingcart/types/entities/ShoppingCartOrOrderSalesItem';
 import ChangeExpiredReservedSalesItemStatesToForSaleArg from './types/args/ChangeExpiredReservedSalesItemStatesToForSaleArg';
+import DeleteOldUnsoldSalesItemsArg from './types/args/DeleteOldUnsoldSalesItemsArg';
+import GetSalesItemsArg from './types/args/GetSalesItemsArg';
+import GetSalesItemsByUserDefinedFiltersArg from './types/args/GetSalesItemsByUserDefinedFiltersArg';
+import SalesItem from './types/entities/SalesItem';
+import { SalesItemState } from './types/enums/SalesItemState';
+import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 
-export default abstract class SalesItemService extends CrudEntityService {
-  abstract deleteAllSalesItems(): PromiseErrorOr<null>;
-  abstract createSalesItem(arg: SalesItem): PromiseErrorOr<One<SalesItem>>;
-  abstract getSalesItems(arg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>>;
+export interface SalesItemService {
+  deleteAllSalesItems(): PromiseErrorOr<null>;
+  createSalesItem(arg: SalesItem): PromiseErrorOr<One<SalesItem>>;
+  getSalesItems(arg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>>;
 
-  abstract getSalesItemsByUserDefinedFilters(
+  getSalesItemsByUserDefinedFilters(
     arg: GetSalesItemsByUserDefinedFiltersArg
   ): PromiseErrorOr<Many<SalesItem>>;
 
-  abstract getFollowedUsersSalesItems(arg: UserAccountId): PromiseErrorOr<Many<FollowedUserSalesItem>>;
-  abstract getSalesItem(arg: _Id): PromiseErrorOr<One<SalesItem>>;
-  abstract followSalesItemPriceChange(arg: _IdAndUserAccountId): PromiseErrorOr<null>;
-  abstract unfollowSalesItemPriceChange(arg: _IdAndUserAccountId): PromiseErrorOr<null>;
-  abstract toggleLikeSalesItem(arg: _IdAndUserAccountId): PromiseErrorOr<null>;
-  abstract updateSalesItem(arg: SalesItem): PromiseErrorOr<null>;
+  getFollowedUsersSalesItems(arg: UserAccountId): PromiseErrorOr<Many<FollowedUserSalesItem>>;
+  getSalesItem(arg: _Id): PromiseErrorOr<One<SalesItem>>;
+  followSalesItemPriceChange(arg: _IdAndUserAccountId): PromiseErrorOr<null>;
+  unfollowSalesItemPriceChange(arg: _IdAndUserAccountId): PromiseErrorOr<null>;
+  toggleLikeSalesItem(arg: _IdAndUserAccountId): PromiseErrorOr<null>;
+  updateSalesItem(arg: SalesItem): PromiseErrorOr<null>;
 
-  abstract changeExpiredReservedSalesItemStatesToForSale(
+  changeExpiredReservedSalesItemStatesToForSale(
     arg: ChangeExpiredReservedSalesItemStatesToForSaleArg
   ): PromiseErrorOr<null>;
 
-  abstract deleteOldUnsoldSalesItemsDaily(arg: DeleteOldUnsoldSalesItemsArg): PromiseErrorOr<null>;
-  abstract deleteSalesItem(arg: _Id): PromiseErrorOr<null>;
+  deleteOldUnsoldSalesItemsDaily(arg: DeleteOldUnsoldSalesItemsArg): PromiseErrorOr<null>;
+  deleteSalesItem(arg: _Id): PromiseErrorOr<null>;
 
-  abstract updateSalesItemStates(
+  updateSalesItemStates(
     salesItems: ShoppingCartOrOrderSalesItem[],
     newState: SalesItemState,
     requiredCurrentState?: SalesItemState,
     buyerUserAccountId?: string
   ): PromiseErrorOr<null>;
 
-  abstract updateSalesItemState(
+  updateSalesItemState(
     _id: string,
     newState: SalesItemState,
     requiredCurrentState?: SalesItemState,
     buyerUserAccountId?: string | null
   ): PromiseErrorOr<null>;
 
-  abstract updateSalesItemStatesByFilters(
+  updateSalesItemStatesByFilters(
     salesItemIds: string[],
     newState: SalesItemState,
     currentStateFilter: SalesItemState,

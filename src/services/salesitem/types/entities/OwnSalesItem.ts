@@ -19,38 +19,38 @@ import {
   ReadOnly,
   ReadUpdate,
   ReadWrite,
-  Values
+  Values,
 } from 'backk';
 import { SalesItemState } from '../enums/SalesItemState';
 
 @Entity('SalesItem')
 export default class OwnSalesItem {
   @IsUndefined({
-    groups: ['__backk_create__']
+    groups: ['__backk_create__'],
   })
   @IsStringOrObjectId({
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
-    groups: ['__backk_update__']
+    groups: ['__backk_update__'],
   })
   @ReadUpdate()
   _id!: string;
 
   @IsUndefined({
-    groups: ['__backk_create__', '__backk_update__']
+    groups: ['__backk_create__', '__backk_update__'],
   })
   @IsDate({
-    groups: ['__backk_none__']
+    groups: ['__backk_none__'],
   })
   @ReadOnly()
   createdAtTimestamp!: Date;
 
   @IsUndefined({
-    groups: ['__backk_create__', '__backk_update__']
+    groups: ['__backk_create__', '__backk_update__'],
   })
   @IsDate({
-    groups: ['__backk_none__']
+    groups: ['__backk_none__'],
   })
   @ReadOnly()
   lastModifiedTimestamp!: Date;

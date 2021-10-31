@@ -1,10 +1,9 @@
 import {
-  _Id,
-  AbstractDataStore,
   AllowForEveryUser,
   AllowForEveryUserForOwnResources,
   AllowForTests,
   AllowServiceForUserRoles,
+  DataStore,
   ExecuteOnStartUp,
   Many,
   NoAutoTests,
@@ -12,18 +11,20 @@ import {
   PromiseErrorOr,
   Subject,
   Update,
-  Value
+  UserBaseService,
+  Value,
+  _Id,
 } from 'backk';
-import UserAccount from './types/entities/UserAccount';
-import getCities from './validation/getCities';
-import UserAccountService from './UserAccountService';
 import GetUserAccountArg from './types/args/GetUserAccountArg';
-import _IdAndSalesItemId from './types/args/_IdAndSalesItemId';
 import _IdAndFollowedUserAccountId from './types/args/_IdAndFollowedUserAccountId';
+import _IdAndSalesItemId from './types/args/_IdAndSalesItemId';
+import UserAccount from './types/entities/UserAccount';
+import { UserAccountService } from './UserAccountService';
+import getCities from './validation/getCities';
 
 @AllowServiceForUserRoles(['vitjaAdmin'])
-export default class UserAccountServiceImpl extends UserAccountService {
-  constructor(dataStore: AbstractDataStore) {
+export default class UserAccountServiceImpl extends UserBaseService implements UserAccountService {
+  constructor(dataStore: DataStore) {
     super({}, dataStore);
   }
 
@@ -44,12 +45,12 @@ export default class UserAccountServiceImpl extends UserAccountService {
       {
         ...userAccount,
         commissionDiscountPercentage: 0,
-        isLocked: false
+        isLocked: false,
       },
       {
         postQueryOperations: {
-          includeResponseFields: ['_id', 'commissionDiscountPercentage']
-        }
+          includeResponseFields: ['_id', 'commissionDiscountPercentage'],
+        },
       }
     );
   }
@@ -68,7 +69,7 @@ export default class UserAccountServiceImpl extends UserAccountService {
     return this.dataStore.getEntityByFilters(
       UserAccount,
       {
-        'favoriteSalesItems.state': 'forSale'
+        'favoriteSalesItems.state': 'forSale',
       },
       getUserAccountArg,
       false
@@ -90,7 +91,7 @@ export default class UserAccountServiceImpl extends UserAccountService {
             [{ _id }],
             UserAccount,
             followedUserAccountId
-          )
+          ),
       }
     );
   }
@@ -110,7 +111,7 @@ export default class UserAccountServiceImpl extends UserAccountService {
             _id,
             UserAccount,
             followedUserAccountId
-          )
+          ),
       }
     );
   }

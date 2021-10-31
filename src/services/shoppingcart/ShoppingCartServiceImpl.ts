@@ -1,26 +1,27 @@
-import ShoppingCartService from './ShoppingCartService';
-import ShoppingCart from './types/entities/ShoppingCart';
-import SalesItemService from '../salesitem/SalesItemService';
-import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
-import { shoppingCartServiceErrors } from './errors/shoppingCartServiceErrors';
 import {
-  AbstractDataStore,
   AllowForEveryUserForOwnResources,
   AllowForMicroserviceInternalUse,
   AllowForTests,
   AllowServiceForUserRoles,
+  CrudEntityService,
+  DataStore,
   DefaultPostQueryOperations,
   Delete,
   ErrorDef,
   One,
   PromiseErrorOr,
   Update,
-  UserAccountId
+  UserAccountId,
 } from 'backk';
+import { SalesItemService } from '../salesitem/SalesItemService';
+import { shoppingCartServiceErrors } from './errors/shoppingCartServiceErrors';
+import { ShoppingCartService } from './ShoppingCartService';
+import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
+import ShoppingCart from './types/entities/ShoppingCart';
 
 @AllowServiceForUserRoles(['vitjaAdmin'])
-export default class ShoppingCartServiceImpl extends ShoppingCartService {
-  constructor(dataStore: AbstractDataStore, private readonly salesItemService: SalesItemService) {
+export default class ShoppingCartServiceImpl extends CrudEntityService implements ShoppingCartService {
+  constructor(dataStore: DataStore, private readonly salesItemService: SalesItemService) {
     super(shoppingCartServiceErrors, dataStore);
   }
 
@@ -39,7 +40,7 @@ export default class ShoppingCartServiceImpl extends ShoppingCartService {
       {
         preHooks: () => this.removeExpiredSalesItemsFromShoppingCart(userAccountId),
         ifEntityNotFoundReturn: () =>
-          this.dataStore.createEntity(ShoppingCart, { userAccountId, salesItems: [] })
+          this.dataStore.createEntity(ShoppingCart, { userAccountId, salesItems: [] }),
       }
     );
   }
@@ -58,8 +59,8 @@ export default class ShoppingCartServiceImpl extends ShoppingCartService {
         entityPreHooks: {
           shouldSucceedOrBeTrue: () =>
             this.salesItemService.updateSalesItemState(salesItemId, 'reserved', 'forSale', userAccountId),
-          error: shoppingCartServiceErrors.salesItemReservedOrSold
-        }
+          error: shoppingCartServiceErrors.salesItemReservedOrSold,
+        },
       }
     );
   }
@@ -79,7 +80,7 @@ export default class ShoppingCartServiceImpl extends ShoppingCartService {
             'forSale',
             'reserved',
             userAccountId
-          )
+          ),
       }
     );
   }
@@ -97,7 +98,7 @@ export default class ShoppingCartServiceImpl extends ShoppingCartService {
             'forSale',
             'reserved',
             userAccountId
-          )
+          ),
       }
     );
   }
@@ -118,8 +119,8 @@ export default class ShoppingCartServiceImpl extends ShoppingCartService {
         preHooks: () => this.removeExpiredSalesItemsFromShoppingCart(userAccountId),
         postHook: {
           shouldSucceedOrBeTrue: (shoppingCart) => (shoppingCart?.salesItems.length ?? 0) > 0,
-          error
-        }
+          error,
+        },
       }
     );
   }
