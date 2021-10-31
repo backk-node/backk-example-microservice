@@ -1,20 +1,20 @@
 import {
-  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
   ArrayMaxSize,
   ArrayMinSize,
-  IsAlphanumeric,
-  MaxLength,
   Entity,
+  IsAlphanumeric,
   IsExternalId,
   IsFloat,
   Lengths,
+  MaxLength,
   MinMax,
   OneToMany,
+  ReadWrite,
   Values,
-  ReadWrite
+  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk';
-import OrderItem from './OrderItem';
 import { PaymentGateway } from '../enum/PaymentGateway';
+import OrderItem from './OrderItem';
 
 @Entity()
 export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {

@@ -9,11 +9,10 @@ import {
   MaxLength,
   NotUnique,
   ReadWrite,
-  ShouldBeTrueForObject
+  ShouldBeTrueForObject,
 } from 'backk';
-
-import { OrderItemState } from '../enum/OrderItemState';
 import ShoppingCartOrOrderSalesItem from '../../../shoppingcart/types/entities/ShoppingCartOrOrderSalesItem';
+import { OrderItemState } from '../enum/OrderItemState';
 
 @Entity()
 export default class OrderItem extends Id {

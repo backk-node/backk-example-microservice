@@ -1,4 +1,4 @@
-import { ArrayMaxSize, ArrayMinSize, _IdAndUserAccountId, Entity, ManyToMany, ReadOnly } from 'backk';
+import { ArrayMaxSize, ArrayMinSize, Entity, ManyToMany, ReadOnly, _IdAndUserAccountId } from 'backk';
 import ShoppingCartOrOrderSalesItem from './ShoppingCartOrOrderSalesItem';
 
 @Entity()

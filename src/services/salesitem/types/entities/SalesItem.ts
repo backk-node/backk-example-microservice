@@ -1,31 +1,31 @@
 import {
-  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
+  ArrayMaxSize,
+  ArrayMinSize,
   ArrayNotUnique,
+  ArrayUnique,
   Entity,
   Index,
   IsAnyString,
   IsDataUri,
   IsFloat,
+  IsInt,
   Lengths,
   ManyToMany,
+  MaxLength,
   MAX_INT_VALUE,
   MinMax,
-  Private,
-  Values,
-  ArrayMaxSize,
-  ArrayMinSize,
-  ArrayUnique,
-  IsInt,
-  MaxLength,
   NotUnique,
+  Private,
+  ReadOnly,
   ReadWrite,
-  ReadOnly
+  Values,
+  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk';
-import { Area } from '../enums/Area';
-import { Department } from '../enums/Department';
-import { Category } from '../enums/Category';
-import { SalesItemState } from '../enums/SalesItemState';
 import Tag from '../../../tag/entities/Tag';
+import { Area } from '../enums/Area';
+import { Category } from '../enums/Category';
+import { Department } from '../enums/Department';
+import { SalesItemState } from '../enums/SalesItemState';
 
 @Entity()
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {

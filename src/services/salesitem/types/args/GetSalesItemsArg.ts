@@ -1,18 +1,18 @@
 import {
-  DefaultSortingAndPagination,
-  IsAnyString,
-  Lengths,
-  MinMax,
-  SortBy,
   ArrayMaxSize,
   ArrayMinSize,
   ArrayUnique,
+  DefaultSortingAndPagination,
+  IsAnyString,
   IsInt,
-  MaxLength
+  Lengths,
+  MaxLength,
+  MinMax,
+  SortBy,
 } from 'backk';
+import { Area } from '../enums/Area';
 import { Category } from '../enums/Category';
 import { Department } from '../enums/Department';
-import { Area } from '../enums/Area';
 
 export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   @MaxLength(Lengths._512)
@@ -50,6 +50,6 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   sortBys: SortBy[] = [
     { fieldName: '_id', sortDirection: 'DESC' },
     { subEntityPath: '*', fieldName: '_id', sortDirection: 'ASC' },
-    { subEntityPath: '*', fieldName: 'id', sortDirection: 'ASC' }
+    { subEntityPath: '*', fieldName: 'id', sortDirection: 'ASC' },
   ];
 }

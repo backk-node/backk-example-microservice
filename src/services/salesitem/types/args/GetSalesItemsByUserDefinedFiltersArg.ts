@@ -7,8 +7,8 @@ export default class GetSalesItemsByUserDefinedFiltersArg {
     {
       fieldName: 'title',
       operator: '=',
-      value: 'abc'
-    }
+      value: 'abc',
+    },
   ])
   filters!: UserDefinedFilter[];
 }

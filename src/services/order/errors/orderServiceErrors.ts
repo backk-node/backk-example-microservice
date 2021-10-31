@@ -1,34 +1,34 @@
 export const orderServiceErrors = {
   cannotRemoveDeliveredOrderItem: {
     errorCode: 'orderService.1',
-    message: 'Cannot remove delivered order item'
+    message: 'Cannot remove delivered order item',
   },
   invalidOrderItemCurrentState: {
     errorCode: 'orderService.2',
-    message: 'Cannot update order item state due to invalid current state'
+    message: 'Cannot update order item state due to invalid current state',
   },
   deliveredOrderDeleteNotAllowed: {
     errorCode: 'orderService.3',
-    message: 'Deleting order is not allowed when some or all of order items have been delivered'
+    message: 'Deleting order is not allowed when some or all of order items have been delivered',
   },
   orderAlreadyPaid: {
     errorCode: 'orderService.4',
-    message: 'Order already paid'
+    message: 'Order already paid',
   },
   orderItemAlreadyDelivered: {
     errorCode: 'orderService.5',
-    message: 'Cannot deliver order item which is already delivered'
+    message: 'Cannot deliver order item which is already delivered',
   },
   cannotUpdateOrderWhichIsNotPaid: {
     errorCode: 'orderService.6',
-    message: 'Cannot update order which is not paid'
+    message: 'Cannot update order which is not paid',
   },
   shoppingCartIsEmpty: {
     errorCode: 'orderService.7',
-    message: 'Cannot place order because shopping cart is empty'
+    message: 'Cannot place order because shopping cart is empty',
   },
   notAgreedWithTermsAndConditions: {
     errorCode: 'orderService.8',
-    message: 'Terms and conditions were not agreed with'
-  }
+    message: 'Terms and conditions were not agreed with',
+  },
 };

@@ -18,16 +18,16 @@ import {
   Private,
   ReadOnly,
   ReadWrite,
-  ShouldBeTrueForObject
+  ShouldBeTrueForObject,
 } from 'backk';
 import _ from 'lodash';
-import PaymentMethod from './PaymentMethod';
 import Order from '../../../order/types/entities/Order';
-import getCities from '../../validation/getCities';
 import FavoriteSalesItem from '../../../salesitem/types/entities/FavoriteSalesItem';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
+import getCities from '../../validation/getCities';
 import FollowedUserAccount from './FollowedUserAccount';
 import FollowingUserAccount from './FollowingUserAccount';
+import PaymentMethod from './PaymentMethod';
 
 @Entity()
 export default class UserAccount extends BaseUserAccount {

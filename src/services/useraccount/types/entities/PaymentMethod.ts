@@ -6,7 +6,7 @@ import {
   IsCreditCardVerificationCode,
   NotUnique,
   ReadWrite,
-  TestValue
+  TestValue,
 } from 'backk';
 
 @Entity()
