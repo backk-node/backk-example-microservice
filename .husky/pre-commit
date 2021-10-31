@@ -3,7 +3,7 @@
 
 npx lint-staged
 
-# Remove below if you want to disable automatic client generation
+# Remove all below if you want to disable automatic client generation
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ $BRANCH == main ]] || [[ $BRANCH == master ]]; then
