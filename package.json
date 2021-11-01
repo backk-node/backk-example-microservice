@@ -41,7 +41,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "backk": "^1.0.0-alpha.297",
     "@opentelemetry/exporter-jaeger": "0.12.0",
     "@opentelemetry/exporter-prometheus": "0.12.0",
     "@opentelemetry/metrics": "0.12.0",
@@ -54,6 +53,7 @@
     "@opentelemetry/plugin-mysql": "0.11.0",
     "@opentelemetry/plugin-pg": "0.11.0",
     "@opentelemetry/plugin-pg-pool": "0.11.0",
+    "backk": "^1.0.0-alpha.303",
     "dayjs": "^1.10.4",
     "ioredis": "^4.19.2",
     "jsonpath-plus": "^5.0.7",
@@ -112,14 +112,14 @@
   },
   "lint-staged": {
     "*.ts": [
-      "npm run generateClientsOnlyIfNeeded",
-      "git add generated/clients",
+      "npm run format",
+      "npm run lint",
+      "npm test",
       "npm run generateApiSpecs",
       "git add generated/openapi/openApiInternalSpec.yaml",
       "git add generated/openapi/openApiPublicSpec.yaml",
-      "npm run lint",
-      "npm run format",
-      "npm test"
+      "npm run generateClientsOnlyIfNeeded",
+      "git add generated/clients"
     ]
   }
 }
