@@ -6,14 +6,17 @@ import {
   IsAnyString,
   IsDataUri,
   IsEmail,
+  IsInstance,
   IsOneOf,
   IsPhoneNumber,
   IsPostalCode,
+  IsUndefined,
   Lengths,
   MaxLength,
-  ReadOnly,
-  ReadWrite,
   ShouldBeTrueForObject,
+  Type,
+  ValidateIf,
+  ValidateNested,
 } from 'backk-frontend-utils';
 import _ from 'lodash';
 import Order from '../../../order/types/entities/Order';
@@ -27,49 +30,72 @@ import PaymentMethod from './PaymentMethod';
 export default class UserAccount extends BaseUserAccount {
   @MaxLength(Lengths._128)
   @IsAnyString()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.displayName !== undefined, {
+    groups: ['__backk_update__'],
+  })
   displayName!: string;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.firstName !== undefined, {
+    groups: ['__backk_update__'],
+  })
   firstName!: string;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.lastName !== undefined, {
+    groups: ['__backk_update__'],
+  })
   lastName!: string;
 
   @IsEmail()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.email !== undefined, {
+    groups: ['__backk_update__'],
+  })
   email!: string;
 
   /* this is an example of property documentation */
 
   @MaxLength(Lengths._512)
   @IsAnyString()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.streetAddress !== undefined, {
+    groups: ['__backk_update__'],
+  })
   streetAddress!: string;
 
   @IsPostalCode('FI')
-  @ReadWrite()
+  @ValidateIf((o: any) => o.postalCode !== undefined, {
+    groups: ['__backk_update__'],
+  })
   postalCode!: string;
 
   @MaxLength(Lengths._256)
   @IsOneOf(getCities, 'userAccountsService.getCities', 'Tampere')
-  @ReadWrite()
+  @ValidateIf((o: any) => o.city !== undefined, {
+    groups: ['__backk_update__'],
+  })
   city!: string;
 
   @IsPhoneNumber('FI')
-  @ReadWrite()
+  @ValidateIf((o: any) => o.phoneNumber !== undefined, {
+    groups: ['__backk_update__'],
+  })
   phoneNumber!: string;
 
-  @ReadOnly()
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @ValidateIf((o: any) => o.commissionDiscountPercentage !== undefined, {
+    groups: ['__backk_update__'],
+  })
   commissionDiscountPercentage!: 0 | 25 | 50;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
+    groups: ['__backk_update__'],
+  })
   imageDataUri!: string;
 
   @ArrayMinSize(0)
@@ -83,21 +109,90 @@ export default class UserAccount extends BaseUserAccount {
       _.uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods.length,
     'Credit card numbers in payment methods must be unique'
   )
-  @ReadWrite()
+  @IsInstance(PaymentMethod, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => PaymentMethod)
+  @ValidateIf((o: any) => o.paymentMethods !== undefined, {
+    groups: ['__backk_update__'],
+  })
   paymentMethods!: PaymentMethod[];
 
-  @ReadOnly()
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @IsInstance(FavoriteSalesItem, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => FavoriteSalesItem)
+  @ValidateIf((o: any) => o.favoriteSalesItems !== undefined, {
+    groups: ['__backk_update__'],
+  })
   favoriteSalesItems!: FavoriteSalesItem[];
 
-  @ReadOnly()
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @IsInstance(OwnSalesItem, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => OwnSalesItem)
+  @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
+    groups: ['__backk_update__'],
+  })
   ownSalesItems!: OwnSalesItem[];
 
-  @ReadOnly()
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @IsInstance(Order, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => Order)
+  @ValidateIf((o: any) => o.orders !== undefined, {
+    groups: ['__backk_update__'],
+  })
   orders!: Order[];
 
-  @ReadOnly()
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @IsInstance(FollowedUserAccount, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => FollowedUserAccount)
+  @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
+    groups: ['__backk_update__'],
+  })
   followedUserAccounts!: FollowedUserAccount[];
 
-  @ReadOnly()
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @IsInstance(FollowingUserAccount, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => FollowingUserAccount)
+  @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
+    groups: ['__backk_update__'],
+  })
   followingUserAccounts!: FollowingUserAccount[];
 }

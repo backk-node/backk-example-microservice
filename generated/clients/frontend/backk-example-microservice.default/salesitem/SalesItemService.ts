@@ -8,96 +8,124 @@ import {
   _Id,
   _IdAndUserAccountId,
 } from 'backk-frontend-utils';
+import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
 import GetSalesItemsArg from './types/args/GetSalesItemsArg';
 import GetSalesItemsByUserDefinedFiltersArg from './types/args/GetSalesItemsByUserDefinedFiltersArg';
 import SalesItem from './types/entities/SalesItem';
 import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 
 export default class SalesItemService {
-  createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
+  static createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.createSalesItem',
+      'create',
       salesItem,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getSalesItems(getSalesItemsArg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>> {
+  static getSalesItems(getSalesItemsArg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.getSalesItems',
+      'other',
       getSalesItemsArg,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getSalesItemsByUserDefinedFilters(
+  static getSalesItemsByUserDefinedFilters(
     getSalesItemsByUserDefinedFiltersArg: GetSalesItemsByUserDefinedFiltersArg
   ): PromiseErrorOr<Many<SalesItem>> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.getSalesItemsByUserDefinedFilters',
+      'other',
       getSalesItemsByUserDefinedFiltersArg,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getFollowedUsersSalesItems(userAccountId: UserAccountId): PromiseErrorOr<Many<FollowedUserSalesItem>> {
+  static getFollowedUsersSalesItems(
+    userAccountId: UserAccountId
+  ): PromiseErrorOr<Many<FollowedUserSalesItem>> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.getFollowedUsersSalesItems',
+      'other',
       userAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getSalesItem(_id: _Id): PromiseErrorOr<One<SalesItem>> {
-    return callRemoteService('backk-example-microservice', 'salesItemService.getSalesItem', _id, 'default');
+  static getSalesItem(_id: _Id): PromiseErrorOr<One<SalesItem>> {
+    return callRemoteService(
+      'backk-example-microservice',
+      'salesItemService.getSalesItem',
+      'other',
+      _id,
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
+    );
   }
 
-  followSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
+  static followSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.followSalesItemPriceChange',
+      'update',
       _idAndUserAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  unfollowSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
+  static unfollowSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.unfollowSalesItemPriceChange',
+      'update',
       _idAndUserAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  toggleLikeSalesItem(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
+  static toggleLikeSalesItem(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.toggleLikeSalesItem',
+      'update',
       _idAndUserAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  updateSalesItem(salesItem: SalesItem): PromiseErrorOr<null> {
+  static updateSalesItem(salesItem: SalesItem): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.updateSalesItem',
+      'update',
       salesItem,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  deleteSalesItem(_id: _Id): PromiseErrorOr<null> {
+  static deleteSalesItem(_id: _Id): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'salesItemService.deleteSalesItem',
+      'other',
       _id,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 }

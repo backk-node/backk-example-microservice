@@ -1,7 +1,4 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-// This is an auto-generated file from the respective .type file
-// DO NOT MODIFY THIS FILE! Updates should be made to the respective .type file only
-// This file can be generated from the respective .type file by running npm script 'generateTypes'
 import {
   IsAnyString,
   IsDataUri,
@@ -11,9 +8,8 @@ import {
   Lengths,
   MaxLength,
   MaxLengthAndMatches,
-  ReadUpdate,
-  ReadWrite,
-} from 'backk-frontend-utils';
+  ValidateIf,
+} from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
 import getCities from '../../validation/getCities';
 
 export default class FollowingUserAccount {
@@ -26,21 +22,26 @@ export default class FollowingUserAccount {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  @ReadUpdate()
   _id!: string;
 
   @MaxLength(Lengths._128)
   @IsAnyString()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.displayName !== undefined, {
+    groups: ['__backk_update__'],
+  })
   displayName!: string;
 
   @MaxLength(Lengths._256)
   @IsOneOf(getCities, 'userAccountsService.getCities', 'Tampere')
-  @ReadWrite()
+  @ValidateIf((o: any) => o.city !== undefined, {
+    groups: ['__backk_update__'],
+  })
   city!: string;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
+    groups: ['__backk_update__'],
+  })
   imageDataUri!: string;
 }

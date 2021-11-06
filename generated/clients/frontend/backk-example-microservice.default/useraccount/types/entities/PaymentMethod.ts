@@ -4,25 +4,35 @@ import {
   IsCreditCard,
   IsCreditCardExpiration,
   IsCreditCardVerificationCode,
-  ReadWrite,
+  ValidateIf,
 } from 'backk-frontend-utils';
 
 export default class PaymentMethod extends Id {
-  @ReadWrite()
+  @ValidateIf((o: any) => o.isDefault !== undefined, {
+    groups: ['__backk_update__'],
+  })
   isDefault!: boolean;
 
-  @ReadWrite()
+  @ValidateIf((o: any) => o.paymentMethodType !== undefined, {
+    groups: ['__backk_update__'],
+  })
   paymentMethodType!: 'creditCard';
 
   @IsCreditCard()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.creditCardNumber !== undefined, {
+    groups: ['__backk_update__'],
+  })
   creditCardNumber!: string;
 
   @IsCreditCardExpiration()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.creditCardExpiration !== undefined, {
+    groups: ['__backk_update__'],
+  })
   creditCardExpiration!: string;
 
   @IsCreditCardVerificationCode()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.cardVerificationCode !== undefined, {
+    groups: ['__backk_update__'],
+  })
   cardVerificationCode!: string;
 }

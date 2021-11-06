@@ -5,10 +5,14 @@ import {
   IsAlphanumeric,
   IsExternalId,
   IsFloat,
+  IsIn,
+  IsInstance,
   Lengths,
   MaxLength,
   MinMax,
-  ReadWrite,
+  Type,
+  ValidateIf,
+  ValidateNested,
   Values,
   _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
@@ -18,23 +22,44 @@ import OrderItem from './OrderItem';
 export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
   @ArrayMinSize(1)
   @ArrayMaxSize(Values._50)
-  @ReadWrite()
+  @IsInstance(OrderItem, {
+    each: true,
+  })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => OrderItem)
+  @ValidateIf((o: any) => o.orderItems !== undefined, {
+    groups: ['__backk_update__'],
+  })
   orderItems!: OrderItem[];
 
-  @ReadWrite()
+  @IsIn('Paytrail', 'PayPal', 'Klarna')
+  @ValidateIf((o: any) => o.paymentGateway !== undefined, {
+    groups: ['__backk_update__'],
+  })
   paymentGateway: PaymentGateway = 'Paytrail';
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
   @IsExternalId()
-  @ReadWrite()
+  @ValidateIf((o: any) => o.transactionId !== null)
+  @ValidateIf((o: any) => o.transactionId !== undefined, {
+    groups: ['__backk_update__'],
+  })
   transactionId!: string | null;
 
-  @ReadWrite()
+  @ValidateIf((o: any) => o.transactionTimestamp !== null)
+  @ValidateIf((o: any) => o.transactionTimestamp !== undefined, {
+    groups: ['__backk_update__'],
+  })
   transactionTimestamp!: Date | null;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  @ReadWrite()
+  @ValidateIf((o: any) => o.paymentAmount !== null)
+  @ValidateIf((o: any) => o.paymentAmount !== undefined, {
+    groups: ['__backk_update__'],
+  })
   paymentAmount!: number | null;
 }

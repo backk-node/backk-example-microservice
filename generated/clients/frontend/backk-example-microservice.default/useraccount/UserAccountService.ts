@@ -1,98 +1,119 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import { callRemoteService, Many, One, PromiseErrorOr, Subject, Value, _Id } from 'backk-frontend-utils';
+import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
 import GetUserAccountArg from './types/args/GetUserAccountArg';
 import _IdAndFollowedUserAccountId from './types/args/_IdAndFollowedUserAccountId';
 import _IdAndSalesItemId from './types/args/_IdAndSalesItemId';
 import UserAccount from './types/entities/UserAccount';
 
 export default class UserAccountService {
-  createUserAccount(userAccount: UserAccount): PromiseErrorOr<One<UserAccount>> {
+  static createUserAccount(userAccount: UserAccount): PromiseErrorOr<One<UserAccount>> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.createUserAccount',
+      'create',
       userAccount,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getIdBySubject(subject: Subject): PromiseErrorOr<One<_Id>> {
+  static getIdBySubject(subject: Subject): PromiseErrorOr<One<_Id>> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.getIdBySubject',
+      'other',
       subject,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getUserAccount(getUserAccountArg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>> {
+  static getUserAccount(getUserAccountArg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.getUserAccount',
+      'other',
       getUserAccountArg,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  followUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
+  static followUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.followUser',
+      'update',
       _idAndFollowedUserAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  unfollowUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
+  static unfollowUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.unfollowUser',
+      'update',
       _idAndFollowedUserAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  addToFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
+  static addToFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.addToFavoriteSalesItems',
+      'update',
       _idAndSalesItemId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  removeFromFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
+  static removeFromFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.removeFromFavoriteSalesItems',
+      'update',
       _idAndSalesItemId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  updateUserAccount(userAccount: UserAccount): PromiseErrorOr<null> {
+  static updateUserAccount(userAccount: UserAccount): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.updateUserAccount',
+      'update',
       userAccount,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  deleteUserAccount(_id: _Id): PromiseErrorOr<null> {
+  static deleteUserAccount(_id: _Id): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.deleteUserAccount',
+      'other',
       _id,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  getCities(): PromiseErrorOr<Many<Value>> {
+  static getCities(): PromiseErrorOr<Many<Value>> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.getCities',
+      'other',
       undefined,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 }

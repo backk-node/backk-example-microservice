@@ -1,42 +1,53 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import { callRemoteService, One, PromiseErrorOr, UserAccountId } from 'backk-frontend-utils';
+import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
 
 export default class ShoppingCartService {
-  getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
+  static getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.getShoppingCart',
+      'other',
       userAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  addToShoppingCart(userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId): PromiseErrorOr<null> {
+  static addToShoppingCart(userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.addToShoppingCart',
+      'update',
       userAccountIdAndSalesItemId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  removeFromShoppingCart(userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId): PromiseErrorOr<null> {
+  static removeFromShoppingCart(
+    userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId
+  ): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.removeFromShoppingCart',
+      'update',
       userAccountIdAndSalesItemId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
+  static emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.emptyShoppingCart',
+      'other',
       userAccountId,
-      'default'
+      'default',
+      EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 }
