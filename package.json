@@ -116,8 +116,7 @@
       "npm run lint",
       "npm test",
       "npm run generateApiSpecs",
-      "git add generated/openapi/openApiInternalSpec.yaml",
-      "git add generated/openapi/openApiPublicSpec.yaml",
+      "git add generated/openapi",
       "npm run generateClientsOnlyIfNeeded",
       "git add generated/clients"
     ]
