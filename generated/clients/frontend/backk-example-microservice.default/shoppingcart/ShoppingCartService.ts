@@ -1,50 +1,106 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { callRemoteService, One, PromiseErrorOr, UserAccountId } from 'backk-frontend-utils';
+import {
+  callRemoteService,
+  One,
+  PromiseErrorOr,
+  UserAccountId,
+  validateServiceFunctionArgumentOrThrow,
+} from 'backk-frontend-utils';
 import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
 
 export default class ShoppingCartService {
-  static getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
+  static async getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.getShoppingCart',
-      'other',
       userAccountId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static addToShoppingCart(userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId): PromiseErrorOr<null> {
+  static async addToShoppingCart(
+    userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId
+  ): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(
+        userAccountIdAndSalesItemId,
+        UserAccountIdAndSalesItemId,
+        'update'
+      );
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.addToShoppingCart',
-      'update',
       userAccountIdAndSalesItemId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static removeFromShoppingCart(
+  static async removeFromShoppingCart(
     userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId
   ): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(
+        userAccountIdAndSalesItemId,
+        UserAccountIdAndSalesItemId,
+        'update'
+      );
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.removeFromShoppingCart',
-      'update',
       userAccountIdAndSalesItemId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
+  static async emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'shoppingCartService.emptyShoppingCart',
-      'other',
       userAccountId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey

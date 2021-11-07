@@ -1,5 +1,11 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { callRemoteService, One, PromiseErrorOr, _Id } from 'backk-frontend-utils';
+import {
+  callRemoteService,
+  One,
+  PromiseErrorOr,
+  validateServiceFunctionArgumentOrThrow,
+  _Id,
+} from 'backk-frontend-utils';
 import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
 import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
 import PayOrderArg from './types/args/PayOrderArg';
@@ -9,110 +15,210 @@ import _IdAndOrderItemId from './types/args/_IdAndOrderItemId';
 import Order from './types/entities/Order';
 
 export default class OrderService {
-  static placeOrder(placeOrderArg: PlaceOrderArg): PromiseErrorOr<One<Order>> {
+  static async placeOrder(placeOrderArg: PlaceOrderArg): PromiseErrorOr<One<Order>> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(placeOrderArg, PlaceOrderArg, 'create');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.placeOrder',
-      'create',
       placeOrderArg,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static getOrder(_id: _Id): PromiseErrorOr<One<Order>> {
+  static async getOrder(_id: _Id): PromiseErrorOr<One<Order>> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.getOrder',
-      'other',
       _id,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static discardUnpaidOrder(_id: _Id): PromiseErrorOr<null> {
+  static async discardUnpaidOrder(_id: _Id): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.discardUnpaidOrder',
-      'other',
       _id,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static payOrder(payOrderArg: PayOrderArg): PromiseErrorOr<null> {
+  static async payOrder(payOrderArg: PayOrderArg): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(payOrderArg, PayOrderArg, 'update');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.payOrder',
-      'update',
       payOrderArg,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static removeUndeliveredOrderItem(removeOrderItemArg: RemoveOrderItemArg): PromiseErrorOr<null> {
+  static async removeUndeliveredOrderItem(removeOrderItemArg: RemoveOrderItemArg): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(removeOrderItemArg, RemoveOrderItemArg, 'update');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.removeUndeliveredOrderItem',
-      'update',
       removeOrderItemArg,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static deleteUndeliveredPaidOrder(_id: _Id): PromiseErrorOr<null> {
+  static async deleteUndeliveredPaidOrder(_id: _Id): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.deleteUndeliveredPaidOrder',
-      'other',
       _id,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static deliverOrderItem(deliverOrderItemArg: DeliverOrderItemArg): PromiseErrorOr<null> {
+  static async deliverOrderItem(deliverOrderItemArg: DeliverOrderItemArg): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(deliverOrderItemArg, DeliverOrderItemArg, 'update');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.deliverOrderItem',
-      'update',
       deliverOrderItemArg,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static receiveOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
+  static async receiveOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(_idAndOrderItemId, _IdAndOrderItemId, 'update');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.receiveOrderItem',
-      'update',
       _idAndOrderItemId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static returnOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
+  static async returnOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(_idAndOrderItemId, _IdAndOrderItemId, 'update');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.returnOrderItem',
-      'update',
       _idAndOrderItemId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static receiveReturnedOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
+  static async receiveReturnedOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
+    try {
+      await validateServiceFunctionArgumentOrThrow(_idAndOrderItemId, _IdAndOrderItemId, 'update');
+    } catch (error) {
+      return [
+        null,
+        {
+          message: error.message,
+        },
+      ];
+    }
+
     return callRemoteService(
       'backk-example-microservice',
       'orderService.receiveReturnedOrderItem',
-      'update',
       _idAndOrderItemId,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
