@@ -42,7 +42,7 @@ export default class OrderItem extends Id {
   })
   deliveryTimestamp!: Date | null;
 
-  @IsIn('toBeDelivered', 'delivering', 'delivered', 'returning', 'returned')
+  @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'])
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })

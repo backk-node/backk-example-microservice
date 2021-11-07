@@ -55,25 +55,25 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   })
   tags!: Tag[];
 
-  @IsIn('Area1', 'Area2', 'Area3')
+  @IsIn(['Area1', 'Area2', 'Area3'])
   @ValidateIf((o: any) => o.area !== undefined, {
     groups: ['__backk_update__'],
   })
   area!: Area;
 
-  @IsIn('Vehicles', 'Clothes')
+  @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productDepartment !== undefined, {
     groups: ['__backk_update__'],
   })
   productDepartment!: Department;
 
-  @IsIn('Vehicles', 'Clothes')
+  @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productCategory !== undefined, {
     groups: ['__backk_update__'],
   })
   productCategory!: Category;
 
-  @IsIn('Vehicles', 'Clothes')
+  @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productSubCategory !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -138,7 +138,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @IsIn('forSale', 'reserved', 'sold')
+  @IsIn(['forSale', 'reserved', 'sold'])
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })

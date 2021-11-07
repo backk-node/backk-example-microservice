@@ -3,7 +3,6 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   IsAlphanumeric,
-  IsExternalId,
   IsFloat,
   IsIn,
   IsInstance,
@@ -34,7 +33,7 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   })
   orderItems!: OrderItem[];
 
-  @IsIn('Paytrail', 'PayPal', 'Klarna')
+  @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   @ValidateIf((o: any) => o.paymentGateway !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -42,7 +41,6 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
-  @IsExternalId()
   @ValidateIf((o: any) => o.transactionId !== null)
   @ValidateIf((o: any) => o.transactionId !== undefined, {
     groups: ['__backk_update__'],

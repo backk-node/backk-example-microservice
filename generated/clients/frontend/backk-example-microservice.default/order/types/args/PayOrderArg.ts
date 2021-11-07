@@ -1,7 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
   IsAlphanumeric,
-  IsExternalId,
   IsFloat,
   IsIn,
   IsStringOrObjectId,
@@ -27,12 +26,11 @@ export default class PayOrderArg {
   })
   _id!: string;
 
-  @IsIn('Paytrail', 'PayPal', 'Klarna')
+  @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   paymentGateway: PaymentGateway = 'Paytrail';
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
-  @IsExternalId()
   transactionId!: string;
 
   @Type(() => Date)

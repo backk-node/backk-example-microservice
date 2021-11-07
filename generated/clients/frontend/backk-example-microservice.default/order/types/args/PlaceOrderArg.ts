@@ -14,7 +14,7 @@ export default class PlaceOrderArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   userAccountId!: string;
 
-  @IsIn('Paytrail', 'PayPal', 'Klarna')
+  @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   paymentGateway: PaymentGateway = 'Paytrail';
 
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)

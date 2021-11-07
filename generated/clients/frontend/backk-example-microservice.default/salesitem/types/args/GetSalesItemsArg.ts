@@ -29,28 +29,28 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
-  @IsIn('Area1', 'Area2', 'Area3')
+  @IsIn(['Area1', 'Area2', 'Area3'])
   @ValidateIf((o: any) => o.areas !== undefined)
   areas?: Area[];
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
-  @IsIn('Vehicles', 'Clothes')
+  @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productDepartments !== undefined)
   productDepartments?: Department[];
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
-  @IsIn('Vehicles', 'Clothes')
+  @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productCategories !== undefined)
   productCategories?: Category[];
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
-  @IsIn('Vehicles', 'Clothes')
+  @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productSubCategories !== undefined)
   productSubCategories?: Category[];
 
