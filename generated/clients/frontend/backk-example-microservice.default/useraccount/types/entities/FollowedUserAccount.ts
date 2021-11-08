@@ -35,7 +35,7 @@ export default class FollowedUserAccount {
   displayName!: string;
 
   @MaxLength(Lengths._256)
-  @IsOneOf('userAccountsService.getCities', 'Tampere')
+  @IsOneOf('backk-example-microservice', 'default', 'userAccountsService.getCities', 'Tampere')
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
