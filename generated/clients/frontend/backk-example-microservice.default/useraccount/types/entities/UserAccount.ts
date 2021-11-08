@@ -22,6 +22,7 @@ import _ from 'lodash';
 import Order from '../../../order/types/entities/Order';
 import FavoriteSalesItem from '../../../salesitem/types/entities/FavoriteSalesItem';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
+import MicroserviceOptions from '../../../_backk/MicroserviceOptions';
 import FollowedUserAccount from './FollowedUserAccount';
 import FollowingUserAccount from './FollowingUserAccount';
 import PaymentMethod from './PaymentMethod';
@@ -70,7 +71,14 @@ export default class UserAccount extends BaseUserAccount {
   postalCode!: string;
 
   @MaxLength(Lengths._256)
-  @IsOneOf('backk-example-microservice', 'default', 'userAccountsService.getCities', 'Tampere')
+  @IsOneOf(
+    'backk-example-microservice',
+    'default',
+    MicroserviceOptions.fqdn,
+    MicroserviceOptions.accessTokenStorageEncryptionKey,
+    'userAccountsService.getCities',
+    'Tampere'
+  )
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
