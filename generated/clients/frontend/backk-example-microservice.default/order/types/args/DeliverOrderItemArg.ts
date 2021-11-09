@@ -38,7 +38,6 @@ export default class DeliverOrderItemArg {
   @ArrayMaxSize(1)
   @IsInstance(OrderItemForDelivery, {
     each: true,
-    argument: '__backk_argument__',
   })
   orderItems!: OrderItemForDelivery[];
 }

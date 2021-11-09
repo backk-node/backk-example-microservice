@@ -3,7 +3,6 @@ import {
   callRemoteService,
   One,
   PromiseErrorOr,
-  Service,
   UserAccountId,
   validateServiceFunctionArgumentOrThrow,
 } from 'backk-frontend-utils';
@@ -11,7 +10,7 @@ import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
 
-export interface ShoppingCartService extends Service {
+export interface ShoppingCartService {
   getShoppingCart(arg: UserAccountId): PromiseErrorOr<One<ShoppingCart>>;
   addToShoppingCart(arg: UserAccountIdAndSalesItemId): PromiseErrorOr<null>;
   removeFromShoppingCart(arg: UserAccountIdAndSalesItemId): PromiseErrorOr<null>;

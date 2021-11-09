@@ -5,7 +5,6 @@ import {
   One,
   PromiseErrorOr,
   Subject,
-  UserService,
   validateServiceFunctionArgumentOrThrow,
   Value,
   _Id,
@@ -20,7 +19,7 @@ import UserAccount from './types/entities/UserAccount';
  * - jee
  * - jaa
  * **/
-export interface UserAccountService extends UserService {
+export interface UserAccountService {
   // createUserAccount documentation goes here..
   createUserAccount(arg: UserAccount): PromiseErrorOr<One<UserAccount>>;
   getIdBySubject(arg: Subject): PromiseErrorOr<One<_Id>>;

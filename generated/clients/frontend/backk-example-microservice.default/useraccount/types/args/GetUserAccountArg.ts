@@ -9,7 +9,6 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
 
   @IsInstance(SortBy, {
     each: true,
-    argument: '__backk_argument__',
   })
   sortBys: SortBy[] = [
     ...new DefaultPostQueryOperations().sortBys,

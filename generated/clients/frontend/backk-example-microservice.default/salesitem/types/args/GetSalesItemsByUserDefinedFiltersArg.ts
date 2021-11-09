@@ -6,7 +6,6 @@ export default class GetSalesItemsByUserDefinedFiltersArg {
   @ArrayMaxSize(10)
   @IsInstance(UserDefinedFilter, {
     each: true,
-    argument: '__backk_argument__',
   })
   filters!: UserDefinedFilter[];
 }

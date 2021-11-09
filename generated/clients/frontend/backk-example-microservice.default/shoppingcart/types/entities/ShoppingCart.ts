@@ -17,10 +17,7 @@ export default class ShoppingCart extends _IdAndUserAccountId {
   })
   @IsInstance(ShoppingCartOrOrderSalesItem, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.salesItems !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.salesItems !== undefined)
   salesItems!: ShoppingCartOrOrderSalesItem[];
 }

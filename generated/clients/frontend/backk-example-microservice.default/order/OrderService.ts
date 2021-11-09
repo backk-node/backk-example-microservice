@@ -3,7 +3,6 @@ import {
   callRemoteService,
   One,
   PromiseErrorOr,
-  Service,
   validateServiceFunctionArgumentOrThrow,
   _Id,
 } from 'backk-frontend-utils';
@@ -15,7 +14,7 @@ import RemoveOrderItemArg from './types/args/RemoveOrderItemArg';
 import _IdAndOrderItemId from './types/args/_IdAndOrderItemId';
 import Order from './types/entities/Order';
 
-export interface OrderService extends Service {
+export interface OrderService {
   placeOrder(arg: PlaceOrderArg): PromiseErrorOr<One<Order>>;
   getOrder(arg: _Id): PromiseErrorOr<One<Order>>;
   discardUnpaidOrder(arg: _Id): PromiseErrorOr<null>;

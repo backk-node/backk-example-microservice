@@ -4,7 +4,6 @@ import {
   Many,
   One,
   PromiseErrorOr,
-  Service,
   validateServiceFunctionArgumentOrThrow,
   _Id,
 } from 'backk-frontend-utils';
@@ -12,7 +11,7 @@ import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import GetUsersArg from './types/args/GetUsersArg';
 import User from './types/entities/User';
 
-export interface UserService extends Service {
+export interface UserService {
   getUsers(arg: GetUsersArg): PromiseErrorOr<Many<User>>;
   getUser(arg: _Id): PromiseErrorOr<One<User>>;
 }

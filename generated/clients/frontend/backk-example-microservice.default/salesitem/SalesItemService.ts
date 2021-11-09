@@ -4,7 +4,6 @@ import {
   Many,
   One,
   PromiseErrorOr,
-  Service,
   UserAccountId,
   validateServiceFunctionArgumentOrThrow,
   _Id,
@@ -16,7 +15,7 @@ import GetSalesItemsByUserDefinedFiltersArg from './types/args/GetSalesItemsByUs
 import SalesItem from './types/entities/SalesItem';
 import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 
-export interface SalesItemService extends Service {
+export interface SalesItemService {
   createSalesItem(arg: SalesItem): PromiseErrorOr<One<SalesItem>>;
   getSalesItems(arg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>>;
   getSalesItemsByUserDefinedFilters(

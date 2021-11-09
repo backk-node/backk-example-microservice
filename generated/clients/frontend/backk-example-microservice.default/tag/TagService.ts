@@ -4,14 +4,13 @@ import {
   Many,
   One,
   PromiseErrorOr,
-  Service,
   validateServiceFunctionArgumentOrThrow,
 } from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import TagName from './args/TagName';
 import Tag from './entities/Tag';
 
-export interface TagService extends Service {
+export interface TagService {
   createTag(arg: Tag): PromiseErrorOr<One<Tag>>;
   getTagsByName(arg: TagName): PromiseErrorOr<Many<Tag>>;
 }

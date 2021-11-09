@@ -19,11 +19,8 @@ export default class OrderItem extends Id {
   @ArrayMaxSize(1)
   @IsInstance(ShoppingCartOrOrderSalesItem, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.salesItems !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.salesItems !== undefined)
   salesItems!: ShoppingCartOrOrderSalesItem[];
 
   @ShouldBeTrueForObject<OrderItem>(
@@ -32,17 +29,11 @@ export default class OrderItem extends Id {
       (state !== 'toBeDelivered' && deliveryTimestamp !== null)
   )
   @ValidateIf((o: any) => o.deliveryTimestamp !== null)
-  @ValidateIf((o: any) => o.deliveryTimestamp !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.deliveryTimestamp !== undefined)
   deliveryTimestamp!: Date | null;
 
-  @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'], {
-    groups: '__backk_argument__',
-  })
-  @ValidateIf((o: any) => o.state !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'])
+  @ValidateIf((o: any) => o.state !== undefined)
   state!: OrderItemState;
 
   @MaxLength(Lengths._3K)
@@ -53,8 +44,6 @@ export default class OrderItem extends Id {
       (state !== 'toBeDelivered' && trackingUrl !== null)
   )
   @ValidateIf((o: any) => o.trackingUrl !== null)
-  @ValidateIf((o: any) => o.trackingUrl !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.trackingUrl !== undefined)
   trackingUrl!: string | null;
 }

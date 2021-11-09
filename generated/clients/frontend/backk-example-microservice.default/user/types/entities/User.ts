@@ -30,9 +30,7 @@ export default class User {
 
   @MaxLength(Lengths._128)
   @IsAnyString()
-  @ValidateIf((o: any) => o.displayName !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.displayName !== undefined)
   displayName!: string;
 
   @MaxLength(Lengths._256)
@@ -44,16 +42,12 @@ export default class User {
     'userAccountsService.getCities',
     'Tampere'
   )
-  @ValidateIf((o: any) => o.city !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.city !== undefined)
   city!: string;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.imageDataUri !== undefined)
   imageDataUri!: string;
 
   @IsUndefined({
@@ -61,11 +55,8 @@ export default class User {
   })
   @IsInstance(OwnSalesItem, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.ownSalesItems !== undefined)
   ownSalesItems!: OwnSalesItem[];
 
   @IsUndefined({
@@ -73,11 +64,8 @@ export default class User {
   })
   @IsInstance(FollowedUserAccount, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.followedUserAccounts !== undefined)
   followedUserAccounts!: FollowedUserAccount[];
 
   @IsUndefined({
@@ -85,10 +73,7 @@ export default class User {
   })
   @IsInstance(FollowingUserAccount, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.followingUserAccounts !== undefined)
   followingUserAccounts!: FollowingUserAccount[];
 }

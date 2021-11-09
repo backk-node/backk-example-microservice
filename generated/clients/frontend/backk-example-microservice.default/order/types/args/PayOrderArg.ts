@@ -26,9 +26,7 @@ export default class PayOrderArg {
   })
   _id!: string;
 
-  @IsIn(['Paytrail', 'PayPal', 'Klarna'], {
-    groups: '__backk_argument__',
-  })
+  @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   paymentGateway: PaymentGateway = 'Paytrail';
 
   @MaxLength(Lengths._256)

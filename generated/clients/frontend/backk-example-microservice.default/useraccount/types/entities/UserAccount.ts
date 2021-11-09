@@ -28,44 +28,32 @@ import PaymentMethod from './PaymentMethod';
 export default class UserAccount extends BaseUserAccount {
   @MaxLength(Lengths._128)
   @IsAnyString()
-  @ValidateIf((o: any) => o.displayName !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.displayName !== undefined)
   displayName!: string;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.firstName !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.firstName !== undefined)
   firstName!: string;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.lastName !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.lastName !== undefined)
   lastName!: string;
 
   @IsEmail()
-  @ValidateIf((o: any) => o.email !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.email !== undefined)
   email!: string;
 
   /* this is an example of property documentation */
 
   @MaxLength(Lengths._512)
   @IsAnyString()
-  @ValidateIf((o: any) => o.streetAddress !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.streetAddress !== undefined)
   streetAddress!: string;
 
   @IsPostalCode('FI')
-  @ValidateIf((o: any) => o.postalCode !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.postalCode !== undefined)
   postalCode!: string;
 
   @MaxLength(Lengths._256)
@@ -77,30 +65,22 @@ export default class UserAccount extends BaseUserAccount {
     'userAccountsService.getCities',
     'Tampere'
   )
-  @ValidateIf((o: any) => o.city !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.city !== undefined)
   city!: string;
 
   @IsPhoneNumber('FI')
-  @ValidateIf((o: any) => o.phoneNumber !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.phoneNumber !== undefined)
   phoneNumber!: string;
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @ValidateIf((o: any) => o.commissionDiscountPercentage !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.commissionDiscountPercentage !== undefined)
   commissionDiscountPercentage!: 0 | 25 | 50;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.imageDataUri !== undefined)
   imageDataUri!: string;
 
   @ArrayMinSize(0)
@@ -116,11 +96,8 @@ export default class UserAccount extends BaseUserAccount {
   )
   @IsInstance(PaymentMethod, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.paymentMethods !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.paymentMethods !== undefined)
   paymentMethods!: PaymentMethod[];
 
   @IsUndefined({
@@ -128,11 +105,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(FavoriteSalesItem, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.favoriteSalesItems !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.favoriteSalesItems !== undefined)
   favoriteSalesItems!: FavoriteSalesItem[];
 
   @IsUndefined({
@@ -140,11 +114,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(OwnSalesItem, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.ownSalesItems !== undefined)
   ownSalesItems!: OwnSalesItem[];
 
   @IsUndefined({
@@ -152,11 +123,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(Order, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.orders !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.orders !== undefined)
   orders!: Order[];
 
   @IsUndefined({
@@ -164,11 +132,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(FollowedUserAccount, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.followedUserAccounts !== undefined)
   followedUserAccounts!: FollowedUserAccount[];
 
   @IsUndefined({
@@ -176,10 +141,7 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(FollowingUserAccount, {
     each: true,
-    argument: '__backk_argument__',
   })
-  @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.followingUserAccounts !== undefined)
   followingUserAccounts!: FollowingUserAccount[];
 }
