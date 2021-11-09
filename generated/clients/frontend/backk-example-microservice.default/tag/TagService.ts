@@ -4,14 +4,20 @@ import {
   Many,
   One,
   PromiseErrorOr,
+  Service,
   validateServiceFunctionArgumentOrThrow,
 } from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import TagName from './args/TagName';
 import Tag from './entities/Tag';
 
-export default class TagService {
-  static async createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
+export interface TagService extends Service {
+  createTag(arg: Tag): PromiseErrorOr<One<Tag>>;
+  getTagsByName(arg: TagName): PromiseErrorOr<Many<Tag>>;
+}
+
+export class TagServiceImpl implements TagService {
+  async createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
     try {
       await validateServiceFunctionArgumentOrThrow(tag, Tag, 'create');
     } catch (error: any) {
@@ -33,7 +39,7 @@ export default class TagService {
     );
   }
 
-  static async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
+  async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
     try {
       await validateServiceFunctionArgumentOrThrow(tagName, TagName, 'other');
     } catch (error: any) {
@@ -55,3 +61,6 @@ export default class TagService {
     );
   }
 }
+
+const tagService = new TagServiceImpl();
+export default tagService;

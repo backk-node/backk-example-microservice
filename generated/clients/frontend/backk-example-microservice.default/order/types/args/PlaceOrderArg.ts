@@ -14,10 +14,14 @@ export default class PlaceOrderArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   userAccountId!: string;
 
-  @IsIn(['Paytrail', 'PayPal', 'Klarna'])
+  @IsIn(['Paytrail', 'PayPal', 'Klarna'], {
+    groups: '__backk_argument__',
+  })
   paymentGateway: PaymentGateway = 'Paytrail';
 
-  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
+  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
+    groups: '__backk_argument__',
+  })
   @IsStringOrObjectId()
   shoppingCartId!: string;
 

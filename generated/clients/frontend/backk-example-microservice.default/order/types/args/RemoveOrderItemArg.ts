@@ -31,7 +31,9 @@ export default class RemoveOrderItemArg {
   @Max(Number.MAX_SAFE_INTEGER)
   version!: number;
 
-  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
+  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
+    groups: '__backk_argument__',
+  })
   @IsStringOrObjectId()
   orderItemId!: string;
 

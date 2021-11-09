@@ -20,7 +20,7 @@ import {
   ReadWrite,
   ShouldBeTrueForObject,
 } from 'backk';
-import _ from 'lodash';
+import uniqBy from 'lodash/uniqBy';
 import Order from '../../../order/types/entities/Order';
 import FavoriteSalesItem from '../../../salesitem/types/entities/FavoriteSalesItem';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
@@ -99,7 +99,7 @@ export default class UserAccount extends BaseUserAccount {
   )
   @ShouldBeTrueForObject<UserAccount>(
     ({ paymentMethods }) =>
-      _.uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods.length,
+      uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods.length,
     'Credit card numbers in payment methods must be unique'
   )
   @ReadWrite()

@@ -1,5 +1,5 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { DefaultPostQueryOperations, IsInstance, SortBy, Type, ValidateNested } from 'backk-frontend-utils';
+import { DefaultPostQueryOperations, IsInstance, SortBy } from 'backk-frontend-utils';
 
 export default class GetUserAccountArg extends DefaultPostQueryOperations {
   excludeResponseFields: string[] = [
@@ -9,11 +9,8 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
 
   @IsInstance(SortBy, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => SortBy)
   sortBys: SortBy[] = [
     ...new DefaultPostQueryOperations().sortBys,
     new SortBy('paymentMethods', 'isDefault', 'DESC'),

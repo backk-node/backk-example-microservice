@@ -9,9 +9,7 @@ import {
   Lengths,
   MaxLength,
   MaxLengthAndMatches,
-  Type,
   ValidateIf,
-  ValidateNested,
 } from 'backk-frontend-utils';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
@@ -61,11 +59,8 @@ export default class FollowedUserAccount {
   })
   @IsInstance(OwnSalesItem, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => OwnSalesItem)
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })

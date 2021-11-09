@@ -9,9 +9,7 @@ import {
   Lengths,
   MaxLength,
   ShouldBeTrueForObject,
-  Type,
   ValidateIf,
-  ValidateNested,
 } from 'backk-frontend-utils';
 import ShoppingCartOrOrderSalesItem from '../../../shoppingcart/types/entities/ShoppingCartOrOrderSalesItem';
 import { OrderItemState } from '../enum/OrderItemState';
@@ -21,11 +19,8 @@ export default class OrderItem extends Id {
   @ArrayMaxSize(1)
   @IsInstance(ShoppingCartOrOrderSalesItem, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => ShoppingCartOrOrderSalesItem)
   @ValidateIf((o: any) => o.salesItems !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -42,7 +37,9 @@ export default class OrderItem extends Id {
   })
   deliveryTimestamp!: Date | null;
 
-  @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'])
+  @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })

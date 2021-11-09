@@ -14,9 +14,7 @@ import {
   MaxLength,
   MAX_INT_VALUE,
   MinMax,
-  Type,
   ValidateIf,
-  ValidateNested,
   Values,
   _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
@@ -45,35 +43,40 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ArrayMaxSize(Values._25)
   @IsInstance(Tag, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => Tag)
   @ValidateIf((o: any) => o.tags !== undefined, {
     groups: ['__backk_update__'],
   })
   tags!: Tag[];
 
-  @IsIn(['Area1', 'Area2', 'Area3'])
+  @IsIn(['Area1', 'Area2', 'Area3'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.area !== undefined, {
     groups: ['__backk_update__'],
   })
   area!: Area;
 
-  @IsIn(['Vehicles', 'Clothes'])
+  @IsIn(['Vehicles', 'Clothes'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.productDepartment !== undefined, {
     groups: ['__backk_update__'],
   })
   productDepartment!: Department;
 
-  @IsIn(['Vehicles', 'Clothes'])
+  @IsIn(['Vehicles', 'Clothes'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.productCategory !== undefined, {
     groups: ['__backk_update__'],
   })
   productCategory!: Category;
 
-  @IsIn(['Vehicles', 'Clothes'])
+  @IsIn(['Vehicles', 'Clothes'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.productSubCategory !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -138,7 +141,9 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @IsIn(['forSale', 'reserved', 'sold'])
+  @IsIn(['forSale', 'reserved', 'sold'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })

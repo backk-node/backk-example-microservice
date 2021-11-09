@@ -9,9 +9,7 @@ import {
   Lengths,
   MaxLength,
   MinMax,
-  Type,
   ValidateIf,
-  ValidateNested,
   Values,
   _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
@@ -23,17 +21,16 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   @ArrayMaxSize(Values._50)
   @IsInstance(OrderItem, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => OrderItem)
   @ValidateIf((o: any) => o.orderItems !== undefined, {
     groups: ['__backk_update__'],
   })
   orderItems!: OrderItem[];
 
-  @IsIn(['Paytrail', 'PayPal', 'Klarna'])
+  @IsIn(['Paytrail', 'PayPal', 'Klarna'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.paymentGateway !== undefined, {
     groups: ['__backk_update__'],
   })

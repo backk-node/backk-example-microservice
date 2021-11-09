@@ -9,9 +9,7 @@ import {
   Lengths,
   MaxLength,
   MaxLengthAndMatches,
-  Type,
   ValidateIf,
-  ValidateNested,
 } from 'backk-frontend-utils';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import FollowedUserAccount from '../../../useraccount/types/entities/FollowedUserAccount';
@@ -63,11 +61,8 @@ export default class User {
   })
   @IsInstance(OwnSalesItem, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => OwnSalesItem)
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -78,11 +73,8 @@ export default class User {
   })
   @IsInstance(FollowedUserAccount, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => FollowedUserAccount)
   @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -93,11 +85,8 @@ export default class User {
   })
   @IsInstance(FollowingUserAccount, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => FollowingUserAccount)
   @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })

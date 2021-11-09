@@ -14,11 +14,9 @@ import {
   Lengths,
   MaxLength,
   ShouldBeTrueForObject,
-  Type,
   ValidateIf,
-  ValidateNested,
 } from 'backk-frontend-utils';
-import _ from 'lodash';
+import uniqBy from 'lodash/uniqBy';
 import Order from '../../../order/types/entities/Order';
 import FavoriteSalesItem from '../../../salesitem/types/entities/FavoriteSalesItem';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
@@ -113,16 +111,13 @@ export default class UserAccount extends BaseUserAccount {
   )
   @ShouldBeTrueForObject<UserAccount>(
     ({ paymentMethods }) =>
-      _.uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods.length,
+      uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods.length,
     'Credit card numbers in payment methods must be unique'
   )
   @IsInstance(PaymentMethod, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => PaymentMethod)
   @ValidateIf((o: any) => o.paymentMethods !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -133,11 +128,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(FavoriteSalesItem, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => FavoriteSalesItem)
   @ValidateIf((o: any) => o.favoriteSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -148,11 +140,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(OwnSalesItem, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => OwnSalesItem)
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -163,11 +152,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(Order, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => Order)
   @ValidateIf((o: any) => o.orders !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -178,11 +164,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(FollowedUserAccount, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => FollowedUserAccount)
   @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -193,11 +176,8 @@ export default class UserAccount extends BaseUserAccount {
   })
   @IsInstance(FollowingUserAccount, {
     each: true,
+    argument: '__backk_argument__',
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => FollowingUserAccount)
   @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })

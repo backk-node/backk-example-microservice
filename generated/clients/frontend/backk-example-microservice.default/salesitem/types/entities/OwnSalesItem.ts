@@ -98,7 +98,9 @@ export default class OwnSalesItem {
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @IsIn(['forSale', 'reserved', 'sold'])
+  @IsIn(['forSale', 'reserved', 'sold'], {
+    groups: '__backk_argument__',
+  })
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })

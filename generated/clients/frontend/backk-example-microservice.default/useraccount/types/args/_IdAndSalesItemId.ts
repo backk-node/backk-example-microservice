@@ -2,7 +2,9 @@
 import { IsStringOrObjectId, MaxLengthAndMatches, _Id } from 'backk-frontend-utils';
 
 export default class _IdAndSalesItemId extends _Id {
-  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
+  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
+    groups: '__backk_argument__',
+  })
   @IsStringOrObjectId()
   salesItemId!: string;
 }
