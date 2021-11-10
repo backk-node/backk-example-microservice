@@ -1,11 +1,5 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import {
-  callRemoteService,
-  One,
-  PromiseErrorOr,
-  validateServiceFunctionArgumentOrThrow,
-  _Id,
-} from 'backk-frontend-utils';
+import { callRemoteService, One, PromiseErrorOr, _Id } from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
 import PayOrderArg from './types/args/PayOrderArg';
@@ -30,7 +24,7 @@ export interface OrderService {
 export class OrderServiceImpl implements OrderService {
   async placeOrder(placeOrderArg: PlaceOrderArg): PromiseErrorOr<One<Order>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(placeOrderArg, PlaceOrderArg, 'create');
+      await validateServiceFunctionArgument(placeOrderArg, PlaceOrderArg, 'create');
     } catch (error: any) {
       return [
         null,
@@ -52,7 +46,7 @@ export class OrderServiceImpl implements OrderService {
 
   async getOrder(_id: _Id): PromiseErrorOr<One<Order>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgument(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,
@@ -74,7 +68,7 @@ export class OrderServiceImpl implements OrderService {
 
   async discardUnpaidOrder(_id: _Id): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgument(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,
@@ -96,7 +90,7 @@ export class OrderServiceImpl implements OrderService {
 
   async payOrder(payOrderArg: PayOrderArg): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(payOrderArg, PayOrderArg, 'update');
+      await validateServiceFunctionArgument(payOrderArg, PayOrderArg, 'update');
     } catch (error: any) {
       return [
         null,
@@ -118,7 +112,7 @@ export class OrderServiceImpl implements OrderService {
 
   async removeUndeliveredOrderItem(removeOrderItemArg: RemoveOrderItemArg): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(removeOrderItemArg, RemoveOrderItemArg, 'update');
+      await validateServiceFunctionArgument(removeOrderItemArg, RemoveOrderItemArg, 'update');
     } catch (error: any) {
       return [
         null,
@@ -140,7 +134,7 @@ export class OrderServiceImpl implements OrderService {
 
   async deleteUndeliveredPaidOrder(_id: _Id): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgument(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,
@@ -162,7 +156,7 @@ export class OrderServiceImpl implements OrderService {
 
   async deliverOrderItem(deliverOrderItemArg: DeliverOrderItemArg): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(deliverOrderItemArg, DeliverOrderItemArg, 'update');
+      await validateServiceFunctionArgument(deliverOrderItemArg, DeliverOrderItemArg, 'update');
     } catch (error: any) {
       return [
         null,
@@ -184,7 +178,7 @@ export class OrderServiceImpl implements OrderService {
 
   async receiveOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndOrderItemId, _IdAndOrderItemId, 'update');
+      await validateServiceFunctionArgument(_idAndOrderItemId, _IdAndOrderItemId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -206,7 +200,7 @@ export class OrderServiceImpl implements OrderService {
 
   async returnOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndOrderItemId, _IdAndOrderItemId, 'update');
+      await validateServiceFunctionArgument(_idAndOrderItemId, _IdAndOrderItemId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -228,7 +222,7 @@ export class OrderServiceImpl implements OrderService {
 
   async receiveReturnedOrderItem(_idAndOrderItemId: _IdAndOrderItemId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndOrderItemId, _IdAndOrderItemId, 'update');
+      await validateServiceFunctionArgument(_idAndOrderItemId, _IdAndOrderItemId, 'update');
     } catch (error: any) {
       return [
         null,

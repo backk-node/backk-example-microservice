@@ -5,7 +5,6 @@ import {
   One,
   PromiseErrorOr,
   UserAccountId,
-  validateServiceFunctionArgumentOrThrow,
   _Id,
   _IdAndUserAccountId,
 } from 'backk-frontend-utils';
@@ -33,7 +32,7 @@ export interface SalesItemService {
 export class SalesItemServiceImpl implements SalesItemService {
   async createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(salesItem, SalesItem, 'create');
+      await validateServiceFunctionArgument(salesItem, SalesItem, 'create');
     } catch (error: any) {
       return [
         null,
@@ -55,7 +54,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async getSalesItems(getSalesItemsArg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(getSalesItemsArg, GetSalesItemsArg, 'other');
+      await validateServiceFunctionArgument(getSalesItemsArg, GetSalesItemsArg, 'other');
     } catch (error: any) {
       return [
         null,
@@ -79,7 +78,7 @@ export class SalesItemServiceImpl implements SalesItemService {
     getSalesItemsByUserDefinedFiltersArg: GetSalesItemsByUserDefinedFiltersArg
   ): PromiseErrorOr<Many<SalesItem>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(
+      await validateServiceFunctionArgument(
         getSalesItemsByUserDefinedFiltersArg,
         GetSalesItemsByUserDefinedFiltersArg,
         'other'
@@ -107,7 +106,7 @@ export class SalesItemServiceImpl implements SalesItemService {
     userAccountId: UserAccountId
   ): PromiseErrorOr<Many<FollowedUserSalesItem>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
+      await validateServiceFunctionArgument(userAccountId, UserAccountId, 'other');
     } catch (error: any) {
       return [
         null,
@@ -129,7 +128,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async getSalesItem(_id: _Id): PromiseErrorOr<One<SalesItem>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgument(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,
@@ -151,7 +150,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async followSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndUserAccountId, _IdAndUserAccountId, 'update');
+      await validateServiceFunctionArgument(_idAndUserAccountId, _IdAndUserAccountId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -173,7 +172,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async unfollowSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndUserAccountId, _IdAndUserAccountId, 'update');
+      await validateServiceFunctionArgument(_idAndUserAccountId, _IdAndUserAccountId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -195,7 +194,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async toggleLikeSalesItem(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndUserAccountId, _IdAndUserAccountId, 'update');
+      await validateServiceFunctionArgument(_idAndUserAccountId, _IdAndUserAccountId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -217,7 +216,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async updateSalesItem(salesItem: SalesItem): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(salesItem, SalesItem, 'update');
+      await validateServiceFunctionArgument(salesItem, SalesItem, 'update');
     } catch (error: any) {
       return [
         null,
@@ -239,7 +238,7 @@ export class SalesItemServiceImpl implements SalesItemService {
 
   async deleteSalesItem(_id: _Id): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgument(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,

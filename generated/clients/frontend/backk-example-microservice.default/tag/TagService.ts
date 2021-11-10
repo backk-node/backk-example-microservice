@@ -1,11 +1,5 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import {
-  callRemoteService,
-  Many,
-  One,
-  PromiseErrorOr,
-  validateServiceFunctionArgumentOrThrow,
-} from 'backk-frontend-utils';
+import { callRemoteService, Many, One, PromiseErrorOr } from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import TagName from './args/TagName';
 import Tag from './entities/Tag';
@@ -18,7 +12,7 @@ export interface TagService {
 export class TagServiceImpl implements TagService {
   async createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(tag, Tag, 'create');
+      await validateServiceFunctionArgument(tag, Tag, 'create');
     } catch (error: any) {
       return [
         null,
@@ -40,7 +34,7 @@ export class TagServiceImpl implements TagService {
 
   async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(tagName, TagName, 'other');
+      await validateServiceFunctionArgument(tagName, TagName, 'other');
     } catch (error: any) {
       return [
         null,

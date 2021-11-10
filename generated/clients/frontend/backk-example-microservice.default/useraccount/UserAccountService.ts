@@ -1,14 +1,5 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import {
-  callRemoteService,
-  Many,
-  One,
-  PromiseErrorOr,
-  Subject,
-  validateServiceFunctionArgumentOrThrow,
-  Value,
-  _Id,
-} from 'backk-frontend-utils';
+import { callRemoteService, Many, One, PromiseErrorOr, Subject, Value, _Id } from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import GetUserAccountArg from './types/args/GetUserAccountArg';
 import _IdAndFollowedUserAccountId from './types/args/_IdAndFollowedUserAccountId';
@@ -36,7 +27,7 @@ export interface UserAccountService {
 export class UserAccountServiceImpl implements UserAccountService {
   async createUserAccount(userAccount: UserAccount): PromiseErrorOr<One<UserAccount>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(userAccount, UserAccount, 'create');
+      await validateServiceFunctionArgument(userAccount, UserAccount, 'create');
     } catch (error: any) {
       return [
         null,
@@ -58,7 +49,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async getIdBySubject(subject: Subject): PromiseErrorOr<One<_Id>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(subject, Subject, 'other');
+      await validateServiceFunctionArgument(subject, Subject, 'other');
     } catch (error: any) {
       return [
         null,
@@ -80,7 +71,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async getUserAccount(getUserAccountArg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(getUserAccountArg, GetUserAccountArg, 'other');
+      await validateServiceFunctionArgument(getUserAccountArg, GetUserAccountArg, 'other');
     } catch (error: any) {
       return [
         null,
@@ -102,7 +93,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async followUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(
+      await validateServiceFunctionArgument(
         _idAndFollowedUserAccountId,
         _IdAndFollowedUserAccountId,
         'update'
@@ -128,7 +119,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async unfollowUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(
+      await validateServiceFunctionArgument(
         _idAndFollowedUserAccountId,
         _IdAndFollowedUserAccountId,
         'update'
@@ -154,7 +145,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async addToFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndSalesItemId, _IdAndSalesItemId, 'update');
+      await validateServiceFunctionArgument(_idAndSalesItemId, _IdAndSalesItemId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -176,7 +167,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async removeFromFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_idAndSalesItemId, _IdAndSalesItemId, 'update');
+      await validateServiceFunctionArgument(_idAndSalesItemId, _IdAndSalesItemId, 'update');
     } catch (error: any) {
       return [
         null,
@@ -198,7 +189,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async updateUserAccount(userAccount: UserAccount): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(userAccount, UserAccount, 'update');
+      await validateServiceFunctionArgument(userAccount, UserAccount, 'update');
     } catch (error: any) {
       return [
         null,
@@ -220,7 +211,7 @@ export class UserAccountServiceImpl implements UserAccountService {
 
   async deleteUserAccount(_id: _Id): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgument(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,
