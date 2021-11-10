@@ -1,5 +1,11 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { callRemoteService, One, PromiseErrorOr, UserAccountId } from 'backk-frontend-utils';
+import {
+  callRemoteService,
+  One,
+  PromiseErrorOr,
+  UserAccountId,
+  validateServiceFunctionArgumentOrThrow,
+} from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
@@ -14,7 +20,7 @@ export interface ShoppingCartService {
 export class ShoppingCartServiceImpl implements ShoppingCartService {
   async getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
     try {
-      await validateServiceFunctionArgument(userAccountId, UserAccountId, 'other');
+      await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
     } catch (error: any) {
       return [
         null,
@@ -36,7 +42,7 @@ export class ShoppingCartServiceImpl implements ShoppingCartService {
 
   async addToShoppingCart(userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgument(
+      await validateServiceFunctionArgumentOrThrow(
         userAccountIdAndSalesItemId,
         UserAccountIdAndSalesItemId,
         'update'
@@ -64,7 +70,7 @@ export class ShoppingCartServiceImpl implements ShoppingCartService {
     userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId
   ): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgument(
+      await validateServiceFunctionArgumentOrThrow(
         userAccountIdAndSalesItemId,
         UserAccountIdAndSalesItemId,
         'update'
@@ -90,7 +96,7 @@ export class ShoppingCartServiceImpl implements ShoppingCartService {
 
   async emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
     try {
-      await validateServiceFunctionArgument(userAccountId, UserAccountId, 'other');
+      await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
     } catch (error: any) {
       return [
         null,

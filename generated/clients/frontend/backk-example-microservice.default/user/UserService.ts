@@ -1,5 +1,12 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { callRemoteService, Many, One, PromiseErrorOr, _Id } from 'backk-frontend-utils';
+import {
+  callRemoteService,
+  Many,
+  One,
+  PromiseErrorOr,
+  validateServiceFunctionArgumentOrThrow,
+  _Id,
+} from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import GetUsersArg from './types/args/GetUsersArg';
 import User from './types/entities/User';
@@ -12,7 +19,7 @@ export interface UserService {
 export class UserServiceImpl implements UserService {
   async getUsers(getUsersArg: GetUsersArg): PromiseErrorOr<Many<User>> {
     try {
-      await validateServiceFunctionArgument(getUsersArg, GetUsersArg, 'other');
+      await validateServiceFunctionArgumentOrThrow(getUsersArg, GetUsersArg, 'other');
     } catch (error: any) {
       return [
         null,
@@ -34,7 +41,7 @@ export class UserServiceImpl implements UserService {
 
   async getUser(_id: _Id): PromiseErrorOr<One<User>> {
     try {
-      await validateServiceFunctionArgument(_id, _Id, 'other');
+      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
     } catch (error: any) {
       return [
         null,
