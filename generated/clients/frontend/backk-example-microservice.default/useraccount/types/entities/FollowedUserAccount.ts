@@ -64,7 +64,6 @@ export default class FollowedUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => OwnSalesItem)
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {

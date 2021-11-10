@@ -121,7 +121,6 @@ export default class UserAccount extends BaseUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => PaymentMethod)
   @ValidateIf((o: any) => o.paymentMethods !== undefined, {
@@ -137,7 +136,6 @@ export default class UserAccount extends BaseUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => FavoriteSalesItem)
   @ValidateIf((o: any) => o.favoriteSalesItems !== undefined, {
@@ -153,7 +151,6 @@ export default class UserAccount extends BaseUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => OwnSalesItem)
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
@@ -169,7 +166,6 @@ export default class UserAccount extends BaseUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => Order)
   @ValidateIf((o: any) => o.orders !== undefined, {
@@ -185,7 +181,6 @@ export default class UserAccount extends BaseUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => FollowedUserAccount)
   @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
@@ -201,7 +196,6 @@ export default class UserAccount extends BaseUserAccount {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => FollowingUserAccount)
   @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {

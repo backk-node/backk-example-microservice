@@ -26,7 +26,6 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => OrderItem)
   @ValidateIf((o: any) => o.orderItems !== undefined, {

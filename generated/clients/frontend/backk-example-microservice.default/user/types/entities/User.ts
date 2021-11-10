@@ -66,7 +66,6 @@ export default class User {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => OwnSalesItem)
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
@@ -82,7 +81,6 @@ export default class User {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => FollowedUserAccount)
   @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
@@ -98,7 +96,6 @@ export default class User {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => FollowingUserAccount)
   @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {

@@ -43,7 +43,6 @@ export default class DeliverOrderItemArg {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => OrderItemForDelivery)
   orderItems!: OrderItemForDelivery[];

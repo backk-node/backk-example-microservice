@@ -22,7 +22,6 @@ export default class ShoppingCart extends _IdAndUserAccountId {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => ShoppingCartOrOrderSalesItem)
   @ValidateIf((o: any) => o.salesItems !== undefined, {

@@ -12,7 +12,6 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => SortBy)
   sortBys: SortBy[] = [

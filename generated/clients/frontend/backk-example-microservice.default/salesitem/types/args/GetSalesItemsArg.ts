@@ -69,7 +69,6 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => SortBy)
   sortBys: SortBy[] = [

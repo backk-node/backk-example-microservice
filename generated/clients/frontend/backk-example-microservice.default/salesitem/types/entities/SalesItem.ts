@@ -48,7 +48,6 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => Tag)
   @ValidateIf((o: any) => o.tags !== undefined, {

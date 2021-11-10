@@ -16,7 +16,6 @@ export default class GetSalesItemsByUserDefinedFiltersArg {
   })
   @ValidateNested({
     each: true,
-    argument: '__backk_argument__',
   })
   @Type(() => UserDefinedFilter)
   filters!: UserDefinedFilter[];
