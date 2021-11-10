@@ -94,12 +94,12 @@ export default class UserAccount extends BaseUserAccount {
   @ArrayMaxSize(10)
   @OneToMany()
   @ShouldBeTrueForObject<UserAccount>(
-    ({ paymentMethods }) => paymentMethods.filter(({ isDefault }) => isDefault).length === 1,
+    ({ paymentMethods }) => paymentMethods?.filter(({ isDefault }) => isDefault).length === 1,
     'There should be exactly one default payment method'
   )
   @ShouldBeTrueForObject<UserAccount>(
     ({ paymentMethods }) =>
-      uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods.length,
+      uniqBy(paymentMethods, ({ creditCardNumber }) => creditCardNumber).length === paymentMethods?.length,
     'Credit card numbers in payment methods must be unique'
   )
   @ReadWrite()
