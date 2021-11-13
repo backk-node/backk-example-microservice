@@ -13,6 +13,13 @@ import {
 import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
 
 export default class FollowingUserAccount {
+  constructor() {
+    this._id = '';
+    this.displayName = '';
+    this.city = '';
+    this.imageDataUri = '';
+  }
+
   @IsUndefined({
     groups: ['__backk_create__'],
   })

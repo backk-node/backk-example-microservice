@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # TODO: https://blog.baeke.info/2021/03/28/distroless-or-scratch-for-go-apps/
 
-FROM node:14
+FROM node:12.19
 
 RUN groupadd -g 2000 microservice && \
     useradd -u 1000 -g microservice -s /bin/bash microservice-user

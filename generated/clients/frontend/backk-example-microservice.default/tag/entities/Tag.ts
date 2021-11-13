@@ -2,6 +2,11 @@
 import { IsAnyString, Lengths, MaxLength, ValidateIf, _Id } from 'backk-frontend-utils';
 
 export default class Tag extends _Id {
+  constructor() {
+    super();
+    this.name = '';
+  }
+
   @MaxLength(Lengths._64)
   @IsAnyString()
   @ValidateIf((o: any) => o.name !== undefined, {

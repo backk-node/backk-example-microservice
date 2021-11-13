@@ -27,6 +27,25 @@ import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
+  constructor() {
+    super();
+    this.title = '';
+    this.description = '';
+    this.tags = [new Tag()];
+    this.area = 'Area1';
+    this.productDepartment = 'Vehicles';
+    this.productCategory = 'Vehicles';
+    this.productSubCategory = 'Vehicles';
+    this.price = 0;
+    this.previousPrice = 0;
+    this.shippingCost = 0;
+    this.primaryImageDataUri = '';
+    this.primaryImageThumbnailDataUri = '';
+    this.secondaryImageDataUris = [''];
+    this.state = 'forSale';
+    this.likeCount = 0;
+  }
+
   @MaxLength(Lengths._64)
   @IsAnyString()
   @ValidateIf((o: any) => o.title !== undefined, {

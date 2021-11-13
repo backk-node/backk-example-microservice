@@ -2,6 +2,11 @@
 import { DefaultPostQueryOperations, IsAnyString, Lengths, MaxLength } from 'backk-frontend-utils';
 
 export default class GetUsersArg extends DefaultPostQueryOperations {
+  constructor() {
+    super();
+    this.displayNameFilter = '';
+  }
+
   @MaxLength(Lengths._256)
   @IsAnyString()
   displayNameFilter!: string;

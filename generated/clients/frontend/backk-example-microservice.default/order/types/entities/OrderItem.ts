@@ -17,6 +17,14 @@ import ShoppingCartOrOrderSalesItem from '../../../shoppingcart/types/entities/S
 import { OrderItemState } from '../enum/OrderItemState';
 
 export default class OrderItem extends Id {
+  constructor() {
+    super();
+    this.salesItems = [new ShoppingCartOrOrderSalesItem()];
+    this.deliveryTimestamp = new Date();
+    this.state = 'toBeDelivered';
+    this.trackingUrl = '';
+  }
+
   @ArrayMinSize(1)
   @ArrayMaxSize(1)
   @IsInstance(ShoppingCartOrOrderSalesItem, {

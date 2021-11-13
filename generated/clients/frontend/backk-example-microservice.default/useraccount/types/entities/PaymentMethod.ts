@@ -8,6 +8,15 @@ import {
 } from 'backk-frontend-utils';
 
 export default class PaymentMethod extends Id {
+  constructor() {
+    super();
+    this.isDefault = false;
+    this.paymentMethodType = 'creditCard';
+    this.creditCardNumber = '';
+    this.creditCardExpiration = '';
+    this.cardVerificationCode = '';
+  }
+
   @ValidateIf((o: any) => o.isDefault !== undefined, {
     groups: ['__backk_update__'],
   })

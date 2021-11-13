@@ -2,6 +2,11 @@
 import { IsStringOrObjectId, MaxLengthAndMatches, ShouldBeTrueForObject, _Id } from 'backk-frontend-utils';
 
 export default class _IdAndFollowedUserAccountId extends _Id {
+  constructor() {
+    super();
+    this.followedUserAccountId = '';
+  }
+
   @ShouldBeTrueForObject<_IdAndFollowedUserAccountId>(
     ({ _id, followedUserAccountId }) => _id !== followedUserAccountId,
     '_id and followedUserAccountId may not be the same'

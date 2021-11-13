@@ -9,6 +9,10 @@ import {
 } from 'backk-frontend-utils';
 
 export default class GetSalesItemsByUserDefinedFiltersArg {
+  constructor() {
+    this.filters = [new UserDefinedFilter()];
+  }
+
   @ArrayMinSize(1)
   @ArrayMaxSize(10)
   @IsInstance(UserDefinedFilter, {

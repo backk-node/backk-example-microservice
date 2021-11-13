@@ -10,6 +10,13 @@ import {
 } from 'backk-frontend-utils';
 
 export default class RemoveOrderItemArg {
+  constructor() {
+    this._id = '';
+    this.version = 0;
+    this.orderItemId = '';
+    this.userAccountId = '';
+  }
+
   @IsUndefined({
     groups: ['__backk_create__'],
   })
