@@ -22,7 +22,6 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   constructor() {
     super();
     this.orderItems = [new OrderItem()];
-    this.paymentGateway = 'Paytrail';
     this.transactionId = '';
     this.transactionTimestamp = new Date();
     this.paymentAmount = 0;

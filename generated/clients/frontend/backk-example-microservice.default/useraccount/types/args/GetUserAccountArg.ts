@@ -4,8 +4,6 @@ import { DefaultPostQueryOperations, IsInstance, SortBy, Type, ValidateNested } 
 export default class GetUserAccountArg extends DefaultPostQueryOperations {
   constructor() {
     super();
-    this.excludeResponseFields = [''];
-    this.sortBys = [new SortBy()];
   }
 
   excludeResponseFields: string[] = [

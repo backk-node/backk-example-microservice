@@ -30,7 +30,6 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
     this.productSubCategories = ['Vehicles'];
     this.minPrice = 0;
     this.maxPrice = 0;
-    this.sortBys = [new SortBy()];
   }
 
   @MaxLength(Lengths._512)
