@@ -9,11 +9,6 @@ import {
 import ShoppingCartOrOrderSalesItem from './ShoppingCartOrOrderSalesItem';
 
 export default class ShoppingCart extends _IdAndUserAccountId {
-  constructor() {
-    super();
-    this.salesItems = [new ShoppingCartOrOrderSalesItem()];
-  }
-
   @ArrayMinSize(0)
   @ArrayMaxSize(50)
   @IsUndefined({

@@ -16,16 +16,6 @@ import FollowingUserAccount from '../../../useraccount/types/entities/FollowingU
 import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
 
 export default class User {
-  constructor() {
-    this._id = '';
-    this.displayName = '';
-    this.city = '';
-    this.imageDataUri = '';
-    this.ownSalesItems = [new OwnSalesItem()];
-    this.followedUserAccounts = [new FollowedUserAccount()];
-    this.followingUserAccounts = [new FollowingUserAccount()];
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

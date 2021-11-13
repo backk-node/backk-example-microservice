@@ -15,12 +15,6 @@ import {
 import OrderItemForDelivery from './OrderItemForDelivery';
 
 export default class DeliverOrderItemArg {
-  constructor() {
-    this._id = '';
-    this.version = 0;
-    this.orderItems = [new OrderItemForDelivery()];
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

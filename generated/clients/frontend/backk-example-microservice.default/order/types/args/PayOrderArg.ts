@@ -15,13 +15,6 @@ import {
 import { PaymentGateway } from '../enum/PaymentGateway';
 
 export default class PayOrderArg {
-  constructor() {
-    this._id = '';
-    this.transactionId = '';
-    this.transactionTimestamp = new Date();
-    this.paymentAmount = 0;
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

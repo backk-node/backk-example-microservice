@@ -28,26 +28,6 @@ import FollowingUserAccount from './FollowingUserAccount';
 import PaymentMethod from './PaymentMethod';
 
 export default class UserAccount extends BaseUserAccount {
-  constructor() {
-    super();
-    this.displayName = '';
-    this.firstName = '';
-    this.lastName = '';
-    this.email = '';
-    this.streetAddress = '';
-    this.postalCode = '';
-    this.city = '';
-    this.phoneNumber = '';
-    this.commissionDiscountPercentage = 0;
-    this.imageDataUri = '';
-    this.paymentMethods = [new PaymentMethod()];
-    this.favoriteSalesItems = [new FavoriteSalesItem()];
-    this.ownSalesItems = [new OwnSalesItem()];
-    this.orders = [new Order()];
-    this.followedUserAccounts = [new FollowedUserAccount()];
-    this.followingUserAccounts = [new FollowingUserAccount()];
-  }
-
   @MaxLength(Lengths._128)
   @IsAnyString()
   @ValidateIf((o: any) => o.displayName !== undefined, {

@@ -2,11 +2,6 @@
 import { IsStringOrObjectId, MaxLengthAndMatches, UserAccountId } from 'backk-frontend-utils';
 
 export default class UserAccountIdAndSalesItemId extends UserAccountId {
-  constructor() {
-    super();
-    this.salesItemId = '';
-  }
-
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()
   salesItemId!: string;

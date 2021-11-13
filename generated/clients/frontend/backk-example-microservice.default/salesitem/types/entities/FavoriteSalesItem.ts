@@ -14,14 +14,6 @@ import {
 } from 'backk-frontend-utils';
 
 export default class FavoriteSalesItem {
-  constructor() {
-    this._id = '';
-    this.title = '';
-    this.price = 0;
-    this.previousPrice = 0;
-    this.primaryImageDataUri = '';
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

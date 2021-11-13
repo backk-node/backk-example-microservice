@@ -14,16 +14,6 @@ import {
 } from 'backk-frontend-utils';
 
 export default class FollowedUserSalesItem {
-  constructor() {
-    this._id = '';
-    this.title = '';
-    this.price = 0;
-    this.previousPrice = 0;
-    this.primaryImageDataUri = '';
-    this.userAccountId = '';
-    this.displayName = '';
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

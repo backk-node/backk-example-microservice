@@ -21,17 +21,6 @@ import { Category } from '../enums/Category';
 import { Department } from '../enums/Department';
 
 export default class GetSalesItemsArg extends DefaultSortingAndPagination {
-  constructor() {
-    super();
-    this.textFilter = '';
-    this.areas = ['Area1'];
-    this.productDepartments = ['Vehicles'];
-    this.productCategories = ['Vehicles'];
-    this.productSubCategories = ['Vehicles'];
-    this.minPrice = 0;
-    this.maxPrice = 0;
-  }
-
   @MaxLength(Lengths._512)
   @IsAnyString()
   @ValidateIf((o: any) => o.textFilter !== undefined)

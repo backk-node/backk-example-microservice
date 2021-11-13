@@ -2,10 +2,6 @@
 import { DefaultPostQueryOperations, IsInstance, SortBy, Type, ValidateNested } from 'backk-frontend-utils';
 
 export default class GetUserAccountArg extends DefaultPostQueryOperations {
-  constructor() {
-    super();
-  }
-
   excludeResponseFields: string[] = [
     'ownSalesItems.primaryImageDataUri',
     'followedUserAccounts.ownSalesItems',

@@ -16,18 +16,6 @@ import {
 import { SalesItemState } from '../enums/SalesItemState';
 
 export default class OwnSalesItem {
-  constructor() {
-    this._id = '';
-    this.createdAtTimestamp = new Date();
-    this.lastModifiedTimestamp = new Date();
-    this.title = '';
-    this.price = 0;
-    this.previousPrice = 0;
-    this.primaryImageDataUri = '';
-    this.primaryImageThumbnailDataUri = '';
-    this.state = 'forSale';
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

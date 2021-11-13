@@ -14,14 +14,6 @@ import {
 } from 'backk-frontend-utils';
 
 export default class ShoppingCartOrOrderSalesItem {
-  constructor() {
-    this._id = '';
-    this.title = '';
-    this.price = 0;
-    this.shippingCost = 0;
-    this.primaryImageThumbnailDataUri = '';
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

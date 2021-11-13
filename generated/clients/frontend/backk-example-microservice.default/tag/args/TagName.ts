@@ -4,10 +4,6 @@
 import { IsAnyString, Lengths, MaxLength } from 'backk-frontend-utils';
 
 export default class TagName {
-  constructor() {
-    this.name = '';
-  }
-
   @MaxLength(Lengths._64)
   @IsAnyString()
   name!: string;

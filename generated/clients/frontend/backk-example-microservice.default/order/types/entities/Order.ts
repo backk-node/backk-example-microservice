@@ -19,14 +19,6 @@ import { PaymentGateway } from '../enum/PaymentGateway';
 import OrderItem from './OrderItem';
 
 export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
-  constructor() {
-    super();
-    this.orderItems = [new OrderItem()];
-    this.transactionId = '';
-    this.transactionTimestamp = new Date();
-    this.paymentAmount = 0;
-  }
-
   @ArrayMinSize(1)
   @ArrayMaxSize(Values._50)
   @IsInstance(OrderItem, {

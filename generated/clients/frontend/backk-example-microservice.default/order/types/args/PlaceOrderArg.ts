@@ -10,13 +10,6 @@ import {
 import { PaymentGateway } from '../enum/PaymentGateway';
 
 export default class PlaceOrderArg {
-  constructor() {
-    this.userAccountId = '';
-    this.shoppingCartId = '';
-    this.iAgreeWithTermsAndConditions = false;
-    this.uiRedirectUrl = '';
-  }
-
   @IsStringOrObjectId()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   userAccountId!: string;

@@ -14,14 +14,6 @@ import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
 
 export default class FollowedUserAccount {
-  constructor() {
-    this._id = '';
-    this.displayName = '';
-    this.city = '';
-    this.imageDataUri = '';
-    this.ownSalesItems = [new OwnSalesItem()];
-  }
-
   @IsUndefined({
     groups: ['__backk_create__'],
   })

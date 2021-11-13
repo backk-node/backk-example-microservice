@@ -11,12 +11,6 @@ import {
 import OrderItem from '../entities/OrderItem';
 
 export default class OrderItemForDelivery {
-  constructor() {
-    this.id = '';
-    this.deliveryTimestamp = new Date();
-    this.trackingUrl = '';
-  }
-
   @IsStringOrObjectId()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   id!: string;
