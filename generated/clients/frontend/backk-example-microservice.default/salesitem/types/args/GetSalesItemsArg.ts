@@ -24,10 +24,10 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   constructor() {
     super();
     this.textFilter = '';
-    this.areas = [new Area()];
-    this.productDepartments = [new Department()];
-    this.productCategories = [new Category()];
-    this.productSubCategories = [new Category()];
+    this.areas = ['Area1'];
+    this.productDepartments = ['Vehicles'];
+    this.productCategories = ['Vehicles'];
+    this.productSubCategories = ['Vehicles'];
     this.minPrice = 0;
     this.maxPrice = 0;
     this.sortBys = [new SortBy()];
