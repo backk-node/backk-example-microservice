@@ -1,7 +1,17 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { DefaultPostQueryOperations, IsInstance, SortBy, Type, ValidateNested } from 'backk-frontend-utils';
+import {
+  DefaultPostQueryOperations,
+  IsInstance,
+  IsString,
+  SortBy,
+  Type,
+  ValidateNested,
+} from 'backk-frontend-utils';
 
 export default class GetUserAccountArg extends DefaultPostQueryOperations {
+  @IsString({
+    each: true,
+  })
   excludeResponseFields: string[] = [
     'ownSalesItems.primaryImageDataUri',
     'followedUserAccounts.ownSalesItems',

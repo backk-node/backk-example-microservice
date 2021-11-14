@@ -3,6 +3,7 @@ import {
   IsAnyString,
   IsDataUri,
   IsFloat,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
@@ -23,10 +24,12 @@ export default class FollowedUserSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   _id!: string | undefined;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
+  @IsString()
   title!: string;
 
   @IsFloat(2)
@@ -43,6 +46,7 @@ export default class FollowedUserSalesItem {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @IsString()
   primaryImageDataUri!: string;
 
   @IsUndefined({
@@ -54,9 +58,11 @@ export default class FollowedUserSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   userAccountId!: string | undefined;
 
   @MaxLength(Lengths._128)
   @IsAnyString()
+  @IsString()
   displayName!: string;
 }

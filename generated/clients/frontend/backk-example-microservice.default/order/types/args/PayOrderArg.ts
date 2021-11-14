@@ -1,8 +1,10 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
   IsAlphanumeric,
+  IsDate,
   IsFloat,
   IsIn,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
@@ -24,6 +26,7 @@ export default class PayOrderArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   _id!: string | undefined;
 
   @IsIn(['Paytrail', 'PayPal', 'Klarna'])
@@ -31,9 +34,11 @@ export default class PayOrderArg {
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
+  @IsString()
   transactionId!: string;
 
   @Type(() => Date)
+  @IsDate()
   transactionTimestamp!: Date;
 
   @IsFloat(2)

@@ -8,6 +8,7 @@ import {
   IsIn,
   IsInstance,
   IsInt,
+  IsString,
   Lengths,
   MaxLength,
   MinMax,
@@ -23,6 +24,7 @@ import { Department } from '../enums/Department';
 export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   @MaxLength(Lengths._512)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.textFilter !== undefined)
   textFilter?: string;
 

@@ -10,6 +10,7 @@ import {
   IsOneOf,
   IsPhoneNumber,
   IsPostalCode,
+  IsString,
   IsUndefined,
   Lengths,
   MaxLength,
@@ -30,6 +31,7 @@ import PaymentMethod from './PaymentMethod';
 export default class UserAccount extends BaseUserAccount {
   @MaxLength(Lengths._128)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.displayName !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -37,6 +39,7 @@ export default class UserAccount extends BaseUserAccount {
 
   @MaxLength(Lengths._64)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.firstName !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -44,12 +47,14 @@ export default class UserAccount extends BaseUserAccount {
 
   @MaxLength(Lengths._64)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.lastName !== undefined, {
     groups: ['__backk_update__'],
   })
   lastName!: string | undefined;
 
   @IsEmail()
+  @IsString()
   @ValidateIf((o: any) => o.email !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -59,12 +64,14 @@ export default class UserAccount extends BaseUserAccount {
 
   @MaxLength(Lengths._512)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.streetAddress !== undefined, {
     groups: ['__backk_update__'],
   })
   streetAddress!: string | undefined;
 
   @IsPostalCode('FI')
+  @IsString()
   @ValidateIf((o: any) => o.postalCode !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -79,12 +86,14 @@ export default class UserAccount extends BaseUserAccount {
     'userAccountsService.getCities',
     'Tampere'
   )
+  @IsString()
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
   city!: string | undefined;
 
   @IsPhoneNumber('FI')
+  @IsString()
   @ValidateIf((o: any) => o.phoneNumber !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -100,6 +109,7 @@ export default class UserAccount extends BaseUserAccount {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @IsString()
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })

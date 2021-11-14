@@ -9,6 +9,7 @@ import {
   IsIn,
   IsInstance,
   IsInt,
+  IsString,
   IsUndefined,
   Lengths,
   MaxLength,
@@ -29,6 +30,7 @@ import { SalesItemState } from '../enums/SalesItemState';
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
   @MaxLength(Lengths._64)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -36,6 +38,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
 
   @MaxLength(Lengths._1K)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.description !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -106,6 +109,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @IsString()
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -113,6 +117,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
+  @IsString()
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
@@ -130,6 +135,9 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayNotUnique()
+  @IsString({
+    each: true,
+  })
   @ValidateIf((o: any) => o.secondaryImageDataUris !== undefined, {
     groups: ['__backk_update__'],
   })

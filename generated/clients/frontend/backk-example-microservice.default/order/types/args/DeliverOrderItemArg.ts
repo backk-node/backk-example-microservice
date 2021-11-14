@@ -4,6 +4,7 @@ import {
   ArrayMinSize,
   IsBigInt,
   IsInstance,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Max,
@@ -24,6 +25,7 @@ export default class DeliverOrderItemArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   _id!: string | undefined;
 
   @IsUndefined({

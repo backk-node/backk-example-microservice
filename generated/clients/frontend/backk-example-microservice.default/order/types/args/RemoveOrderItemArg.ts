@@ -1,6 +1,7 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
   IsBigInt,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Max,
@@ -19,6 +20,7 @@ export default class RemoveOrderItemArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   _id!: string | undefined;
 
   @IsUndefined({
@@ -31,11 +33,13 @@ export default class RemoveOrderItemArg {
   @Max(Number.MAX_SAFE_INTEGER)
   version!: number | undefined;
 
+  @IsString()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()
   orderItemId!: string;
 
   @IsStringOrObjectId()
   @MaxLengthAndMatches(Values._24, /^[a-f\d]{1,24}$/)
+  @IsString()
   userAccountId!: string;
 }

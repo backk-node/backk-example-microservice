@@ -3,6 +3,7 @@ import {
   IsAnyString,
   IsDataUri,
   IsOneOf,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
@@ -25,10 +26,12 @@ export default class User {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   _id!: string | undefined;
 
   @MaxLength(Lengths._128)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.displayName !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -43,6 +46,7 @@ export default class User {
     'userAccountsService.getCities',
     'Tampere'
   )
+  @IsString()
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -50,6 +54,7 @@ export default class User {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @IsString()
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })

@@ -5,6 +5,7 @@ import {
   Id,
   IsIn,
   IsInstance,
+  IsString,
   IsUrl,
   Lengths,
   MaxLength,
@@ -55,6 +56,7 @@ export default class OrderItem extends Id {
       (state === 'toBeDelivered' && trackingUrl === null) ||
       (state !== 'toBeDelivered' && trackingUrl !== null)
   )
+  @IsString()
   @ValidateIf((o: any) => o.trackingUrl !== null)
   @ValidateIf((o: any) => o.trackingUrl !== undefined, {
     groups: ['__backk_update__'],

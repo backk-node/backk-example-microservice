@@ -3,6 +3,7 @@ import {
   IsAnyString,
   IsDataUri,
   IsFloat,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
@@ -23,10 +24,12 @@ export default class FavoriteSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
+  @IsString()
   _id!: string | undefined;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -52,6 +55,7 @@ export default class FavoriteSalesItem {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @IsString()
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })

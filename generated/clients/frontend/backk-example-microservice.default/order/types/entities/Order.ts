@@ -6,6 +6,7 @@ import {
   IsFloat,
   IsIn,
   IsInstance,
+  IsString,
   Lengths,
   MaxLength,
   MinMax,
@@ -41,6 +42,7 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
+  @IsString()
   @ValidateIf((o: any) => o.transactionId !== null)
   @ValidateIf((o: any) => o.transactionId !== undefined, {
     groups: ['__backk_update__'],
