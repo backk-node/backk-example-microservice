@@ -21,7 +21,7 @@ export default class RemoveOrderItemArg {
     groups: ['__backk_update__'],
   })
   @IsString()
-  _id!: string | undefined;
+  _id!: string | undefined = '';
 
   @IsUndefined({
     groups: ['__backk_create__'],
@@ -31,15 +31,15 @@ export default class RemoveOrderItemArg {
   })
   @Min(-1)
   @Max(Number.MAX_SAFE_INTEGER)
-  version!: number | undefined;
+  version!: number | undefined = NaN;
 
   @IsString()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()
-  orderItemId!: string;
+  orderItemId!: string = '';
 
   @IsStringOrObjectId()
   @MaxLengthAndMatches(Values._24, /^[a-f\d]{1,24}$/)
   @IsString()
-  userAccountId!: string;
+  userAccountId!: string = '';
 }

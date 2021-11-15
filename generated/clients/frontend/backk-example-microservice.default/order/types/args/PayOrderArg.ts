@@ -27,7 +27,7 @@ export default class PayOrderArg {
     groups: ['__backk_update__'],
   })
   @IsString()
-  _id!: string | undefined;
+  _id!: string | undefined = '';
 
   @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   paymentGateway: PaymentGateway = 'Paytrail';
@@ -35,7 +35,7 @@ export default class PayOrderArg {
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
   @IsString()
-  transactionId!: string;
+  transactionId!: string = '';
 
   @Type(() => Date)
   @IsDate()
@@ -43,5 +43,5 @@ export default class PayOrderArg {
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  paymentAmount!: number;
+  paymentAmount!: number = NaN;
 }

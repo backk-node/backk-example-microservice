@@ -26,7 +26,7 @@ export default class DeliverOrderItemArg {
     groups: ['__backk_update__'],
   })
   @IsString()
-  _id!: string | undefined;
+  _id!: string | undefined = '';
 
   @IsUndefined({
     groups: ['__backk_create__'],
@@ -36,7 +36,7 @@ export default class DeliverOrderItemArg {
   })
   @Min(-1)
   @Max(Number.MAX_SAFE_INTEGER)
-  version!: number | undefined;
+  version!: number | undefined = NaN;
 
   @ArrayMinSize(1)
   @ArrayMaxSize(1)
@@ -47,5 +47,5 @@ export default class DeliverOrderItemArg {
     each: true,
   })
   @Type(() => OrderItemForDelivery)
-  orderItems!: OrderItemForDelivery[];
+  orderItems!: OrderItemForDelivery[] = [];
 }

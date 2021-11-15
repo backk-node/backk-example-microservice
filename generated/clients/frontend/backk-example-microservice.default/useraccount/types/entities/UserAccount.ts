@@ -35,7 +35,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.displayName !== undefined, {
     groups: ['__backk_update__'],
   })
-  displayName!: string | undefined;
+  displayName!: string | undefined = '';
 
   @MaxLength(Lengths._64)
   @IsAnyString()
@@ -43,7 +43,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.firstName !== undefined, {
     groups: ['__backk_update__'],
   })
-  firstName!: string | undefined;
+  firstName!: string | undefined = '';
 
   @MaxLength(Lengths._64)
   @IsAnyString()
@@ -51,14 +51,14 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.lastName !== undefined, {
     groups: ['__backk_update__'],
   })
-  lastName!: string | undefined;
+  lastName!: string | undefined = '';
 
   @IsEmail()
   @IsString()
   @ValidateIf((o: any) => o.email !== undefined, {
     groups: ['__backk_update__'],
   })
-  email!: string | undefined;
+  email!: string | undefined = '';
 
   /* this is an example of property documentation */
 
@@ -68,14 +68,14 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.streetAddress !== undefined, {
     groups: ['__backk_update__'],
   })
-  streetAddress!: string | undefined;
+  streetAddress!: string | undefined = '';
 
   @IsPostalCode('FI')
   @IsString()
   @ValidateIf((o: any) => o.postalCode !== undefined, {
     groups: ['__backk_update__'],
   })
-  postalCode!: string | undefined;
+  postalCode!: string | undefined = '';
 
   @MaxLength(Lengths._256)
   @IsOneOf(
@@ -90,14 +90,14 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
-  city!: string | undefined;
+  city!: string | undefined = '';
 
   @IsPhoneNumber('FI')
   @IsString()
   @ValidateIf((o: any) => o.phoneNumber !== undefined, {
     groups: ['__backk_update__'],
   })
-  phoneNumber!: string | undefined;
+  phoneNumber!: string | undefined = '';
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -105,7 +105,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.commissionDiscountPercentage !== undefined, {
     groups: ['__backk_update__'],
   })
-  commissionDiscountPercentage!: 0 | 25 | 50 | undefined;
+  commissionDiscountPercentage!: 0 | 25 | 50 | undefined = 0;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
@@ -113,7 +113,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  imageDataUri!: string | undefined;
+  imageDataUri!: string | undefined = '';
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
@@ -136,7 +136,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.paymentMethods !== undefined, {
     groups: ['__backk_update__'],
   })
-  paymentMethods!: PaymentMethod[] | undefined;
+  paymentMethods!: PaymentMethod[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -144,7 +144,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.favoriteSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  favoriteSalesItems!: FavoriteSalesItem[] | undefined;
+  favoriteSalesItems!: FavoriteSalesItem[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -152,7 +152,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  ownSalesItems!: OwnSalesItem[] | undefined;
+  ownSalesItems!: OwnSalesItem[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -160,7 +160,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.orders !== undefined, {
     groups: ['__backk_update__'],
   })
-  orders!: Order[] | undefined;
+  orders!: Order[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -168,7 +168,7 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })
-  followedUserAccounts!: FollowedUserAccount[] | undefined;
+  followedUserAccounts!: FollowedUserAccount[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -176,5 +176,5 @@ export default class UserAccount extends BaseUserAccount {
   @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })
-  followingUserAccounts!: FollowingUserAccount[] | undefined;
+  followingUserAccounts!: FollowingUserAccount[] | undefined = [];
 }

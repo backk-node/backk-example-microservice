@@ -25,16 +25,16 @@ export default class FollowedUserSalesItem {
     groups: ['__backk_update__'],
   })
   @IsString()
-  _id!: string | undefined;
+  _id!: string | undefined = '';
 
   @MaxLength(Lengths._64)
   @IsAnyString()
   @IsString()
-  title!: string;
+  title!: string = '';
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  price!: number;
+  price!: number = NaN;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
@@ -42,12 +42,12 @@ export default class FollowedUserSalesItem {
     groups: ['__backk_create__', '__backk_update__'],
   })
   @ValidateIf((o: any) => o.previousPrice !== null)
-  previousPrice!: number | null | undefined;
+  previousPrice!: number | null | undefined = NaN;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
   @IsString()
-  primaryImageDataUri!: string;
+  primaryImageDataUri!: string = '';
 
   @IsUndefined({
     groups: ['__backk_create__'],
@@ -59,10 +59,10 @@ export default class FollowedUserSalesItem {
     groups: ['__backk_update__'],
   })
   @IsString()
-  userAccountId!: string | undefined;
+  userAccountId!: string | undefined = '';
 
   @MaxLength(Lengths._128)
   @IsAnyString()
   @IsString()
-  displayName!: string;
+  displayName!: string = '';
 }

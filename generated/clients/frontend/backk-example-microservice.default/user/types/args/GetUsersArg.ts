@@ -5,5 +5,5 @@ export default class GetUsersArg extends DefaultPostQueryOperations {
   @MaxLength(Lengths._256)
   @IsAnyString()
   @IsString()
-  displayNameFilter!: string;
+  displayNameFilter!: string = '';
 }

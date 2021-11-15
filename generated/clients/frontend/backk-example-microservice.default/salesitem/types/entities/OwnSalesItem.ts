@@ -27,7 +27,7 @@ export default class OwnSalesItem {
     groups: ['__backk_update__'],
   })
   @IsString()
-  _id!: string | undefined;
+  _id!: string | undefined = '';
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -57,14 +57,14 @@ export default class OwnSalesItem {
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
-  title!: string | undefined;
+  title!: string | undefined = '';
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
   @ValidateIf((o: any) => o.price !== undefined, {
     groups: ['__backk_update__'],
   })
-  price!: number | undefined;
+  price!: number | undefined = NaN;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
@@ -75,7 +75,7 @@ export default class OwnSalesItem {
   @ValidateIf((o: any) => o.previousPrice !== undefined, {
     groups: ['__backk_update__'],
   })
-  previousPrice!: number | null | undefined;
+  previousPrice!: number | null | undefined = NaN;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
@@ -83,7 +83,7 @@ export default class OwnSalesItem {
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  primaryImageDataUri!: string | undefined;
+  primaryImageDataUri!: string | undefined = '';
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
@@ -94,7 +94,7 @@ export default class OwnSalesItem {
   @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  primaryImageThumbnailDataUri!: string | undefined;
+  primaryImageThumbnailDataUri!: string | undefined = '';
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -102,5 +102,5 @@ export default class OwnSalesItem {
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })
-  state!: SalesItemState | undefined;
+  state!: SalesItemState | undefined = 'forSale';
 }
