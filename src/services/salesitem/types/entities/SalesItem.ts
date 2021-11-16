@@ -1,4 +1,5 @@
 import {
+  AcceptFileTypes,
   ArrayMaxSize,
   ArrayMinSize,
   ArrayNotUnique,
@@ -76,18 +77,21 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @NotUnique()
   @ReadWrite()
   primaryImageDataUri!: string;
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @NotUnique()
   @ReadOnly()
   primaryImageThumbnailDataUri!: string;
 
   @MaxLength(Lengths._10M, { each: true })
   @IsDataUri({ each: true })
+  @AcceptFileTypes(['image/*'], { each: true })
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayNotUnique()

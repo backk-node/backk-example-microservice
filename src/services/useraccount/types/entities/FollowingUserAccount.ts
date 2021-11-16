@@ -3,6 +3,7 @@
 // This file can be generated from the respective .type file by running npm script 'generateTypes'
 
 import {
+  AcceptFileTypes,
   Entity,
   IsAnyString,
   IsDataUri,
@@ -48,6 +49,7 @@ export default class FollowingUserAccount {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @NotUnique()
   @ReadWrite()
   imageDataUri!: string;

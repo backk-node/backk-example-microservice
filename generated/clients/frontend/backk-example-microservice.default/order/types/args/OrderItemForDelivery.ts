@@ -15,7 +15,7 @@ export default class OrderItemForDelivery {
   @IsStringOrObjectId()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsString()
-  id!: string = '';
+  id: string = '';
 
   @ShouldBeTrueForObject<OrderItem>(
     ({ state, deliveryTimestamp }) =>
@@ -34,5 +34,5 @@ export default class OrderItemForDelivery {
   )
   @IsString()
   @ValidateIf((o: any) => o.trackingUrl !== null)
-  trackingUrl!: string | null = '';
+  trackingUrl: string | null = '';
 }

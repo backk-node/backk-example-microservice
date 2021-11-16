@@ -5,5 +5,5 @@ export default class TagName {
   @MaxLength(Lengths._64)
   @IsAnyString()
   @IsString()
-  name!: string = '';
+  name: string = '';
 }

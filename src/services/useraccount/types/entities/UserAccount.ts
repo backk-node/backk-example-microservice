@@ -1,4 +1,5 @@
 import {
+  AcceptFileTypes,
   ArrayMaxSize,
   ArrayMinSize,
   BaseUserAccount,
@@ -83,6 +84,7 @@ export default class UserAccount extends BaseUserAccount {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @NotUnique()
   @ReadWrite()
   imageDataUri!: string;

@@ -15,5 +15,5 @@ export default class _IdAndFollowedUserAccountId extends _Id {
   @IsString()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()
-  followedUserAccountId!: string = '';
+  followedUserAccountId: string = '';
 }

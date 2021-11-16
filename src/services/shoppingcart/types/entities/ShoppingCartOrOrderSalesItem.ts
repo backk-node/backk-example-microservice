@@ -3,6 +3,7 @@
 // This file can be generated from the respective .type file by running npm script 'generateTypes'
 
 import {
+  AcceptFileTypes,
   Entity,
   Index,
   IsAnyString,
@@ -59,6 +60,7 @@ export default class ShoppingCartOrOrderSalesItem {
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @NotUnique()
   @ReadOnly()
   primaryImageThumbnailDataUri!: string;

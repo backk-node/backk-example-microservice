@@ -5,5 +5,5 @@ export default class _IdAndSalesItemId extends _Id {
   @IsString()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()
-  salesItemId!: string = '';
+  salesItemId: string = '';
 }
