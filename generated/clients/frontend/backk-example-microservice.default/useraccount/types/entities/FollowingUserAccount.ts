@@ -1,0 +1,61 @@
+// DO NOT MODIFY THIS FILE! This is an auto-generated file
+import {
+  AcceptFileTypes,
+  IsAnyString,
+  IsDataUri,
+  IsOneOf,
+  IsString,
+  IsStringOrObjectId,
+  IsUndefined,
+  Lengths,
+  MaxLength,
+  MaxLengthAndMatches,
+  ValidateIf,
+} from 'backk-frontend-utils';
+import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
+
+export default class FollowingUserAccount {
+  @IsUndefined({
+    groups: ['__backk_create__'],
+  })
+  @IsStringOrObjectId({
+    groups: ['__backk_update__'],
+  })
+  @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
+    groups: ['__backk_update__'],
+  })
+  @IsString()
+  _id: string | undefined = '';
+
+  @MaxLength(Lengths._128)
+  @IsAnyString()
+  @IsString()
+  @ValidateIf((o: any) => o.displayName !== undefined, {
+    groups: ['__backk_update__'],
+  })
+  displayName: string | undefined = '';
+
+  @MaxLength(Lengths._256)
+  @IsOneOf(
+    'backk-example-microservice',
+    'default',
+    MicroserviceOptions.fqdn,
+    MicroserviceOptions.accessTokenStorageEncryptionKey,
+    'userAccountsService.getCities',
+    'Tampere'
+  )
+  @IsString()
+  @ValidateIf((o: any) => o.city !== undefined, {
+    groups: ['__backk_update__'],
+  })
+  city: string | undefined = '';
+
+  @MaxLength(Lengths._10M)
+  @IsDataUri()
+  @AcceptFileTypes(['image/*'])
+  @IsString()
+  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
+    groups: ['__backk_update__'],
+  })
+  imageDataUri: string | undefined = '';
+}
