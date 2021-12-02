@@ -19,6 +19,8 @@ import {
   SqlEquals,
   SqlExpression,
   SqlInExpression,
+  Subscription,
+  subscriptionManager,
   Update,
   UserAccountId,
   _Id,
@@ -59,8 +61,8 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
 
   @AllowForEveryUserForOwnResources('userAccountId')
   @NoCaptcha('')
-  createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
-    return this.dataStore.createEntity(
+  async createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
+    const [createdSalesItem, error] = await this.dataStore.createEntity(
       SalesItem,
       {
         ...salesItem,
@@ -85,6 +87,21 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
         },
       }
     );
+
+    if (createdSalesItem) {
+      subscriptionManager.publishToSubscribers(
+        'salesItemService.subscribeToCreatedSalesItem',
+        createdSalesItem.data
+      );
+    }
+
+    return [createdSalesItem, error];
+  }
+
+  @Subscription()
+  @AllowForEveryUser()
+  subscribeToCreatedSalesItem(): PromiseErrorOr<null> {
+    return Promise.resolve([null, null]);
   }
 
   @AllowForEveryUser()

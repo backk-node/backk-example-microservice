@@ -11,6 +11,7 @@ import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 export interface SalesItemService extends Service {
   deleteAllSalesItems(): PromiseErrorOr<null>;
   createSalesItem(arg: SalesItem): PromiseErrorOr<One<SalesItem>>;
+  subscribeToCreatedSalesItem(): PromiseErrorOr<null>;
   getSalesItems(arg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>>;
 
   getSalesItemsByUserDefinedFilters(
