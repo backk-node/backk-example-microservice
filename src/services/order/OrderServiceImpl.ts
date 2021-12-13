@@ -6,7 +6,7 @@ import {
   Create,
   CrudEntityService,
   DataStore,
-  DefaultPostQueryOperations,
+  DefaultPostQueryOperationsImpl,
   Delete,
   EntityPreHook,
   getMicroserviceName,
@@ -17,9 +17,9 @@ import {
   ResponseHeaders,
   ResponseStatusCode,
   sendToRemoteService,
-  SqlEquals,
-  SqlExpression,
-  SqlInExpression,
+  SqlEqFilter,
+  SqlFilter,
+  SqlInFilter,
   Update,
   _Id,
 } from 'backk';
@@ -119,7 +119,7 @@ export default class OrderServiceImpl extends CrudEntityService implements Order
 
   @AllowForEveryUserForOwnResources('userAccountId')
   getOrder({ _id }: _Id): PromiseErrorOr<One<Order>> {
-    return this.dataStore.getEntityById(Order, _id, new DefaultPostQueryOperations(), false);
+    return this.dataStore.getEntityById(Order, _id, new DefaultPostQueryOperationsImpl(), false);
   }
 
   @AllowForUserRoles(['vitjaPaymentGateway'])
@@ -320,8 +320,8 @@ export default class OrderServiceImpl extends CrudEntityService implements Order
         },
       },
       [
-        new SqlEquals({ transactionId: null }),
-        new SqlExpression(
+        new SqlEqFilter({ transactionId: null }),
+        new SqlFilter(
           `lastmodifiedtimestamp <= current_timestamp - INTERVAL '${unpaidOrderTimeToLiveInMinutes}' minute`
         ),
       ]
@@ -344,7 +344,7 @@ export default class OrderServiceImpl extends CrudEntityService implements Order
             });
 
             const salesItemFilters = this.dataStore.getFilters({ _id: { $in: salesItemIdsToUpdate } }, [
-              new SqlInExpression('_id', salesItemIdsToUpdate),
+              new SqlInFilter('_id', salesItemIdsToUpdate),
             ]);
 
             return salesItemIdsToUpdate.length > 0

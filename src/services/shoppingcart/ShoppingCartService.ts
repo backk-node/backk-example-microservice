@@ -1,4 +1,4 @@
-import { ErrorDef, One, PromiseErrorOr, Service, UserAccountId } from 'backk';
+import { BackkError, One, PromiseErrorOr, Service, UserAccountId } from 'backk';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
 
@@ -10,5 +10,5 @@ export interface ShoppingCartService extends Service {
   emptyShoppingCart(arg: UserAccountId): PromiseErrorOr<null>;
   deleteShoppingCart(arg: UserAccountId): PromiseErrorOr<null>;
 
-  getShoppingCartOrErrorIfEmpty(userAccountId: string, error: ErrorDef): PromiseErrorOr<One<ShoppingCart>>;
+  getShoppingCartOrErrorIfEmpty(userAccountId: string, error: BackkError): PromiseErrorOr<One<ShoppingCart>>;
 }

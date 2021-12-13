@@ -1,6 +1,6 @@
-import { DefaultPostQueryOperations, IsAnyString, Lengths, MaxLength } from 'backk';
+import { DefaultPostQueryOperationsImpl, IsAnyString, Lengths, MaxLength } from 'backk';
 
-export default class GetUsersArg extends DefaultPostQueryOperations {
+export default class GetUsersArg extends DefaultPostQueryOperationsImpl {
   @MaxLength(Lengths._256)
   @IsAnyString()
   displayNameFilter!: string;

@@ -3,11 +3,11 @@ import {
   AllowForMicroserviceInternalUse,
   AllowForTests,
   AllowServiceForUserRoles,
+  BackkError,
   CrudEntityService,
   DataStore,
-  DefaultPostQueryOperations,
+  DefaultPostQueryOperationsImpl,
   Delete,
-  ErrorDef,
   One,
   PromiseErrorOr,
   Update,
@@ -35,7 +35,7 @@ export default class ShoppingCartServiceImpl extends CrudEntityService implement
     return this.dataStore.getEntityByFilters(
       ShoppingCart,
       { userAccountId },
-      new DefaultPostQueryOperations(),
+      new DefaultPostQueryOperationsImpl(),
       false,
       {
         preHooks: () => this.removeExpiredSalesItemsFromShoppingCart(userAccountId),
@@ -109,11 +109,11 @@ export default class ShoppingCartServiceImpl extends CrudEntityService implement
   }
 
   @AllowForMicroserviceInternalUse()
-  getShoppingCartOrErrorIfEmpty(userAccountId: string, error: ErrorDef): PromiseErrorOr<One<ShoppingCart>> {
+  getShoppingCartOrErrorIfEmpty(userAccountId: string, error: BackkError): PromiseErrorOr<One<ShoppingCart>> {
     return this.dataStore.getEntityByFilters(
       ShoppingCart,
       { userAccountId },
-      new DefaultPostQueryOperations(),
+      new DefaultPostQueryOperationsImpl(),
       false,
       {
         preHooks: () => this.removeExpiredSalesItemsFromShoppingCart(userAccountId),

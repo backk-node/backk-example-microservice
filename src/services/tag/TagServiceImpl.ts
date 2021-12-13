@@ -4,13 +4,13 @@ import {
   CrudEntityService,
   DataStore,
   DbTableVersion,
-  DefaultPostQueryOperations,
+  DefaultPostQueryOperationsImpl,
   ExecuteOnStartUp,
   Many,
   NoCaptcha,
   One,
   PromiseErrorOr,
-  SqlExpression,
+  SqlFilter,
   tryGetSeparatedValuesFromTextFile,
 } from 'backk';
 import TagName from './args/TagName';
@@ -27,7 +27,7 @@ export default class TagServiceImpl extends CrudEntityService implements TagServ
     return this.dataStore.getEntityByFilters(
       DbTableVersion,
       { entityName: 'Tag' },
-      new DefaultPostQueryOperations(),
+      new DefaultPostQueryOperationsImpl(),
       false,
       {
         ifEntityNotFoundReturn: () =>
@@ -53,7 +53,7 @@ export default class TagServiceImpl extends CrudEntityService implements TagServ
     return this.dataStore.getEntityByFilters(
       DbTableVersion,
       { entityName: 'Tag', version: 1 },
-      new DefaultPostQueryOperations(),
+      new DefaultPostQueryOperationsImpl(),
       false,
       {
         ifEntityNotFoundReturn: () => Promise.resolve([null, null]),
@@ -87,9 +87,9 @@ export default class TagServiceImpl extends CrudEntityService implements TagServ
   @AllowForEveryUser()
   getTagsByName({ name }: TagName): PromiseErrorOr<Many<Tag>> {
     const filters = this.dataStore.getFilters<Tag>({ name: new RegExp(name) }, [
-      new SqlExpression('name LIKE :name', { name: `%${name}%` }),
+      new SqlFilter('name LIKE :name', { name: `%${name}%` }),
     ]);
 
-    return this.dataStore.getEntitiesByFilters(Tag, filters, new DefaultPostQueryOperations(), false);
+    return this.dataStore.getEntitiesByFilters(Tag, filters, new DefaultPostQueryOperationsImpl(), false);
   }
 }

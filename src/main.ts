@@ -4,4 +4,4 @@ import { HttpServer, initializeDefaultJaegerTracing } from 'backk';
 import microservice from './microservice';
 
 initializeDefaultJaegerTracing();
-microservice.start(process.argv, [new HttpServer()]);
+microservice.start([new HttpServer()]);

@@ -7,18 +7,18 @@ import {
   CronJob,
   CrudEntityService,
   DataStore,
-  DefaultPostQueryOperations,
+  DefaultPostQueryOperationsImpl,
   EntityCountRequest,
   executeForAll,
   Many,
-  MongoDbQuery,
+  MongoDbFilter,
   NoCaptcha,
   One,
   PromiseErrorOr,
   sendToRemoteService,
-  SqlEquals,
-  SqlExpression,
-  SqlInExpression,
+  SqlEqFilter,
+  SqlFilter,
+  SqlInFilter,
   Subscription,
   subscriptionManager,
   Update,
@@ -135,16 +135,16 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
           : {}),
       },
       [
-        new SqlEquals({ state: 'forSale' }),
-        new SqlExpression('title LIKE :textFilter OR description LIKE :textFilter', {
+        new SqlEqFilter({ state: 'forSale' }),
+        new SqlFilter('title LIKE :textFilter OR description LIKE :textFilter', {
           textFilter: textFilter ? `%${textFilter}%` : undefined,
         }),
-        new SqlInExpression('area', areas),
-        new SqlInExpression('productDepartment', productDepartments),
-        new SqlInExpression('productCategory', productCategories),
-        new SqlInExpression('productSubCategory', productSubCategories),
-        new SqlExpression('price >= :minPrice', { minPrice }),
-        new SqlExpression('price <= :maxPrice', { maxPrice }),
+        new SqlInFilter('area', areas),
+        new SqlInFilter('productDepartment', productDepartments),
+        new SqlInFilter('productCategory', productCategories),
+        new SqlInFilter('productSubCategory', productSubCategories),
+        new SqlFilter('price >= :minPrice', { minPrice }),
+        new SqlFilter('price <= :maxPrice', { maxPrice }),
       ]
     );
 
@@ -164,7 +164,12 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
   getSalesItemsByUserDefinedFilters({
     filters,
   }: GetSalesItemsByUserDefinedFiltersArg): PromiseErrorOr<Many<SalesItem>> {
-    return this.dataStore.getEntitiesByFilters(SalesItem, filters, new DefaultPostQueryOperations(), false);
+    return this.dataStore.getEntitiesByFilters(
+      SalesItem,
+      filters,
+      new DefaultPostQueryOperationsImpl(),
+      false
+    );
   }
 
   @AllowForEveryUserForOwnResources('_id')
@@ -215,7 +220,7 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
 
   @AllowForEveryUser()
   getSalesItem({ _id }: _Id): PromiseErrorOr<One<SalesItem>> {
-    return this.dataStore.getEntityById(SalesItem, _id, new DefaultPostQueryOperations(), false);
+    return this.dataStore.getEntityById(SalesItem, _id, new DefaultPostQueryOperationsImpl(), false);
   }
 
   @AllowForEveryUserForOwnResources('userAccountId')
@@ -327,8 +332,8 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
         },
       },
       [
-        new SqlEquals({ state: 'reserved' }),
-        new SqlExpression(
+        new SqlEqFilter({ state: 'reserved' }),
+        new SqlFilter(
           `lastmodifiedtimestamp <= current_timestamp - INTERVAL '${maxSalesItemReservationDurationInMinutes}' minute`
         ),
       ]
@@ -352,8 +357,8 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
         },
       },
       [
-        new SqlEquals({ state: 'forSale' }),
-        new SqlExpression(
+        new SqlEqFilter({ state: 'forSale' }),
+        new SqlFilter(
           `createdattimestamp <= current_timestamp - INTERVAL '${deletableUnsoldSalesItemMinAgeInMonths}' month`
         ),
       ]
@@ -419,15 +424,15 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
   ): PromiseErrorOr<null> {
     const finalFilters = this.dataStore.getFilters(
       [
-        new MongoDbQuery({
+        new MongoDbFilter({
           _id: { $in: salesItemIds },
           state: currentStateFilter,
           buyerUserAccountId: buyerUserAccountIdFilter,
         }),
       ],
       [
-        new SqlInExpression('_id', salesItemIds),
-        new SqlEquals({ state: currentStateFilter, buyerUserAccountId: buyerUserAccountIdFilter }),
+        new SqlInFilter('_id', salesItemIds),
+        new SqlEqFilter({ state: currentStateFilter, buyerUserAccountId: buyerUserAccountIdFilter }),
       ]
     );
 

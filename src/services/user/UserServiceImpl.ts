@@ -3,11 +3,11 @@ import {
   AllowServiceForUserRoles,
   CrudEntityService,
   DataStore,
-  DefaultPostQueryOperations,
+  DefaultPostQueryOperationsImpl,
   Many,
   One,
   PromiseErrorOr,
-  SqlExpression,
+  SqlFilter,
   _Id,
 } from 'backk';
 import GetUsersArg from './/types/args/GetUsersArg';
@@ -27,7 +27,7 @@ export default class UserServiceImpl extends CrudEntityService implements UserSe
         displayName: new RegExp(displayNameFilter),
       },
       [
-        new SqlExpression('displayName LIKE :displayNameFilter', {
+        new SqlFilter('displayName LIKE :displayNameFilter', {
           displayNameFilter: `%${displayNameFilter}%`,
         }),
       ]
@@ -46,6 +46,6 @@ export default class UserServiceImpl extends CrudEntityService implements UserSe
 
   @AllowForEveryUser()
   getUser({ _id }: _Id): PromiseErrorOr<One<User>> {
-    return this.dataStore.getEntityById(User, _id, new DefaultPostQueryOperations(), false);
+    return this.dataStore.getEntityById(User, _id, new DefaultPostQueryOperationsImpl(), false);
   }
 }

@@ -21,8 +21,8 @@
     "prebuild": "rimraf build && copyfiles resources/* build",
     "generateTypes": "node node_modules/backk/lib/typescript/generator/generateTypescriptFilesFromTypeDefinitionFiles.js",
     "generateDoc": "node node_modules/backk/lib/documentation/generateServicesDocumentation.js",
-    "generateClientsOnly": "env-cmd -f .env.dev node build/main --generateClientsOnly",
-    "generateClientsOnlyIfNeeded": "env-cmd -f .env.dev node build/main --generateClientsOnlyIfNeeded",
+    "generateClients": "env-cmd -f .env.dev node build/main --generateClientsOnly",
+    "generateClientsIfNeeded": "env-cmd -f .env.dev node build/main --generateClientsOnlyIfNeeded",
     "generateApiSpecs": "env-cmd -f .env.dev node build/main --generateApiSpecsOnly",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -53,7 +53,7 @@
     "@opentelemetry/plugin-mysql": "0.11.0",
     "@opentelemetry/plugin-pg": "0.11.0",
     "@opentelemetry/plugin-pg-pool": "0.11.0",
-    "backk": "1.0.0-alpha.388",
+    "backk": "1.0.0-alpha.398",
     "dayjs": "1.10.7",
     "ioredis": "^4.19.2",
     "jsonpath-plus": "^5.0.7",
@@ -117,7 +117,7 @@
       "npm test",
       "npm run generateApiSpecs",
       "git add generated/openapi",
-      "npm run generateClientsOnlyIfNeeded",
+      "npm run generateClientsIfNeeded",
       "git add generated/clients"
     ]
   }
