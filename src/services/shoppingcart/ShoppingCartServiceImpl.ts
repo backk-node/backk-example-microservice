@@ -3,11 +3,11 @@ import {
   AllowForMicroserviceInternalUse,
   AllowForTests,
   AllowServiceForUserRoles,
-  BackkError,
   CrudEntityService,
   DataStore,
   DefaultPostQueryOperationsImpl,
   Delete,
+  ErrorDefinition,
   One,
   PromiseErrorOr,
   Update,
@@ -109,7 +109,10 @@ export default class ShoppingCartServiceImpl extends CrudEntityService implement
   }
 
   @AllowForMicroserviceInternalUse()
-  getShoppingCartOrErrorIfEmpty(userAccountId: string, error: BackkError): PromiseErrorOr<One<ShoppingCart>> {
+  getShoppingCartOrErrorIfEmpty(
+    userAccountId: string,
+    error: ErrorDefinition
+  ): PromiseErrorOr<One<ShoppingCart>> {
     return this.dataStore.getEntityByFilters(
       ShoppingCart,
       { userAccountId },
