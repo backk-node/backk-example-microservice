@@ -39,7 +39,7 @@ By default, Vitja uses MySql.
    ```
    You can also import the integration tests to Postman from file `generated/integrationtests/integrationTestsPostmanCollection.json`
 
-## Service of the Vitja Microservice
+## Services of the Vitja Microservice
 
 ### UserAccountService
 
