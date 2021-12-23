@@ -15,7 +15,7 @@ COPY --from=builder /microservice ./
 RUN npm ci --only=production
 CMD [ "node", "build/main" ]
 
-FROM gcr.io/distroless/nodejs:12 as final-distroless
+FROM gcr.io/distroless/nodejs:12 as final
 WORKDIR /microservice
 USER nonroot:nonroot
 COPY --from=production --chown=nonroot:nonroot /microservice ./
