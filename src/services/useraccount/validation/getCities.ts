@@ -1,13 +1,14 @@
-import { Many, PromiseErrorOr, tryGetValuesByXPathFromXmlFile, Value } from 'backk';
+import { Many, PromiseErrorOr, Value } from 'backk';
 import createBackkErrorFromError from 'backk/lib/errors/createBackkErrorFromError';
+import getValuesByXPathFromXmlFileOrThrow from 'backk/lib/file/getValuesByXPathFromXmlFileOrThrow';
 
 let cities: Value[] = [];
 
 export default function getCities(): PromiseErrorOr<Many<Value>> {
   if (cities.length === 0) {
     try {
-      cities = tryGetValuesByXPathFromXmlFile(
-        'resources/postitoimipaikat.xml',
+      cities = getValuesByXPathFromXmlFileOrThrow(
+        'postitoimipaikat.xml',
         '/postitoimipaikat/toimipaikka/nimi/text()'
       ).map((cityNode) => ({ value: cityNode.nodeValue }));
     } catch (error) {

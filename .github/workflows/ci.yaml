@@ -52,7 +52,7 @@ jobs:
           run-tests: true
 
       - name: Setup integration testing environment
-        run: docker-compose --env-file env.ci up
+        run: docker-compose --env-file .env.ci up --build
 
       - name: Run integration tests
         run: ./runIntegrationTestsInCi.sh
@@ -63,7 +63,7 @@ jobs:
           target: generated/openapi/openApiPublicSpec.yaml
 
       - name: Tear down integration testing environment
-        run: docker-compose down
+        run: docker-compose --env-file .env.ci down
 
       - name: Log in to Docker registry
         uses: docker/login-action@v1

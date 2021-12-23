@@ -6,12 +6,12 @@ import {
   DbTableVersion,
   DefaultPostQueryOperationsImpl,
   ExecuteOnStartUp,
+  getSeparatedValuesFromTextFileOrThrow,
   Many,
   NoCaptcha,
   One,
   PromiseErrorOr,
   SqlFilter,
-  tryGetSeparatedValuesFromTextFile,
 } from 'backk';
 import TagName from './args/TagName';
 import Tag from './entities/Tag';
@@ -38,7 +38,7 @@ export default class TagServiceImpl extends CrudEntityService implements TagServ
               preHooks: () =>
                 this.dataStore.createEntities(
                   Tag,
-                  tryGetSeparatedValuesFromTextFile('resources/tags1.txt').map((tagName) => ({
+                  getSeparatedValuesFromTextFileOrThrow('tags1.txt').map((tagName: string) => ({
                     name: tagName,
                   }))
                 ),
@@ -63,8 +63,8 @@ export default class TagServiceImpl extends CrudEntityService implements TagServ
                 preHooks: () =>
                   this.dataStore.createEntities(
                     Tag,
-                    tryGetSeparatedValuesFromTextFile('resources/tags2.txt').map((tag) => ({
-                      name: tag,
+                    getSeparatedValuesFromTextFileOrThrow('tags2.txt').map((tagName: string) => ({
+                      name: tagName,
                     }))
                   ),
               })

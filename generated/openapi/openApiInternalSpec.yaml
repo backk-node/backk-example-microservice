@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: backk-example-microservice API
   description: ""
-  version: 1.0.112
+  version: 1.0.116
 servers:
   - url: http://localhost:3000/backk-example-microservice.default
     description: Local development server
@@ -13,7 +13,240 @@ components:
       scheme: bearer
       bearerFormat: JWT
     openId: null
-  schemas: {}
+  schemas:
+    typeName:
+      type: object
+      properties:
+        unpaidOrderTimeToLiveInMinutes:
+          type: integer
+          minimum: -1
+          maximum: 10
+      required:
+        - unpaidOrderTimeToLiveInMinutes
 security:
   - bearerAuth: []
-paths: {}
+paths:
+  /salesItemService.changeExpiredReservedSalesItemStatesToForSale:
+    post:
+      summary: salesItemService.changeExpiredReservedSalesItemStatesToForSale
+      tags:
+        - salesItemService
+      requestBody:
+        description: ChangeExpiredReservedSalesItemStatesToForSaleArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeExpiredReservedSalesItemStatesToForSaleArg"
+            example: null
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "error.5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a1
+                errorCode: error.5
+                message: "Invalid argument: "
+                statusCode: 400
+        "401":
+          description: "error.17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a2
+                errorCode: error.17
+                message: User is not authenticated
+                statusCode: 401
+        "403":
+          description: "error.6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a3
+                errorCode: error.6
+                message: Service function call not authorized
+                statusCode: 403
+        "404":
+          description: "error.4: Entity not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                errorCode: error.4
+                message: Entity not found
+                statusCode: 404
+        "406":
+          description: "error.10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a4
+                errorCode: error.10
+                message: Missing service function argument
+                statusCode: 406
+        "409":
+          description: "1: Entity version or last modified timestamp conflict. Entity was
+            updated before this request, please re-fetch the entity and try
+            update again"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                errorCode: error.1
+                message: Entity version conflict. Entity was updated before this request, please
+                  re-fetch the entity and try update again
+                statusCode: 409
+        "413":
+          description: "error.16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a5
+                errorCode: error.16
+                message: Request is too long
+                statusCode: 413
+        "422":
+          description: "error.7: Maximum sub-entity count reached. Cannot add new
+            sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example:
+                &a6
+                errorCode: error.7
+                message: Maximum sub-entity count reached. Cannot add new sub-entity
+                statusCode: 422
+  /salesItemService.deleteOldUnsoldSalesItemsDaily:
+    post:
+      summary: salesItemService.deleteOldUnsoldSalesItemsDaily
+      tags:
+        - salesItemService
+      requestBody:
+        description: DeleteOldUnsoldSalesItemsArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteOldUnsoldSalesItemsArg"
+            example: null
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "error.5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "401":
+          description: "error.17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "403":
+          description: "error.6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "406":
+          description: "error.10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "error.16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "error.7: Maximum sub-entity count reached. Cannot add new
+            sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6
+  /orderService.deleteUnpaidOrders:
+    post:
+      summary: orderService.deleteUnpaidOrders
+      tags:
+        - orderService
+      requestBody:
+        description: DeleteUnpaidOrdersArg
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteUnpaidOrdersArg"
+            example: null
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: "error.5: Invalid argument: "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a1
+        "401":
+          description: "error.17: User is not authenticated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a2
+        "403":
+          description: "error.6: Service function call not authorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a3
+        "406":
+          description: "error.10: Missing service function argument"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a4
+        "413":
+          description: "error.16: Request is too long"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a5
+        "422":
+          description: "error.7: Maximum sub-entity count reached. Cannot add new
+            sub-entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackkError"
+              example: *a6

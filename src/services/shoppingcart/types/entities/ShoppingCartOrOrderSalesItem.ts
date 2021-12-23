@@ -5,7 +5,7 @@
 import {
   AcceptFileTypes,
   Entity,
-  Index,
+  Indexed,
   IsAnyString,
   IsDataUri,
   IsFloat,
@@ -38,7 +38,7 @@ export default class ShoppingCartOrOrderSalesItem {
   @ReadUpdate()
   _id!: string;
 
-  @Index()
+  @Indexed()
   @Private()
   state!: SalesItemState;
 

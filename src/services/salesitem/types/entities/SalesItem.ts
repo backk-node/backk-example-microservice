@@ -5,7 +5,7 @@ import {
   ArrayNotUnique,
   ArrayUnique,
   Entity,
-  Index,
+  Indexed,
   IsAnyString,
   IsDataUri,
   IsFloat,
@@ -98,7 +98,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ReadWrite()
   secondaryImageDataUris!: string[];
 
-  @Index()
+  @Indexed()
   @ReadOnly()
   state!: SalesItemState;
 

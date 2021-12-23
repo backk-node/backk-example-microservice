@@ -5,7 +5,7 @@
 import {
   AcceptFileTypes,
   Entity,
-  Index,
+  Indexed,
   IsAnyString,
   IsDataUri,
   IsDate,
@@ -86,7 +86,7 @@ export default class OwnSalesItem {
   @ReadOnly()
   primaryImageThumbnailDataUri!: string;
 
-  @Index()
+  @Indexed()
   @ReadOnly()
   state!: SalesItemState;
 }
