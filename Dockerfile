@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-# TODO: https://blog.baeke.info/2021/03/28/distroless-or-scratch-for-go-apps/
 
 FROM node:12.19 as builder
 WORKDIR /microservice
@@ -10,7 +9,7 @@ COPY src ./src
 RUN npm ci
 RUN npm run build
 
-FROM node:12.19 as production
+FROM node:12.19 as intermediate
 WORKDIR /microservice
 COPY --from=builder /microservice ./
 RUN npm ci --only=production
