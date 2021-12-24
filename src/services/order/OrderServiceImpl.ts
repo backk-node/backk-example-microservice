@@ -64,7 +64,9 @@ export default class OrderServiceImpl extends CrudEntityService implements Order
   @AllowForEveryUserForOwnResources('userAccountId')
   @NoCaptcha('')
   @Create()
-  @ResponseStatusCode(HttpStatusCodes.MOVED_PERMANENTLY)
+  @ResponseStatusCode(
+    process.env.NODE_ENV === 'production' ? HttpStatusCodes.MOVED_PERMANENTLY : HttpStatusCodes.OK
+  )
   @ResponseHeaders<PlaceOrderArg, Order>({
     Location: ({ paymentGateway, uiRedirectUrl }, { _id }) =>
       OrderServiceImpl.getLocationHeaderUrl(paymentGateway, _id, uiRedirectUrl),

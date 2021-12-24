@@ -63,7 +63,7 @@ jobs:
           target: generated/openapi/openApiPublicSpec.yaml
 
       - name: Tear down integration testing environment
-        run: docker-compose --env-file .env.ci down
+        run: docker-compose --env-file .env.ci down -v
 
       - name: Log in to Docker registry
         uses: docker/login-action@v1

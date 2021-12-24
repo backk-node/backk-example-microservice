@@ -18,5 +18,5 @@ CMD [ "node", "build/main" ]
 FROM gcr.io/distroless/nodejs:12 as final
 WORKDIR /microservice
 USER nonroot:nonroot
-COPY --from=production --chown=nonroot:nonroot /microservice ./
+COPY --from=intermediate --chown=nonroot:nonroot /microservice ./
 CMD ["build/main"]
