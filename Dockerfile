@@ -1,21 +1,22 @@
 # syntax=docker/dockerfile:1
 
-FROM node:12.19 as builder
+FROM node:14 as builder
 WORKDIR /microservice
-COPY tsconfig*.json ./
 COPY package*.json ./
+RUN npm ci
+COPY tsconfig*.json ./
 COPY resources ./resources
 COPY src ./src
-RUN npm ci
 RUN npm run build
 
-FROM node:12.19 as intermediate
+FROM node:14 as intermediate
 WORKDIR /microservice
-COPY --from=builder /microservice ./
+COPY package*.json ./
 RUN npm ci --only=production
-CMD [ "node", "build/main" ]
+COPY --from=builder /microservice/build ./build
+COPY --from=builder /microservice/src ./src
 
-FROM gcr.io/distroless/nodejs:12 as final
+FROM gcr.io/distroless/nodejs:14 as final
 WORKDIR /microservice
 USER nonroot:nonroot
 COPY --from=intermediate --chown=nonroot:nonroot /microservice ./
