@@ -2,9 +2,9 @@ openapi: 3.0.3
 info:
   title: backk-example-microservice API
   description: ""
-  version: 1.0.120
+  version: 1.0.121
 servers:
-  - url: http://localhost:3000/backk-example-microservice.default
+  - url: http://localhost:3001/backk-example-microservice.default
     description: Local development server
 components:
   securitySchemes:
