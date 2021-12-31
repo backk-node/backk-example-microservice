@@ -1,9 +1,14 @@
-import { JwtAuthorizationServiceImpl, MySqlDataStore, StartupCheckServiceImpl } from 'backk';
-import Microservice from 'backk/lib/microservice/Microservice';
+import {
+  DefaultStartupCheckServiceImpl,
+  JwtAuthorizationServiceImpl,
+  Microservice,
+  MySqlDataStore,
+} from 'backk';
 import AuditLoggingServiceImpl from './services/auditlogging/AuditLoggingServiceImpl';
 import CaptchaVerificationServiceImpl from './services/captchaverification/CaptchaVerificationServiceImpl';
 import LivenessCheckServiceImpl from './services/livenesscheck/LivenessCheckServiceImpl';
 import OrderServiceImpl from './services/order/OrderServiceImpl';
+import ReadinessCheckServiceImpl from './services/readinesscheckservice/ReadinessCheckServiceImpl';
 import ResponseCacheConfigServiceImpl from './services/responsecacheconfig/ResponseCacheConfigServiceImpl';
 import SalesItemServiceImpl from './services/salesitem/SalesItemServiceImpl';
 import ShoppingCartServiceImpl from './services/shoppingcart/ShoppingCartServiceImpl';
@@ -20,7 +25,8 @@ class MicroserviceImpl extends Microservice {
   private readonly captchaVerifyService = new CaptchaVerificationServiceImpl();
   private readonly livenessCheckService = new LivenessCheckServiceImpl();
   private readonly responseCacheConfigService = new ResponseCacheConfigServiceImpl();
-  private readonly startupCheckService = new StartupCheckServiceImpl(dataStore);
+  private readonly readinessCheckService = new ReadinessCheckServiceImpl();
+  private readonly startupCheckService = new DefaultStartupCheckServiceImpl(dataStore);
 
   private readonly tagService = new TagServiceImpl(dataStore);
   private readonly userAccountService = new UserAccountServiceImpl(dataStore);

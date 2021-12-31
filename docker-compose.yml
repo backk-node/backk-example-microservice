@@ -10,9 +10,11 @@ services:
     env_file: .env.ci
     ports:
       - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
+# TODO: Add/remove services that your Backk microservice depends on
     depends_on:
       - mysql
       - kafka
+# TODO: Uncomment/comment out lines below for services that are needed or not needed
   mysql:
     container_name: mysql
     image: mysql:8.0.22

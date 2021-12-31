@@ -4,4 +4,4 @@ metadata:
   name: {{ include "backk-example-microservice.fullname" . }}
 data:
   LOG_LEVEL: |
-    INFO
+    {{ .Values.observability.logLevel }}

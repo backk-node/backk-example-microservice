@@ -1,4 +1,4 @@
-{{- if eq .Values.environmentType "production" }}
+{{- if eq .Values.nodeEnv "production" }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
