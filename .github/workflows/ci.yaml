@@ -73,6 +73,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: pksilen2/backk-example-microservice
+          tags: type=semver,pattern={{version}}
 
       - name: Build and push Docker image when in main or maintenance branch
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
