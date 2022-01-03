@@ -51,13 +51,19 @@ jobs:
         uses: actions-ecosystem/action-get-latest-tag@v1
         id: getLatestTag
 
+      - name: Extract branch name
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
+        id: extractBranch
+
       - name: Set microservice version
         uses: haya14busa/action-cond@v1
         id: microserviceVersion
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
           if_true: "${{ steps.getLatestTag.outputs.tag }}"
-          if_false: "$feature-{{ github.run_attempt }}-${{ github.sha }}"
+          if_false: "${{ steps.extract_branch.outputs.branch }}-${{ github.run_attempt }}-${{ github.sha }}"
 
       - name: Build and push Docker image when in feature branch
         if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/v*'
@@ -85,3 +91,10 @@ jobs:
           push: true
           tags: ${{ steps.dockerImageMetadata.outputs.tags }}
           labels: ${{ steps.dockerImageMetadata.outputs.labels }}
+
+      - name: Docker image vulnerability scan
+        uses: anchore/scan-action@v3
+        with:
+          image: pksilen2/backk-example-microservice:${{ steps.microserviceVersion.outputs.value }}
+          fail-build: false
+          severity-cutoff: high
