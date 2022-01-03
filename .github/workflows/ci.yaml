@@ -33,3 +33,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: "Legal and compliance with FOSSA scan"
+        uses: fossas/fossa-action@v1
+        with:
+          api-key: ${{secrets.FOSSA_API_KEY}}
