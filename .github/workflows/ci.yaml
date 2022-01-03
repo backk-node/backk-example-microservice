@@ -95,6 +95,6 @@ jobs:
       - name: Docker image vulnerability scan
         uses: anchore/scan-action@v3
         with:
-          image: pksilen2/backk-example-microservice:${{ steps.microserviceVersion.outputs.value }}
+          image: pksilen2/backk-example-microservice:latest
           fail-build: false
           severity-cutoff: high
