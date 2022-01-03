@@ -57,9 +57,9 @@ jobs:
         run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
         id: extractBranch
 
-      - name: Set microservice version
+      - name: Set build version
         uses: haya14busa/action-cond@v1
-        id: microserviceVersion
+        id: buildVersion
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
           if_true: "${{ steps.getLatestTag.outputs.tag }}"
@@ -71,16 +71,16 @@ jobs:
         with:
           context: .
           push: true
-          tags: pksilen2/backk-example-microservice:${{ steps.microserviceVersion.outputs.value }}
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice:${{ steps.buildVersion.outputs.value }}
 
       - name: Extract metadata for building and publish Docker image when in main or maintenance branch
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
         id: dockerImageMetadata
         uses: docker/metadata-action@v3
         with:
-          images: pksilen2/backk-example-microservice
+          images: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.microserviceVersion.outputs.value }}
+            type=semver,pattern={{version}},value=${{ steps.buildVersion.outputs.value }}
 
       - name: Build and push Docker image when in main or maintenance branch
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
@@ -93,8 +93,63 @@ jobs:
           labels: ${{ steps.dockerImageMetadata.outputs.labels }}
 
       - name: Docker image vulnerability scan
+        id: anchoreScan
         uses: anchore/scan-action@v3
         with:
-          image: pksilen2/backk-example-microservice:latest
+          image: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice:latest
           fail-build: false
           severity-cutoff: high
+
+      - name: Upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.anchoreScan.outputs.sarif }}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.7.2
+
+      - name: Set microservice version from tag
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
+        id: microserviceVersionFromTag
+        run: |
+          value=$(echo ${${{ steps.buildVersion.outputs.value }}:1})
+          echo "::set-output name=value::$value"
+
+      - name: Set microservice version
+        uses: haya14busa/action-cond@v1
+        id: microserviceVersion
+        with:
+          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
+          if_true: "${{ steps.microserviceVersionFromTag.output.value }}"
+          if_false: "${{ steps.buildVersion.output.value }}"
+
+      - name: Update helm chart versions
+        run: |
+          sed -i "/^version: .*/version: ${{ steps.microserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "/^appVersion: .*/appVersion: '${{ steps.microserviceVersion.outputs.value }}'/g" helm/backk-example-microservice/Chart.yaml
+
+      - name: Define docker image tag
+        uses: haya14busa/action-cond@v1
+        id: dockerImageTag
+        with:
+          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
+          if_true: "${{ steps.microserviceVersion.outputs.value }}@${{ steps.dockerImageBuildAndPush.outputs.digest }"
+          if_false: "${{ steps.microserviceVersion.outputs.value }}"
+
+      - name: Update Docker image tag in values.yaml
+        run: |
+          sed -i "/^imageTag:.*/imageTag: ${{ steps.dockerImageTag.outputs.value }}/g" helm/backk-example-microservice/values.yaml
+
+      - name: Lint Helm chart
+        run: helm lint helm/backk-example-microservice
+
+      - name: Package and publish Helm chart
+        uses: helm/chart-releaser-action@v1
+        with:
+          charts_dir: helm
+          # TODO: Change the Helm charts repo URL, The default URL is GitHub Pages URL (https://<owner>.github.io/<this-project>)
+          charts_repo_url:
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

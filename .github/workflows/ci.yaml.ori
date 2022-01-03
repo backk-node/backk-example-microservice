@@ -125,7 +125,7 @@ jobs:
           sed -i "/appVersion: .*/appVersion: "${{ steps.microserviceVersion.outputs.value }}"/g helm/backk-example-microservice/Chart.yaml"
 
       - name: Define docker image tag
-      - uses: haya14busa/action-cond@v1
+        uses: haya14busa/action-cond@v1
         id: dockerImageTag
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
