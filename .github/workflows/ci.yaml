@@ -74,7 +74,7 @@ jobs:
         with:
           images: pksilen2/backk-example-microservice
           tags: |
-            type=semver,pattern={{version}}
+            type=semver,pattern={{version}},value=${{ steps.microserviceVersion.outputs.value }}
 
       - name: Build and push Docker image when in main or maintenance branch
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
