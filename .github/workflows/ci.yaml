@@ -39,3 +39,47 @@ jobs:
         with:
           api-key: ${{ secrets.FOSSA_API_KEY }}
           run-tests: false
+
+      - name: Log in to Docker registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.io
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+      - name: Get latest git tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: getLatestTag
+
+      - name: Set microservice version
+        uses: haya14busa/action-cond@v1
+        id: microserviceVersion
+        with:
+          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
+          if_true: "${{ steps.getLatestTag.outputs.tag }}"
+          if_false: "$feature-{{ github.run_attempt }}-${{ github.sha }}"
+
+      - name: Build and push Docker image when in feature branch
+        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/v*'
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: pksilen2/backk-example-microservice:${{ steps.microserviceVersion.outputs.value }}
+
+      - name: Extract metadata for building and publish Docker image when in main or maintenance branch
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
+        id: dockerImageMetadata
+        uses: docker/metadata-action@v3
+        with:
+          images: pksilen2/backk-example-microservice
+
+      - name: Build and push Docker image when in main or maintenance branch
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
+        id: dockerImageBuildAndPush
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.dockerImageMetadata.outputs.tags }}
+          labels: ${{ steps.dockerImageMetadata.outputs.labels }}

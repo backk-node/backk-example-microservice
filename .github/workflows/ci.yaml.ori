@@ -45,12 +45,6 @@ jobs:
         with:
           api-key: ${{ secrets.FOSSA_API_KEY }}
 
-      - name: "Legal and compliance with FOSSA test"
-        uses: fossas/fossa-action@v1
-        with:
-          api-key: ${{ secrets.FOSSA_API_KEY }}
-          run-tests: true
-
       - name: Setup integration testing environment
         run: docker-compose --env-file .env.ci up --build
 
