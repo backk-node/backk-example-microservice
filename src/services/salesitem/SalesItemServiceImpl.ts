@@ -62,7 +62,7 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
   @AllowForEveryUserForOwnResources('userAccountId')
   @NoCaptcha('')
   async createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
-    const [createdSalesItem, error] = await this.dataStore.createEntity(
+    const [createdSalesItem, errorInCreate] = await this.dataStore.createEntity(
       SalesItem,
       {
         ...salesItem,
@@ -74,14 +74,14 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
       {
         preHooks: {
           shouldSucceedOrBeTrue: async () => {
-            const [usersSellableSalesItemCount, error] = await this.dataStore.getEntityCount(SalesItem, {
+            const [usersSellableSalesItemCount, errorInGet] = await this.dataStore.getEntityCount(SalesItem, {
               userAccountId: salesItem.userAccountId,
               state: 'forSale',
             });
 
             return typeof usersSellableSalesItemCount === 'number'
               ? usersSellableSalesItemCount < 100
-              : error;
+              : errorInGet;
           },
           error: salesItemServiceErrors.maximumSalesItemCountPerUserExceeded,
         },
@@ -95,7 +95,7 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
       );
     }
 
-    return [createdSalesItem, error];
+    return [createdSalesItem, errorInCreate];
   }
 
   @Subscription()
@@ -407,7 +407,8 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
           },
           {
             executePreHookIf: () => newState === 'sold',
-            shouldSucceedOrBeTrue: ({ buyerUserAccountId }) => buyerUserAccountId === buyerUserAccountId,
+            shouldSucceedOrBeTrue: ({ buyerUserAccountId: currentBuyerUserAccountId }) =>
+              buyerUserAccountId === currentBuyerUserAccountId,
             error: salesItemServiceErrors.invalidSalesItemState,
           },
         ],

@@ -28,13 +28,13 @@ jobs:
       # TODO: START: Use either SonarCloud or SonarQube for static code analysis
       # TODO: Complete TODOs in sonar-project.properties file
       - name: Static code analysis with SonarCloud scan
-        uses: sonarsource/sonarcloud-github-action@v1
+        uses: sonarsource/sonarcloud-github-action@v1.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Static code analysis with SonarQube scan
-        uses: sonarsource/sonarqube-scan-action@v1
+        uses: sonarsource/sonarqube-scan-action@v1.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
