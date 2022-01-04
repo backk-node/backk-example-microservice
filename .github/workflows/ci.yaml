@@ -10,6 +10,24 @@ on:
     branches:
       - main
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test with older Node versions
+    strategy:
+      matrix:
+        node: [ '12', '14' ]
+    steps:
+      - name: Checkout Git repo
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
   build:
     runs-on: ubuntu-latest
     steps:
@@ -28,11 +46,11 @@ jobs:
       - name: Install NPM dependencies
         run: npm ci
 
-      - name: Lint source code
-        run: npm run lint
-
       - name: Run unit tests with coverage
         run: npm run test:coverage
+
+      - name: Lint source code
+        run: npm run lint
 
       - name: Setup integration testing environment
         run: docker-compose --env-file .env.ci up --build -d
@@ -44,6 +62,7 @@ jobs:
         uses: zaproxy/action-api-scan@v0.1.0
         with:
           target: generated/openapi/openApiPublicSpec.yaml
+          fail_action: true
 
       - name: Tear down integration testing environment
         run: docker-compose --env-file .env.ci down -v
