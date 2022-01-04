@@ -63,9 +63,10 @@ jobs:
         uses: zaproxy/action-api-scan@v0.1.0
         with:
           target: generated/openapi/openApiPublicSpec.yaml
-          fail_action: true
+          fail_action: false
 
       - name: Tear down integration testing environment
+        if: always()
         run: docker-compose --env-file .env.ci down -v
 
       - name: Static code analysis with SonarCloud scan
