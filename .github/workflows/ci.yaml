@@ -135,7 +135,7 @@ jobs:
         id: dockerImageTag
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
-          if_true: "${{ steps.microserviceVersion.outputs.value }}@${{ steps.dockerImageBuildAndPush.outputs.digest }"
+          if_true: "${{ steps.microserviceVersion.outputs.value }}@${{ steps.dockerImageBuildAndPush.outputs.digest }}"
           if_false: "${{ steps.microserviceVersion.outputs.value }}"
 
       - name: Update Docker image tag in values.yaml
