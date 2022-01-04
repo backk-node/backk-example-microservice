@@ -1,7 +1,13 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { DefaultPostQueryOperations, IsAnyString, IsString, Lengths, MaxLength } from 'backk-frontend-utils';
+import {
+  DefaultPostQueryOperationsImpl,
+  IsAnyString,
+  IsString,
+  Lengths,
+  MaxLength,
+} from 'backk-frontend-utils';
 
-export default class GetUsersArg extends DefaultPostQueryOperations {
+export default class GetUsersArg extends DefaultPostQueryOperationsImpl {
   @MaxLength(Lengths._256)
   @IsAnyString()
   @IsString()

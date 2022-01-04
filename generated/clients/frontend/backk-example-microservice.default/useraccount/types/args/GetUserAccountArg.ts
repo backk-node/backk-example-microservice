@@ -1,6 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
-  DefaultPostQueryOperations,
+  DefaultPostQueryOperationsImpl,
   IsInstance,
   IsString,
   SortBy,
@@ -8,7 +8,7 @@ import {
   ValidateNested,
 } from 'backk-frontend-utils';
 
-export default class GetUserAccountArg extends DefaultPostQueryOperations {
+export default class GetUserAccountArg extends DefaultPostQueryOperationsImpl {
   @IsString({
     each: true,
   })
@@ -25,7 +25,7 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
   })
   @Type(() => SortBy)
   sortBys: SortBy[] = [
-    ...new DefaultPostQueryOperations().sortBys,
+    ...new DefaultPostQueryOperationsImpl().sortBys,
     new SortBy('paymentMethods', 'isDefault', 'DESC'),
     new SortBy('ownSalesItems', 'state', 'ASC'),
   ];

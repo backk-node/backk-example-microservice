@@ -4,6 +4,7 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   ArrayNotUnique,
+  Indexed,
   IsAnyString,
   IsDataUri,
   IsFloat,
@@ -149,6 +150,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   })
   secondaryImageDataUris: string[] | undefined = [];
 
+  @Indexed()
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })

@@ -1,6 +1,7 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
   AcceptFileTypes,
+  Indexed,
   IsAnyString,
   IsDataUri,
   IsDate,
@@ -105,6 +106,7 @@ export default class OwnSalesItem {
   })
   primaryImageThumbnailDataUri: string | undefined = '';
 
+  @Indexed()
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })

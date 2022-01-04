@@ -121,7 +121,10 @@ export default class UserAccount extends BaseUserAccount {
   @ArrayMaxSize(10)
   @ShouldBeTrueForObject<UserAccount>(
     ({ paymentMethods }) => paymentMethods?.filter(({ isDefault }) => isDefault).length === 1,
-    'There should be exactly one default payment method'
+    'There should be exactly one default payment method',
+    {
+      each: true,
+    }
   )
   @ShouldBeTrueForObject<UserAccount>(
     ({ paymentMethods }) =>

@@ -17,6 +17,7 @@ import FollowedUserSalesItem from './types/responses/FollowedUserSalesItem';
 
 export interface SalesItemService {
   createSalesItem(arg: SalesItem): PromiseErrorOr<One<SalesItem>>;
+  subscribeToCreatedSalesItem(): PromiseErrorOr<null>;
   getSalesItems(arg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>>;
   getSalesItemsByUserDefinedFilters(
     arg: GetSalesItemsByUserDefinedFiltersArg
@@ -47,6 +48,17 @@ export class SalesItemServiceImpl implements SalesItemService {
       'backk-example-microservice',
       'salesItemService.createSalesItem',
       salesItem,
+      'default',
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
+    );
+  }
+
+  async subscribeToCreatedSalesItem(): PromiseErrorOr<null> {
+    return callRemoteService(
+      'backk-example-microservice',
+      'salesItemService.subscribeToCreatedSalesItem',
+      undefined,
       'default',
       MicroserviceOptions.fqdn,
       MicroserviceOptions.accessTokenStorageEncryptionKey
