@@ -63,6 +63,7 @@ jobs:
         uses: zaproxy/action-api-scan@v0.1.0
         with:
           target: generated/openapi/openApiPublicSpec.yaml
+          rules_file_name: '.zap/rules.tsv'
           fail_action: false
 
       - name: Tear down integration testing environment
