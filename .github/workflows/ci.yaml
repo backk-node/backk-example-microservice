@@ -12,8 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      HUSKY_SKIP_INSTALL: 1
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v2
@@ -23,6 +21,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
+
+      - name: Skip installing Husky
+        run: npm set-script prepare ""
 
       - name: Install NPM dependencies
         run: npm ci
