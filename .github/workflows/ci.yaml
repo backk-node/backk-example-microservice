@@ -40,10 +40,10 @@ jobs:
       - name: Run integration tests
         run: scripts/run-integration-tests-in-ci.sh
 
-     # - name: OWASP ZAP API scan
-     #   uses: zaproxy/action-api-scan@v0.1.0
-     #   with:
-     #     target: generated/openapi/openApiPublicSpec.yaml
+      - name: OWASP ZAP API scan
+        uses: zaproxy/action-api-scan@v0.1.0
+        with:
+          target: generated/openapi/openApiPublicSpec.yaml
 
       - name: Tear down integration testing environment
         run: docker-compose --env-file .env.ci down -v
