@@ -51,23 +51,23 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
-      - name: Get latest Git tag
+      - name: Extract latest Git tag
         uses: actions-ecosystem/action-get-latest-tag@v1
-        id: getLatestTag
+        id: extractLatestGitTag
 
       - name: Extract Git branch name
         if: github.event_name != 'pull_request'
         shell: bash
-        run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
-        id: extractBranch
+        run: echo "##[set-output name=value;]${GITHUB_REF#refs/heads/}"
+        id: extractGitBranchName
 
       - name: Set build version
         uses: haya14busa/action-cond@v1
-        id: buildVersion
+        id: setBuildVersion
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*' }}
-          if_true: "${{ steps.getLatestTag.outputs.tag }}"
-          if_false: "${{ steps.extract_branch.outputs.branch }}-${{ github.run_attempt }}-${{ github.sha }}"
+          if_true: "${{ steps.extractLatestGitTag.outputs.tag }}"
+          if_false: "${{ steps.extractGitBranchName.outputs.value }}-${{ github.run_attempt }}-${{ github.sha }}"
 
       - name: Build and push Docker image when in feature branch
         if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/patch_v*'
@@ -75,16 +75,16 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice:${{ steps.buildVersion.outputs.value }}
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice:${{ steps.setBuildVersion.outputs.value }}
 
-      - name: Extract metadata for building and pusing Docker image when in main or maintenance branch
+      - name: Extract metadata for building and pushing Docker image when in main or maintenance branch
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*'
         id: dockerImageMetadata
         uses: docker/metadata-action@v3
         with:
           images: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.buildVersion.outputs.value }}
+            type=semver,pattern={{version}},value=${{ steps.setBuildVersion.outputs.value }}
 
       - name: Build and push Docker image when in main or maintenance branch
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*'
@@ -114,38 +114,38 @@ jobs:
         with:
           version: v3.7.2
 
-      - name: Set microservice version from Git tag
+      - name: Extract microservice version from Git tag
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*'
-        id: microserviceVersionFromTag
+        id: extractMicroserviceVersionFromGitTag
         run: |
-          value="${{ steps.buildVersion.outputs.value }}"
+          value="${{ steps.setBuildVersion.outputs.value }}"
           value=${value:1}
           echo "::set-output name=value::$value"
 
       - name: Set microservice version
         uses: haya14busa/action-cond@v1
-        id: microserviceVersion
+        id: setMicroserviceVersion
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*' }}
-          if_true: "${{ steps.microserviceVersionFromTag.output.value }}"
-          if_false: "${{ steps.buildVersion.output.value }}"
+          if_true: "${{ steps.extractMicroserviceVersionFromGitTag.outputs.value }}"
+          if_false: "${{ steps.buildVersion.outputs.value }}"
 
-      - name: Update helm chart versions in Chart.yaml
+      - name: Update Helm chart versions in Chart.yaml
         run: |
-          sed -i "/^version: .*/version: ${{ steps.microserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
-          sed -i "/^appVersion: .*/appVersion: '${{ steps.microserviceVersion.outputs.value }}'/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "/version:.*/version: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "/appVersion:.*/appVersion: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
 
       - name: Define docker image tag
         uses: haya14busa/action-cond@v1
-        id: dockerImageTag
+        id: defineDockerImageTag
         with:
           cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*' }}
-          if_true: "${{ steps.microserviceVersion.outputs.value }}@${{ steps.dockerImageBuildAndPush.outputs.digest }}"
-          if_false: "${{ steps.microserviceVersion.outputs.value }}"
+          if_true: "${{ steps.setMicroserviceVersion.outputs.value }}@${{ steps.dockerImageBuildAndPush.outputs.digest }}"
+          if_false: "${{ steps.setMicroserviceVersion.outputs.value }}"
 
       - name: Update Docker image tag in values.yaml
         run: |
-          sed -i "/^imageTag:.*/imageTag: ${{ steps.dockerImageTag.outputs.value }}/g" helm/backk-example-microservice/values.yaml
+          sed -i "/^imageTag:.*/imageTag: ${{ steps.defineDockerImageTag.outputs.value }}/g" helm/backk-example-microservice/values.yaml
 
       - name: Lint Helm chart
         run: helm lint helm/backk-example-microservice
