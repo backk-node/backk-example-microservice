@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Checkout source code repository
+      - name: Checkout Git repo
         uses: actions/checkout@v2
 
       - name: Setup Node.js
@@ -96,7 +96,7 @@ jobs:
           tags: ${{ steps.dockerImageMetadata.outputs.tags }}
           labels: ${{ steps.dockerImageMetadata.outputs.labels }}
 
-      - name: Docker image vulnerability scan
+      - name: Docker image vulnerability scan with Anchore
         id: anchoreScan
         uses: anchore/scan-action@v3
         with:
@@ -132,8 +132,8 @@ jobs:
 
       - name: Update Helm chart versions in Chart.yaml
         run: |
-          sed -i "s/version:.*/version: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
-          sed -i "s/appVersion:.*/appVersion: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "s/^version:.*/version: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "s/^appVersion:.*/appVersion: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
 
       - name: Define docker image tag
         uses: haya14busa/action-cond@v1
@@ -148,7 +148,7 @@ jobs:
           sed -i "s/^imageTag:.*/imageTag: ${{ steps.defineDockerImageTag.outputs.value }}/g" helm/backk-example-microservice/values.yaml
 
       - name: Lint Helm chart
-        run: helm lint helm/backk-example-microservice
+        run: helm lint -f helm/values/values-minikube.yaml helm/backk-example-microservice
 
       - name: Package and publish Helm chart
         uses: helm/chart-releaser-action@v1.2.1
