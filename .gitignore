@@ -101,6 +101,5 @@ helm-packages
 
 build/
 generated/docs/
-generated/integrationtests/
 .husky/VERSION_LEVEL
 .idea/
