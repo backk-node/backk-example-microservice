@@ -146,10 +146,8 @@ jobs:
         run: helm lint helm/backk-example-microservice
 
       - name: Package and publish Helm chart
-        uses: helm/chart-releaser-action@v1
+        uses: helm/chart-releaser-action@v1.2.1
         with:
           charts_dir: helm
-          # TODO: Change the Helm charts repo URL, The default URL is GitHub Pages URL (https://<owner>.github.io/<this-project>)
-          charts_repo_url:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

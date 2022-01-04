@@ -76,7 +76,7 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-helm_packages
+helm-packages
 
 # Gatsby files
 .cache/
