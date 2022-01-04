@@ -150,6 +150,11 @@ jobs:
       - name: Lint Helm chart
         run: helm lint -f helm/values/values-minikube.yaml helm/backk-example-microservice
 
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
       - name: Package and publish Helm chart
         uses: helm/chart-releaser-action@v1.2.1
         with:
