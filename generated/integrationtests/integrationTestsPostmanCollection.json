@@ -8,7 +8,7 @@
         "bearer": [
             {
                 "key": "token",
-                "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKbVltUmlOR1UwWVMwMlpUa3pMVFJpTURndFlURmxOeTB3WWpkaVpEQTROVEl3WVRZaUxDSnBjM01pT2lKb2RIUndPaTh2Ykc5allXeG9iM04wT2pnd09EQXZZWFYwYUM5eVpXRnNiWE12ZEdWemRDSXNJbkpsWVd4dFgyRmpZMlZ6Y3lJNmV5SnliMnhsY3lJNld5SjJhWFJxWVVGa2JXbHVJbDE5TENKcFlYUWlPakUyTkRFeU1ESXhPVFo5LnVHRGxlcmZMSnR6SjltLWl2bGYwc3NLWF9vV3p2d2VjWXMtZ1cyMmR6dzQ=",
+                "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKbVltUmlOR1UwWVMwMlpUa3pMVFJpTURndFlURmxOeTB3WWpkaVpEQTROVEl3WVRZaUxDSnBjM01pT2lKb2RIUndPaTh2Ykc5allXeG9iM04wT2pnd09EQXZZWFYwYUM5eVpXRnNiWE12ZEdWemRDSXNJbkpsWVd4dFgyRmpZMlZ6Y3lJNmV5SnliMnhsY3lJNld5SjJhWFJxWVVGa2JXbHVJbDE5TENKcFlYUWlPakUyTkRFek1ESTRNRFo5LlNmbzM4R3p3Ri1YR3BnX0hnb2k5M0NWZjMtRWhSUktVTmtfc3N0WXo4dEk=",
                 "type": "string"
             }
         ]
@@ -607,7 +607,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"fbdb4e4a-6e93-4b08-a1e7-0b7bd08520a6\",\n    \"displayName\": \"abc\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"65917\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
+                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"fbdb4e4a-6e93-4b08-a1e7-0b7bd08520a6\",\n    \"displayName\": \"abc\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"26794\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -673,7 +673,7 @@
                                             "pm.test(\"response.lastName\", function () {\n  if (response.lastName !== undefined ) \n   return pm.expect(response.lastName).to.eql('abc');\n  else \n    return true; \n})",
                                             "pm.test(\"response.email\", function () {\n  if (response.email !== undefined ) \n   return pm.expect(response.email).to.eql('test@test.com');\n  else \n    return true; \n})",
                                             "pm.test(\"response.streetAddress\", function () {\n  if (response.streetAddress !== undefined ) \n   return pm.expect(response.streetAddress).to.eql('abc');\n  else \n    return true; \n})",
-                                            "pm.test(\"response.postalCode\", function () {\n  if (response.postalCode !== undefined ) \n   return pm.expect(response.postalCode).to.eql('65917');\n  else \n    return true; \n})",
+                                            "pm.test(\"response.postalCode\", function () {\n  if (response.postalCode !== undefined ) \n   return pm.expect(response.postalCode).to.eql('26794');\n  else \n    return true; \n})",
                                             "pm.test(\"response.city\", function () {\n  if (response.city !== undefined ) \n   return pm.expect(response.city).to.eql('Tampere');\n  else \n    return true; \n})",
                                             "pm.test(\"response.phoneNumber\", function () {\n  if (response.phoneNumber !== undefined ) \n   return pm.expect(response.phoneNumber).to.eql('041 2345678');\n  else \n    return true; \n})",
                                             "pm.test(\"response.commissionDiscountPercentage\", function () {\n  if (response.commissionDiscountPercentage !== undefined ) \n   return pm.expect(response.commissionDiscountPercentage).to.eql(0);\n  else \n    return true; \n})",
@@ -808,7 +808,7 @@
                                             "pm.test(\"response.lastName\", function () {\n  if (response.lastName !== undefined ) \n   return pm.expect(response.lastName).to.eql('abc');\n  else \n    return true; \n})",
                                             "pm.test(\"response.email\", function () {\n  if (response.email !== undefined ) \n   return pm.expect(response.email).to.eql('test@test.com');\n  else \n    return true; \n})",
                                             "pm.test(\"response.streetAddress\", function () {\n  if (response.streetAddress !== undefined ) \n   return pm.expect(response.streetAddress).to.eql('abc');\n  else \n    return true; \n})",
-                                            "pm.test(\"response.postalCode\", function () {\n  if (response.postalCode !== undefined ) \n   return pm.expect(response.postalCode).to.eql('65917');\n  else \n    return true; \n})",
+                                            "pm.test(\"response.postalCode\", function () {\n  if (response.postalCode !== undefined ) \n   return pm.expect(response.postalCode).to.eql('26794');\n  else \n    return true; \n})",
                                             "pm.test(\"response.city\", function () {\n  if (response.city !== undefined ) \n   return pm.expect(response.city).to.eql('Tampere');\n  else \n    return true; \n})",
                                             "pm.test(\"response.phoneNumber\", function () {\n  if (response.phoneNumber !== undefined ) \n   return pm.expect(response.phoneNumber).to.eql('041 2345678');\n  else \n    return true; \n})",
                                             "pm.test(\"response.commissionDiscountPercentage\", function () {\n  if (response.commissionDiscountPercentage !== undefined ) \n   return pm.expect(response.commissionDiscountPercentage).to.eql(0);\n  else \n    return true; \n})",
@@ -898,7 +898,7 @@
                                     "bearer": [
                                         {
                                             "key": "token",
-                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVEl3TWpFNU1uMC5MT3o2bHRvM194RXowTG5Ba05HV2E0cVc3RDRXVWR1SXRxdGVVZTFqMVB3",
+                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVE13TWpnd00zMC5pelJzZlhrQ21zQmpRanRmREFLQ29HRXlTTTVzeGdPZkczNmo0T2ZVR1hn",
                                             "type": "string"
                                         }
                                     ]
@@ -913,7 +913,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"user2\",\n    \"displayName\": \"abc\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"65917\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
+                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"user2\",\n    \"displayName\": \"abc\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"26794\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -1058,7 +1058,7 @@
                                     "bearer": [
                                         {
                                             "key": "token",
-                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVEl3TWpFNU1uMC5MT3o2bHRvM194RXowTG5Ba05HV2E0cVc3RDRXVWR1SXRxdGVVZTFqMVB3",
+                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVE13TWpnd05IMC51eXJBZDMyM3Ffdk9xaWZMRlhTZF9vczVUU0h2NFB5WHlBUFJJQWJob3lR",
                                             "type": "string"
                                         }
                                     ]
@@ -1223,7 +1223,7 @@
                                     "bearer": [
                                         {
                                             "key": "token",
-                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVEl3TWpFNU0zMC5qVTZCZHhOQWMtMEtMUFltT0FnQTdCQlRNWEpwbElCLXB0M0EwR1QtSTlR",
+                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVE13TWpnd05IMC51eXJBZDMyM3Ffdk9xaWZMRlhTZF9vczVUU0h2NFB5WHlBUFJJQWJob3lR",
                                             "type": "string"
                                         }
                                     ]
@@ -1282,7 +1282,7 @@
                                     "bearer": [
                                         {
                                             "key": "token",
-                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVEl3TWpFNU0zMC5qVTZCZHhOQWMtMEtMUFltT0FnQTdCQlRNWEpwbElCLXB0M0EwR1QtSTlR",
+                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVE13TWpnd05IMC51eXJBZDMyM3Ffdk9xaWZMRlhTZF9vczVUU0h2NFB5WHlBUFJJQWJob3lR",
                                             "type": "string"
                                         }
                                     ]
@@ -1615,7 +1615,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"_id\": \"{{userAccountId}}\",\n    \"displayName\": \"abcd\",\n    \"firstName\": \"abcd\",\n    \"lastName\": \"abcd\",\n    \"email\": \"test2@test.com\",\n    \"streetAddress\": \"abcd\",\n    \"postalCode\": \"65917\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,XYZsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"5500 0000 0000 0004\",\n            \"creditCardExpiration\": \"12/99\",\n            \"cardVerificationCode\": \"346\"\n        }\n    ]\n}",
+                                    "raw": "{\n    \"_id\": \"{{userAccountId}}\",\n    \"displayName\": \"abcd\",\n    \"firstName\": \"abcd\",\n    \"lastName\": \"abcd\",\n    \"email\": \"test2@test.com\",\n    \"streetAddress\": \"abcd\",\n    \"postalCode\": \"26794\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,XYZsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"5500 0000 0000 0004\",\n            \"creditCardExpiration\": \"12/99\",\n            \"cardVerificationCode\": \"346\"\n        }\n    ]\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -1703,7 +1703,7 @@
                                             "pm.test(\"response.lastName\", function () {\n  if (response.lastName !== undefined ) \n   return pm.expect(response.lastName).to.eql('abcd');\n  else \n    return true; \n})",
                                             "pm.test(\"response.email\", function () {\n  if (response.email !== undefined ) \n   return pm.expect(response.email).to.eql('test2@test.com');\n  else \n    return true; \n})",
                                             "pm.test(\"response.streetAddress\", function () {\n  if (response.streetAddress !== undefined ) \n   return pm.expect(response.streetAddress).to.eql('abcd');\n  else \n    return true; \n})",
-                                            "pm.test(\"response.postalCode\", function () {\n  if (response.postalCode !== undefined ) \n   return pm.expect(response.postalCode).to.eql('65917');\n  else \n    return true; \n})",
+                                            "pm.test(\"response.postalCode\", function () {\n  if (response.postalCode !== undefined ) \n   return pm.expect(response.postalCode).to.eql('26794');\n  else \n    return true; \n})",
                                             "pm.test(\"response.city\", function () {\n  if (response.city !== undefined ) \n   return pm.expect(response.city).to.eql('Tampere');\n  else \n    return true; \n})",
                                             "pm.test(\"response.phoneNumber\", function () {\n  if (response.phoneNumber !== undefined ) \n   return pm.expect(response.phoneNumber).to.eql('041 2345678');\n  else \n    return true; \n})",
                                             "pm.test(\"response.imageDataUri\", function () {\n  if (response.imageDataUri !== undefined ) \n   return pm.expect(response.imageDataUri).to.eql('data:image/png;base64,XYZsbG8sIFdvcmxkIQ==');\n  else \n    return true; \n})",
@@ -1853,7 +1853,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"fbdb4e4a-6e93-4b08-a1e7-0b7bd08520a6\",\n    \"displayName\": \"abc\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"65917\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
+                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"fbdb4e4a-6e93-4b08-a1e7-0b7bd08520a6\",\n    \"displayName\": \"abc\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"26794\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -2418,7 +2418,7 @@
                                     "bearer": [
                                         {
                                             "key": "token",
-                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVEl3TWpFNU5IMC5kdWprZDdpQjdrSHZrcEVYUk1UcGdreUE5bXltNld6ekI3ZEdzVEdRV013",
+                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVE13TWpnd05YMC5xaEVtcW42TEpTMFNmb2VFQi1TTHpWRFk5RlNwV1hrYWtLemRmYXVpc2VR",
                                             "type": "string"
                                         }
                                     ]
@@ -2433,7 +2433,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"user2\",\n    \"displayName\": \"followed user\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"65917\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
+                                    "raw": "{\n    \"captchaToken\": \"abc\",\n    \"subject\": \"user2\",\n    \"displayName\": \"followed user\",\n    \"firstName\": \"abc\",\n    \"lastName\": \"abc\",\n    \"email\": \"test@test.com\",\n    \"streetAddress\": \"abc\",\n    \"postalCode\": \"26794\",\n    \"city\": \"Tampere\",\n    \"phoneNumber\": \"041 2345678\",\n    \"imageDataUri\": \"data:image/png;base64,SGVsbG8sIFdvcmxkIQ==\",\n    \"paymentMethods\": [\n        {\n            \"id\": \"0\",\n            \"isDefault\": true,\n            \"paymentMethodType\": \"creditCard\",\n            \"creditCardNumber\": \"4111 1111 1111 1111\",\n            \"creditCardExpiration\": \"11/99\",\n            \"cardVerificationCode\": \"345\"\n        }\n    ]\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -2525,7 +2525,7 @@
                                     "bearer": [
                                         {
                                             "key": "token",
-                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVEl3TWpFNU5YMC5WUlJQVDQ3Q3VwWjA2Ylc2cXdhazlHYkVhdUVKeGR0SWRmVElxUXAyeWdB",
+                                            "value": "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKMWMyVnlNaUlzSW1semN5STZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZPREE0TUM5aGRYUm9MM0psWVd4dGN5OTBaWE4wSWl3aWNtVmhiRzFmWVdOalpYTnpJanA3SW5KdmJHVnpJanBiSW5acGRHcGhRV1J0YVc0aVhYMHNJbWxoZENJNk1UWTBNVE13TWpnd05YMC5xaEVtcW42TEpTMFNmb2VFQi1TTHpWRFk5RlNwV1hrYWtLemRmYXVpc2VR",
                                             "type": "string"
                                         }
                                     ]
