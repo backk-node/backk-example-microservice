@@ -13,8 +13,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+
+      - name: Checkout source code repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: '16'
           cache: 'npm'
@@ -22,7 +26,7 @@ jobs:
       - name: Install NPM dependencies
         run: npm ci
 
-      - name: Lint code
+      - name: Lint source code
         run: npm run lint
 
       - name: Run unit tests with coverage
@@ -34,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: "Legal and compliance with FOSSA test"
+      - name: Legal and compliance analysis with FOSSA
         uses: fossas/fossa-action@v1
         with:
           api-key: ${{ secrets.FOSSA_API_KEY }}
@@ -47,11 +51,11 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
-      - name: Get latest git tag
+      - name: Get latest Git tag
         uses: actions-ecosystem/action-get-latest-tag@v1
         id: getLatestTag
 
-      - name: Extract branch name
+      - name: Extract Git branch name
         if: github.event_name != 'pull_request'
         shell: bash
         run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
@@ -61,20 +65,20 @@ jobs:
         uses: haya14busa/action-cond@v1
         id: buildVersion
         with:
-          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
+          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*' }}
           if_true: "${{ steps.getLatestTag.outputs.tag }}"
           if_false: "${{ steps.extract_branch.outputs.branch }}-${{ github.run_attempt }}-${{ github.sha }}"
 
       - name: Build and push Docker image when in feature branch
-        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/v*'
+        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/patch_v*'
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/backk-example-microservice:${{ steps.buildVersion.outputs.value }}
 
-      - name: Extract metadata for building and publish Docker image when in main or maintenance branch
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
+      - name: Extract metadata for building and pusing Docker image when in main or maintenance branch
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*'
         id: dockerImageMetadata
         uses: docker/metadata-action@v3
         with:
@@ -83,7 +87,7 @@ jobs:
             type=semver,pattern={{version}},value=${{ steps.buildVersion.outputs.value }}
 
       - name: Build and push Docker image when in main or maintenance branch
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*'
         id: dockerImageBuildAndPush
         uses: docker/build-push-action@v2
         with:
@@ -110,22 +114,23 @@ jobs:
         with:
           version: v3.7.2
 
-      - name: Set microservice version from tag
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*'
+      - name: Set microservice version from Git tag
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*'
         id: microserviceVersionFromTag
         run: |
-          value=$(echo ${${{ steps.buildVersion.outputs.value }}:1})
+          value="${{ steps.buildVersion.outputs.value }}"
+          value=${value:1}
           echo "::set-output name=value::$value"
 
       - name: Set microservice version
         uses: haya14busa/action-cond@v1
         id: microserviceVersion
         with:
-          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
+          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*' }}
           if_true: "${{ steps.microserviceVersionFromTag.output.value }}"
           if_false: "${{ steps.buildVersion.output.value }}"
 
-      - name: Update helm chart versions
+      - name: Update helm chart versions in Chart.yaml
         run: |
           sed -i "/^version: .*/version: ${{ steps.microserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
           sed -i "/^appVersion: .*/appVersion: '${{ steps.microserviceVersion.outputs.value }}'/g" helm/backk-example-microservice/Chart.yaml
@@ -134,7 +139,7 @@ jobs:
         uses: haya14busa/action-cond@v1
         id: dockerImageTag
         with:
-          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v*' }}
+          cond: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/patch_v*' }}
           if_true: "${{ steps.microserviceVersion.outputs.value }}@${{ steps.dockerImageBuildAndPush.outputs.digest }}"
           if_false: "${{ steps.microserviceVersion.outputs.value }}"
 
