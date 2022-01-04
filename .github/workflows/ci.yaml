@@ -132,8 +132,8 @@ jobs:
 
       - name: Update Helm chart versions in Chart.yaml
         run: |
-          sed -i "/version:.*/version: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
-          sed -i "/appVersion:.*/appVersion: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "s/version:.*/version: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
+          sed -i "s/appVersion:.*/appVersion: ${{ steps.setMicroserviceVersion.outputs.value }}/g" helm/backk-example-microservice/Chart.yaml
 
       - name: Define docker image tag
         uses: haya14busa/action-cond@v1
@@ -145,7 +145,7 @@ jobs:
 
       - name: Update Docker image tag in values.yaml
         run: |
-          sed -i "/^imageTag:.*/imageTag: ${{ steps.defineDockerImageTag.outputs.value }}/g" helm/backk-example-microservice/values.yaml
+          sed -i "s/^imageTag:.*/imageTag: ${{ steps.defineDockerImageTag.outputs.value }}/g" helm/backk-example-microservice/values.yaml
 
       - name: Lint Helm chart
         run: helm lint helm/backk-example-microservice
