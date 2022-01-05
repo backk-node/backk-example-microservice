@@ -61,6 +61,8 @@ jobs:
 
       - name: OWASP ZAP API scan
         uses: zaproxy/action-api-scan@v0.1.0
+        env:
+          ZAP_AUTH_HEADER_VALUE: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKbVltUmlOR1UwWVMwMlpUa3pMVFJpTURndFlURmxOeTB3WWpkaVpEQTROVEl3WVRZaUxDSnBjM01pT2lKb2RIUndPaTh2Ykc5allXeG9iM04wT2pnd09EQXZZWFYwYUM5eVpXRnNiWE12ZEdWemRDSXNJbkpsWVd4dFgyRmpZMlZ6Y3lJNmV5SnliMnhsY3lJNld5SjJhWFJxWVVGa2JXbHVJbDE5TENKcFlYUWlPakUyTkRBMU1EWXlPREo5LkQwNW83TUxqNVpub2h0OHd4MVdsOGdJSEsybHIyWUZCVWtGYV9YRFhjdEE=
         with:
           target: generated/openapi/openApiPublicSpec.yaml
           fail_action: true
