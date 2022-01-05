@@ -9,7 +9,7 @@ services:
     build:
       context: .
       cache_from:
-        - pksilen2/backk-example-microservice:latest
+        - ${DOCKER_REPOSITORY}:latest
     env_file: .env.ci
     ports:
       - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
