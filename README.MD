@@ -1,5 +1,7 @@
 # Vitja - Backk Example Microservice
 
+[![Continuous integration workflow](https://github.com/backk-node/backk-example-microservice/actions/workflows/ci.yaml/badge.svg)](https://github.com/backk-node/backk-example-microservice/actions/workflows/ci.yaml)
+
 This version of Vitja Microservice contains multiple services which could be divided into multiple microservices.
 There will later this same example divided into multiple microservices once support for distributed transactions is available in Backk.
 Backk does not really care if your microservice is really a microservice or more like a mini-service, macro-service or monolith.

@@ -4,7 +4,7 @@ services:
   wait-for-services-ready:
     image: dokku/wait
   microservice:
-    container_name: backk-example-microservice
+    container_name: ${MICROSERVICE_NAME}
     restart: always
     build:
       context: .
