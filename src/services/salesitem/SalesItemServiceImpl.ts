@@ -99,12 +99,12 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
   }
 
   @Subscription()
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   subscribeToCreatedSalesItem(): PromiseErrorOr<null> {
     return Promise.resolve([null, null]);
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   getSalesItems({
     textFilter,
     areas,
@@ -160,7 +160,7 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
     );
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   getSalesItemsByUserDefinedFilters({
     filters,
   }: GetSalesItemsByUserDefinedFiltersArg): PromiseErrorOr<Many<SalesItem>> {
@@ -218,7 +218,7 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
     ];
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   getSalesItem({ _id }: _Id): PromiseErrorOr<One<SalesItem>> {
     return this.dataStore.getEntityById(SalesItem, _id, new DefaultPostQueryOperationsImpl(), false);
   }

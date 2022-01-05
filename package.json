@@ -70,7 +70,7 @@
     "@opentelemetry/plugin-mysql": "0.11.0",
     "@opentelemetry/plugin-pg": "0.11.0",
     "@opentelemetry/plugin-pg-pool": "0.11.0",
-    "backk": "1.0.0-alpha.436",
+    "backk": "1.0.0-alpha.438",
     "dayjs": "1.10.7",
     "ioredis": "^4.19.2",
     "jsonpath-plus": "^5.0.7",

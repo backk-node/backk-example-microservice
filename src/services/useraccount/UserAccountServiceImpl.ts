@@ -143,7 +143,7 @@ export default class UserAccountServiceImpl extends UserBaseService implements U
     return this.dataStore.deleteEntityById(UserAccount, _id);
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   @NoAutoTests()
   getCities(): PromiseErrorOr<Many<Value>> {
     return getCities();

@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: backk-example-microservice API
   description: ""
-  version: 1.0.161
+  version: 1.0.168
 servers:
   - url: http://localhost:3001/backk-example-microservice.default
     description: Local development server
@@ -1474,7 +1474,7 @@ paths:
               lastName: abc
               email: test@test.com
               streetAddress: abc
-              postalCode: "21588"
+              postalCode: "10456"
               city: Tampere
               phoneNumber: 041 2345678
               imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
@@ -1499,7 +1499,7 @@ paths:
                 lastName: abc
                 email: test@test.com
                 streetAddress: abc
-                postalCode: "21588"
+                postalCode: "10456"
                 city: Tampere
                 phoneNumber: 041 2345678
                 commissionDiscountPercentage: 0
@@ -1520,7 +1520,7 @@ paths:
                 ownSalesItems:
                   - _id: "{{ownSalesItemId}}"
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-04T16:51:58.753Z
+                    lastModifiedTimestamp: 2022-01-05T18:24:45.306Z
                     price: 0
                     previousPrice: null
                     title: abc
@@ -1531,7 +1531,7 @@ paths:
                   - _id: "{{orderId}}"
                     version: 1
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-04T16:51:58.778Z
+                    lastModifiedTimestamp: 2022-01-05T18:24:45.334Z
                     userAccountId: "{{userAccountId}}"
                     paymentAmount: null
                     orderItems:
@@ -1556,7 +1556,7 @@ paths:
                     ownSalesItems:
                       - _id: "{{ownSalesItemId}}"
                         createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-04T16:51:58.821Z
+                        lastModifiedTimestamp: 2022-01-05T18:24:45.385Z
                         price: 0
                         previousPrice: null
                         title: abc
@@ -1667,7 +1667,7 @@ paths:
                 lastName: abc
                 email: test@test.com
                 streetAddress: abc
-                postalCode: "21588"
+                postalCode: "10456"
                 city: Tampere
                 phoneNumber: 041 2345678
                 commissionDiscountPercentage: 0
@@ -1688,7 +1688,7 @@ paths:
                 ownSalesItems:
                   - _id: "{{ownSalesItemId}}"
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-04T16:51:59.037Z
+                    lastModifiedTimestamp: 2022-01-05T18:24:45.658Z
                     price: 0
                     previousPrice: null
                     title: abc
@@ -1699,7 +1699,7 @@ paths:
                   - _id: "{{orderId}}"
                     version: 1
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-04T16:51:59.059Z
+                    lastModifiedTimestamp: 2022-01-05T18:24:45.689Z
                     userAccountId: "{{userAccountId}}"
                     paymentAmount: null
                     orderItems:
@@ -1724,7 +1724,7 @@ paths:
                     ownSalesItems:
                       - _id: "{{ownSalesItemId}}"
                         createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-04T16:51:59.103Z
+                        lastModifiedTimestamp: 2022-01-05T18:24:45.742Z
                         price: 0
                         previousPrice: null
                         title: abc
@@ -2118,7 +2118,7 @@ paths:
               lastName: abc
               email: test@test.com
               streetAddress: abc
-              postalCode: "21588"
+              postalCode: "10456"
               city: Tampere
               phoneNumber: 041 2345678
               imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
@@ -2332,7 +2332,7 @@ paths:
                 ownSalesItems:
                   - _id: "{{ownSalesItemId}}"
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-04T16:51:59.334Z
+                    lastModifiedTimestamp: 2022-01-05T18:24:46.045Z
                     price: 0
                     previousPrice: null
                     title: abc
@@ -2347,7 +2347,7 @@ paths:
                     ownSalesItems:
                       - _id: "{{ownSalesItemId}}"
                         createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-04T16:51:59.379Z
+                        lastModifiedTimestamp: 2022-01-05T18:24:46.096Z
                         price: 0
                         previousPrice: null
                         title: abc
@@ -2438,7 +2438,7 @@ paths:
                 ownSalesItems:
                   - _id: "{{ownSalesItemId}}"
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-04T16:51:59.436Z
+                    lastModifiedTimestamp: 2022-01-05T18:24:46.170Z
                     price: 0
                     previousPrice: null
                     title: abc
@@ -2453,7 +2453,7 @@ paths:
                     ownSalesItems:
                       - _id: "{{ownSalesItemId}}"
                         createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-04T16:51:59.482Z
+                        lastModifiedTimestamp: 2022-01-05T18:24:46.222Z
                         price: 0
                         previousPrice: null
                         title: abc
@@ -2576,7 +2576,7 @@ paths:
                 _id: "{{salesItemId}}"
                 version: 1
                 createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-04T16:51:59.566Z
+                lastModifiedTimestamp: 2022-01-05T18:24:46.325Z
                 userAccountId: "{{userAccountId}}"
                 price: 0
                 previousPrice: null
@@ -2707,7 +2707,7 @@ paths:
                 _id: "{{salesItemId}}"
                 version: 1
                 createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-04T16:51:59.653Z
+                lastModifiedTimestamp: 2022-01-05T18:24:46.433Z
                 userAccountId: "{{userAccountId}}"
                 price: 0
                 previousPrice: null
@@ -2807,7 +2807,7 @@ paths:
                 _id: "{{salesItemId}}"
                 version: 1
                 createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-04T16:51:59.701Z
+                lastModifiedTimestamp: 2022-01-05T18:24:46.497Z
                 userAccountId: "{{userAccountId}}"
                 price: 0
                 previousPrice: null
@@ -2983,7 +2983,7 @@ paths:
                 _id: "{{salesItemId}}"
                 version: 1
                 createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-04T16:51:59.776Z
+                lastModifiedTimestamp: 2022-01-05T18:24:46.583Z
                 userAccountId: "{{userAccountId}}"
                 price: 0
                 previousPrice: null
@@ -3803,7 +3803,7 @@ paths:
                 _id: "{{orderId}}"
                 version: 1
                 createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-04T16:51:59.912Z
+                lastModifiedTimestamp: 2022-01-05T18:24:46.739Z
                 userAccountId: "{{userAccountId}}"
                 paymentAmount: null
                 orderItems:
@@ -3895,7 +3895,7 @@ paths:
                 _id: "{{orderId}}"
                 version: 1
                 createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-04T16:51:59.936Z
+                lastModifiedTimestamp: 2022-01-05T18:24:46.764Z
                 userAccountId: "{{userAccountId}}"
                 paymentAmount: null
                 orderItems:

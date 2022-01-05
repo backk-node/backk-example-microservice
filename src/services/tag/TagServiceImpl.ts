@@ -78,13 +78,13 @@ export default class TagServiceImpl extends CrudEntityService implements TagServ
     return this.dataStore.deleteAllEntities(Tag);
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   @NoCaptcha('')
   createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
     return this.dataStore.createEntity(Tag, tag);
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   getTagsByName({ name }: TagName): PromiseErrorOr<Many<Tag>> {
     const filters = this.dataStore.getFilters<Tag>({ name: new RegExp(name) }, [
       new SqlFilter('name LIKE :name', { name: `%${name}%` }),

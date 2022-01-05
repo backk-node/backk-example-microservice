@@ -5,7 +5,7 @@ export default class ReadinessCheckServiceImpl extends ReadinessCheckService {
     super({});
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   isMicroserviceReady(): PromiseErrorOr<null> {
     return Promise.resolve([null, null]);
   }

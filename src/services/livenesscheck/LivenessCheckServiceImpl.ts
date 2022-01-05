@@ -5,7 +5,7 @@ export default class LivenessCheckServiceImpl extends LivenessCheckService {
     super({});
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   isMicroserviceAlive(): PromiseErrorOr<null> {
     return Promise.resolve([null, null]);
   }

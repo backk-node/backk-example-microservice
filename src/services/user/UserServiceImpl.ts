@@ -20,7 +20,7 @@ export default class UserServiceImpl extends CrudEntityService implements UserSe
     super({}, dataStore);
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   getUsers({ displayNameFilter, ...postQueryOperations }: GetUsersArg): PromiseErrorOr<Many<User>> {
     const filters = this.dataStore.getFilters<User>(
       {
@@ -44,7 +44,7 @@ export default class UserServiceImpl extends CrudEntityService implements UserSe
     );
   }
 
-  @AllowForEveryUser()
+  @AllowForEveryUser(false)
   getUser({ _id }: _Id): PromiseErrorOr<One<User>> {
     return this.dataStore.getEntityById(User, _id, new DefaultPostQueryOperationsImpl(), false);
   }
