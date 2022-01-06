@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   backk-example-microservice:
   - apiVersion: v2
+    appVersion: 1.0.180
+    created: "2022-01-06T16:28:31.493839954Z"
+    description: A Helm chart for Kubernetes
+    digest: c81e20e0dbcaefc92ce38804e07c886c64980af1a94fcebb23cc529d80c688c0
+    name: backk-example-microservice
+    type: application
+    urls:
+    - https://github.com/backk-node/backk-example-microservice/releases/download/backk-example-microservice-1.0.180/backk-example-microservice-1.0.180.tgz
+    version: 1.0.180
+  - apiVersion: v2
     appVersion: 1.0.179
     created: "2022-01-06T16:11:16.070286056Z"
     description: A Helm chart for Kubernetes
@@ -141,4 +151,4 @@ entries:
     urls:
     - https://github.com/backk-node/backk-example-microservice/releases/download/backk-example-microservice-1.0.152/backk-example-microservice-1.0.152.tgz
     version: 1.0.152
-generated: "2022-01-06T16:11:16.070375956Z"
+generated: "2022-01-06T16:28:31.493974455Z"
