@@ -1,1 +1,1 @@
-helm uninstall $MICROSERVICE_NAME
+helm uninstall "$MICROSERVICE_NAME"

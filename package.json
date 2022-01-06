@@ -52,7 +52,7 @@
     "minikube:stop": "minikube stop",
     "helm:lint": "env-cmd -f .env.dev scripts/helm-lint.sh",
     "prehelm:package": "npm run helm:lint",
-    "helm:package": "helm package helm/backk-example-microservice -d helm",
+    "helm:package": "scripst/helm-package.sh",
     "prehelm:install": "npm run minikube:start && npm run helm:package && npm run helm:uninstall > /dev/null 2>&1",
     "helm:install": "env-cmd -f .env.dev scripts/helm-install.sh",
     "helm:uninstall": "env-cmd -f .env.dev scripts/helm-uninstall.sh"
