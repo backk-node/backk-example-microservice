@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "backk-example-microservice.fullname" . }}
+  name: {{ include "microservice.fullname" . }}
   labels:
-    {{- include "backk-example-microservice.labels" . | nindent 4 }}
+    {{- include "microservice.labels" . | nindent 4 }}
 spec:
   {{- if ne .Values.nodeEnv "production" }}
   replicas: 1
   {{- end }}
   selector:
     matchLabels:
-      {{- include "backk-example-microservice.selectorLabels" . | nindent 6 }}
+      {{- include "microservice.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.deployment.pod.annotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "backk-example-microservice.selectorLabels" . | nindent 8 }}
+        {{- include "microservice.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.deployment.pod.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "backk-example-microservice.serviceAccountName" . }}
+      serviceAccountName: {{ include "microservice.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.imageRegistry }}/{{ .Values.imageRepository }}:{{ .Values.imageTag }}"
@@ -61,10 +61,10 @@ spec:
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: encryptionKey
             - name: MICROSERVICE_NAME
-              value: {{ include "backk-example-microservice.fullname" . }}
+              value: {{ include "microservice.fullname" . }}
             - name: MICROSERVICE_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -99,14 +99,14 @@ spec:
             - name: MONGODB_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: mongoDbUser
             {{- end }}
             {{- if .Values.database.mongoDb.password }}
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: mongoDbPassword
             {{- end }}
             - name: MYSQL_HOST
@@ -117,14 +117,14 @@ spec:
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: mySqlUser
             {{- end }}
             {{- if .Values.database.mySql.password }}
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: mySqlPassword
             {{- end }}
             - name: POSTGRESQL_HOST
@@ -135,14 +135,14 @@ spec:
             - name: POSTGRESQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: postgreSqlUser
             {{- end }}
             {{- if .Values.database.postgreSql.password }}
             - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "backk-example-microservice.fullname" . }}
+                  name: {{ include "microservice.fullname" . }}
                   key: postgreSqlPassword
             {{- end }}
           volumeMounts:
@@ -178,7 +178,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ include "backk-example-microservice.fullname" . }}
+            name: {{ include "microservice.fullname" . }}
             items:
               - key: "LOG_LEVEL"
                 path: "LOG_LEVEL"
