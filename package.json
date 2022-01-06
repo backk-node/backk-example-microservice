@@ -53,7 +53,7 @@
     "helm:lint": "env-cmd -f .env.dev scripts/helm-lint.sh",
     "prehelm:package": "npm run helm:lint",
     "helm:package": "helm package helm/backk-example-microservice -d helm",
-    "prehelm:install": "npm run helm:package && npm run helm:uninstall > /dev/null 2>&1",
+    "prehelm:install": "npm run minikube:start && npm run helm:package && npm run helm:uninstall > /dev/null 2>&1",
     "helm:install": "env-cmd -f .env.dev scripts/helm-install.sh",
     "helm:uninstall": "env-cmd -f .env.dev scripts/helm-uninstall.sh"
   },
@@ -70,7 +70,7 @@
     "@opentelemetry/plugin-mysql": "0.11.0",
     "@opentelemetry/plugin-pg": "0.11.0",
     "@opentelemetry/plugin-pg-pool": "0.11.0",
-    "backk": "1.0.0-alpha.438",
+    "backk": "1.0.0-alpha.439",
     "dayjs": "1.10.7",
     "ioredis": "^4.19.2",
     "jsonpath-plus": "^5.0.7",
