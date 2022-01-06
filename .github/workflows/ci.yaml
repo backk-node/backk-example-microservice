@@ -64,7 +64,7 @@ jobs:
         with:
           target: generated/openapi/openApiPublicSpec.yaml
           fail_action: true
-          md_options: '-d -I'
+          cmd_options: '-d -I'
 
       - name: Tear down integration testing environment
         run: docker-compose --env-file .env.ci down -v
