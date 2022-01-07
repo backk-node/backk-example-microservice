@@ -60,10 +60,69 @@
         },
         "serviceAccount": {
           "$ref": "#/definitions/ServiceAccount"
+        },
+        "mysql": {
+          "$ref": "#/definitions/MySql"
+        },
+        "mongodb": {
+          "$ref": "#/definitions/MongoDb"
+        },
+        "global": {
+          "$ref": "#/definitions/Global"
         }
       },
       "required": ["apiGatewayFqdn", "deployment", "hpa", "nodeEnv", "secrets", "service", "serviceAccount"],
       "title": "Values"
+    },
+    "Global": {
+      "type": "object",
+      "properties": {
+        "storageClass": {
+          "type": "string"
+        },
+        "postgresql": {
+          "type": "object",
+          "properties": {
+            "postgresqlPassword": {
+              "type": "string"
+            }
+          }
+        },
+        "redis": {
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "MySql": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "object",
+          "properties": {
+            "rootPassword": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "MongoDb": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "object",
+          "properties": {
+            "rootPassword": {
+              "type": "string"
+            }
+          }
+        }
+      }
     },
     "Auth": {
       "type": "object",
@@ -87,19 +146,19 @@
       "additionalProperties": false,
       "properties": {
         "mongoDb": {
-          "$ref": "#/definitions/MongoDB"
+          "$ref": "#/definitions/DbProperties"
         },
         "mySql": {
-          "$ref": "#/definitions/MongoDB"
+          "$ref": "#/definitions/DbProperties"
         },
         "postgreSql": {
-          "$ref": "#/definitions/MongoDB"
+          "$ref": "#/definitions/DbProperties"
         }
       },
       "required": [],
       "title": "Database"
     },
-    "MongoDB": {
+    "DbProperties": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -427,6 +486,9 @@
           "type": "integer",
           "minimum": 1000,
           "maximum": 29999
+        },
+        "password": {
+          "type": "string"
         }
       },
       "required": ["host", "port", "shouldInstall"],

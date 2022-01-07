@@ -52,8 +52,8 @@
     "minikube:stop": "minikube stop",
     "helm:lint": "env-cmd -f .env.dev scripts/helm-lint.sh",
     "prehelm:package": "npm run helm:lint",
-    "helm:package": "scripts/helm-package.sh",
-    "prehelm:install": "npm run minikube:start && npm run helm:package && npm run helm:uninstall > /dev/null 2>&1",
+    "helm:package": "env-cmd -f .env.dev scripts/helm-package.sh",
+    "prehelm:install": "npm run docker:push && npm run minikube:start && npm run helm:package && npm run helm:uninstall > /dev/null 2>&1",
     "helm:install": "env-cmd -f .env.dev scripts/helm-install.sh",
     "helm:uninstall": "env-cmd -f .env.dev scripts/helm-uninstall.sh"
   },

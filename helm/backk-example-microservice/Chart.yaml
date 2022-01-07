@@ -23,3 +23,21 @@ version: 1.0.0
 # It is recommended to use it with quotes.
 appVersion: "1.0.0"
 
+# Enable dependencies as needed
+# dependencies:
+#  - name: mysql
+#    version: 8.8.20
+#    repository: https://charts.bitnami.com/bitnami
+#    condition: database.mySql.shouldInstall
+#  - name: postgresql
+#    version: 10.15.1
+#    repository: https://charts.bitnami.com/bitnami
+#    condition: database.postgreSql.shouldInstall
+#  - name: mongodb
+#    version: 10.31.1
+#    repository: https://charts.bitnami.com/bitnami
+#    condition: database.mongoDb.shouldInstall
+#  - name: redis
+#    version: 15.7.1
+#    repository: https://charts.bitnami.com/bitnami
+#    condition: redisCache.shouldInstall
