@@ -69,6 +69,9 @@
         },
         "global": {
           "$ref": "#/definitions/Global"
+        },
+        "apiGateway": {
+          "$ref": "#/definitions/ApiGateway"
         }
       },
       "required": ["apiGatewayFqdn", "deployment", "hpa", "nodeEnv", "secrets", "service", "serviceAccount"],
@@ -538,6 +541,17 @@
       },
       "required": ["annotations", "shouldCreate"],
       "title": "ServiceAccount"
+    },
+    "ApiGateway": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["None", "EmissaryIngress", "AmbassadorEdgeStack"]
+        }
+      },
+      "title": "ApiGateway"
     }
   }
 }

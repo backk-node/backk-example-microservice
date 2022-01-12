@@ -212,3 +212,6 @@ service:
 serviceAccount:
   shouldCreate: false
   annotations: {}
+
+apiGateway:
+  type: None
