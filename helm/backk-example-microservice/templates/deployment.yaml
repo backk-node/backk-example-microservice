@@ -188,6 +188,12 @@ spec:
       {{- end }}
       {{- with .Values.deployment.pod.affinity }}
       affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: {{ include "microservice.name" . }}
+              topologyKey: "kubernetes.io/hostname"
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.deployment.pod.tolerations }}
