@@ -350,6 +350,9 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "privileged": {
+          "type": "boolean"
+        },
         "capabilities": {
           "$ref": "#/definitions/Capabilities"
         },
@@ -370,6 +373,7 @@
         }
       },
       "required": [
+        "privileged",
         "allowPrivilegeEscalation",
         "capabilities",
         "readOnlyRootFilesystem",

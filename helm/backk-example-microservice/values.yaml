@@ -160,6 +160,7 @@ deployment:
     container:
       imagePullPolicy: Always
       securityContext:
+        privileged: false
         capabilities:
           drop:
             - ALL

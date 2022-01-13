@@ -160,7 +160,7 @@ spec:
               path: /readinessCheckService.isMicroserviceReady
               port: http
             failureThreshold: 3
-            periodSeconds: 10
+            periodSeconds: 5
           startupProbe:
             httpGet:
               path: /startupCheckService.isMicroserviceStarted
