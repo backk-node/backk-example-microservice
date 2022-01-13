@@ -1,12 +1,12 @@
-import { AllowForEveryUser, PromiseErrorOr, ReadinessCheckService } from 'backk';
+import { AllowForEveryUser, DefaultReadinessCheckServiceImpl, Microservice, PromiseErrorOr } from 'backk';
 
-export default class ReadinessCheckServiceImpl extends ReadinessCheckService {
-  constructor() {
-    super({});
+export default class ReadinessCheckServiceImpl extends DefaultReadinessCheckServiceImpl {
+  constructor(microservice: Microservice) {
+    super(microservice);
   }
 
   @AllowForEveryUser(false)
   isMicroserviceReady(): PromiseErrorOr<null> {
-    return Promise.resolve([null, null]);
+    return super.isMicroserviceReady();
   }
 }

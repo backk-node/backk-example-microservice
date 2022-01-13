@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: backk-example-microservice API
   description: ""
-  version: 1.0.168
+  version: 1.0.187
 servers:
   - url: http://localhost:3001/backk-example-microservice.default
     description: Local development server
@@ -524,9 +524,13 @@ components:
           type: string
           maxLength: 2048
           pattern: ^([a-zA-Z_][a-zA-Z0-9_.]*|\*|)$
+        sortExpression:
+          type: string
+          maxLength: 0
         fieldName:
           type: string
-          maxLength: 512
+          minLength: 1
+          maxLength: .nan
           pattern: ^[a-zA-Z_][a-zA-Z0-9_.]*$
         sortDirection:
           type: string
@@ -535,6 +539,7 @@ components:
             - DESC
       required:
         - subEntityPath
+        - sortExpression
         - fieldName
         - sortDirection
     Pagination:
@@ -1278,10 +1283,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Tag"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/Tag"
               example:
-                _id: "{{tagId}}"
-                name: abc
+                metadata: {}
+                data:
+                  _id: "{{tagId}}"
+                  name: abc
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -1372,12 +1383,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Tag"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Tag"
               example:
-                _id: "{{tagId}}"
-                name: abc
+                metadata: {}
+                data:
+                  - _id: "{{tagId}}"
+                    name: abc
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -1474,7 +1491,7 @@ paths:
               lastName: abc
               email: test@test.com
               streetAddress: abc
-              postalCode: "10456"
+              postalCode: "72648"
               city: Tampere
               phoneNumber: 041 2345678
               imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
@@ -1491,83 +1508,89 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserAccount"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/UserAccount"
               example:
-                _id: "{{userAccountId}}"
-                displayName: abc
-                firstName: abc
-                lastName: abc
-                email: test@test.com
-                streetAddress: abc
-                postalCode: "10456"
-                city: Tampere
-                phoneNumber: 041 2345678
-                commissionDiscountPercentage: 0
-                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                paymentMethods:
-                  - id: "0"
-                    isDefault: true
-                    paymentMethodType: creditCard
-                    creditCardNumber: 4111 1111 1111 1111
-                    creditCardExpiration: 11/99
-                    cardVerificationCode: "345"
-                favoriteSalesItems:
-                  - _id: "{{favoriteSalesItemId}}"
-                    price: 0
-                    previousPrice: null
-                    title: abc
-                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                ownSalesItems:
-                  - _id: "{{ownSalesItemId}}"
-                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-05T18:24:45.306Z
-                    price: 0
-                    previousPrice: null
-                    title: abc
-                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    state: forSale
-                orders:
-                  - _id: "{{orderId}}"
-                    version: 1
-                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-05T18:24:45.334Z
-                    userAccountId: "{{userAccountId}}"
-                    paymentAmount: null
-                    orderItems:
-                      - id: "0"
-                        salesItems:
-                          - _id: "{{shoppingCartOrOrderSalesItemId}}"
-                            price: 0
-                            shippingCost: 0
-                            title: abc
-                            primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        deliveryTimestamp: null
-                        state: toBeDelivered
-                        trackingUrl: null
-                    paymentGateway: Paytrail
-                    transactionId: null
-                    transactionTimestamp: null
-                followedUserAccounts:
-                  - _id: "{{followedUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    ownSalesItems:
-                      - _id: "{{ownSalesItemId}}"
-                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-05T18:24:45.385Z
-                        price: 0
-                        previousPrice: null
-                        title: abc
-                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        state: forSale
-                followingUserAccounts:
-                  - _id: "{{followingUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                metadata: {}
+                data:
+                  _id: "{{userAccountId}}"
+                  displayName: abc
+                  firstName: abc
+                  lastName: abc
+                  email: test@test.com
+                  streetAddress: abc
+                  postalCode: "72648"
+                  city: Tampere
+                  phoneNumber: 041 2345678
+                  commissionDiscountPercentage: 0
+                  imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  paymentMethods:
+                    - id: "0"
+                      isDefault: true
+                      paymentMethodType: creditCard
+                      creditCardNumber: 4111 1111 1111 1111
+                      creditCardExpiration: 11/99
+                      cardVerificationCode: "345"
+                  favoriteSalesItems:
+                    - _id: "{{favoriteSalesItemId}}"
+                      price: 0
+                      previousPrice: null
+                      title: abc
+                      primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  ownSalesItems:
+                    - _id: "{{ownSalesItemId}}"
+                      createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                      lastModifiedTimestamp: 2022-01-13T16:44:09.694Z
+                      price: 0
+                      previousPrice: null
+                      title: abc
+                      primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      state: forSale
+                  orders:
+                    - _id: "{{orderId}}"
+                      version: 1
+                      createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                      lastModifiedTimestamp: 2022-01-13T16:44:09.746Z
+                      userAccountId: "{{userAccountId}}"
+                      paymentAmount: null
+                      orderItems:
+                        - id: "0"
+                          salesItems:
+                            - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                              price: 0
+                              shippingCost: 0
+                              title: abc
+                              primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          deliveryTimestamp: null
+                          state: toBeDelivered
+                          trackingUrl: null
+                      paymentGateway: Paytrail
+                      transactionId: null
+                      transactionTimestamp: null
+                  followedUserAccounts:
+                    - _id: "{{followedUserAccountId}}"
+                      displayName: abc
+                      city: Tampere
+                      imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      ownSalesItems:
+                        - _id: "{{ownSalesItemId}}"
+                          createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                          lastModifiedTimestamp: 2022-01-13T16:44:09.865Z
+                          price: 0
+                          previousPrice: null
+                          title: abc
+                          primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          state: forSale
+                  followingUserAccounts:
+                    - _id: "{{followingUserAccountId}}"
+                      displayName: abc
+                      city: Tampere
+                      imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -1659,83 +1682,89 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserAccount"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/UserAccount"
               example:
-                _id: "{{userAccountId}}"
-                displayName: abc
-                firstName: abc
-                lastName: abc
-                email: test@test.com
-                streetAddress: abc
-                postalCode: "10456"
-                city: Tampere
-                phoneNumber: 041 2345678
-                commissionDiscountPercentage: 0
-                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                paymentMethods:
-                  - id: "0"
-                    isDefault: true
-                    paymentMethodType: creditCard
-                    creditCardNumber: 4111 1111 1111 1111
-                    creditCardExpiration: 11/99
-                    cardVerificationCode: "345"
-                favoriteSalesItems:
-                  - _id: "{{favoriteSalesItemId}}"
-                    price: 0
-                    previousPrice: null
-                    title: abc
-                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                ownSalesItems:
-                  - _id: "{{ownSalesItemId}}"
-                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-05T18:24:45.658Z
-                    price: 0
-                    previousPrice: null
-                    title: abc
-                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    state: forSale
-                orders:
-                  - _id: "{{orderId}}"
-                    version: 1
-                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-05T18:24:45.689Z
-                    userAccountId: "{{userAccountId}}"
-                    paymentAmount: null
-                    orderItems:
-                      - id: "0"
-                        salesItems:
-                          - _id: "{{shoppingCartOrOrderSalesItemId}}"
-                            price: 0
-                            shippingCost: 0
-                            title: abc
-                            primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        deliveryTimestamp: null
-                        state: toBeDelivered
-                        trackingUrl: null
-                    paymentGateway: Paytrail
-                    transactionId: null
-                    transactionTimestamp: null
-                followedUserAccounts:
-                  - _id: "{{followedUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    ownSalesItems:
-                      - _id: "{{ownSalesItemId}}"
-                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-05T18:24:45.742Z
-                        price: 0
-                        previousPrice: null
-                        title: abc
-                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        state: forSale
-                followingUserAccounts:
-                  - _id: "{{followingUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                metadata: {}
+                data:
+                  _id: "{{userAccountId}}"
+                  displayName: abc
+                  firstName: abc
+                  lastName: abc
+                  email: test@test.com
+                  streetAddress: abc
+                  postalCode: "72648"
+                  city: Tampere
+                  phoneNumber: 041 2345678
+                  commissionDiscountPercentage: 0
+                  imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  paymentMethods:
+                    - id: "0"
+                      isDefault: true
+                      paymentMethodType: creditCard
+                      creditCardNumber: 4111 1111 1111 1111
+                      creditCardExpiration: 11/99
+                      cardVerificationCode: "345"
+                  favoriteSalesItems:
+                    - _id: "{{favoriteSalesItemId}}"
+                      price: 0
+                      previousPrice: null
+                      title: abc
+                      primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  ownSalesItems:
+                    - _id: "{{ownSalesItemId}}"
+                      createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                      lastModifiedTimestamp: 2022-01-13T16:44:10.415Z
+                      price: 0
+                      previousPrice: null
+                      title: abc
+                      primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      state: forSale
+                  orders:
+                    - _id: "{{orderId}}"
+                      version: 1
+                      createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                      lastModifiedTimestamp: 2022-01-13T16:44:10.460Z
+                      userAccountId: "{{userAccountId}}"
+                      paymentAmount: null
+                      orderItems:
+                        - id: "0"
+                          salesItems:
+                            - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                              price: 0
+                              shippingCost: 0
+                              title: abc
+                              primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          deliveryTimestamp: null
+                          state: toBeDelivered
+                          trackingUrl: null
+                      paymentGateway: Paytrail
+                      transactionId: null
+                      transactionTimestamp: null
+                  followedUserAccounts:
+                    - _id: "{{followedUserAccountId}}"
+                      displayName: abc
+                      city: Tampere
+                      imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      ownSalesItems:
+                        - _id: "{{ownSalesItemId}}"
+                          createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                          lastModifiedTimestamp: 2022-01-13T16:44:10.645Z
+                          price: 0
+                          previousPrice: null
+                          title: abc
+                          primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          state: forSale
+                  followingUserAccounts:
+                    - _id: "{{followingUserAccountId}}"
+                      displayName: abc
+                      city: Tampere
+                      imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2118,7 +2147,7 @@ paths:
               lastName: abc
               email: test@test.com
               streetAddress: abc
-              postalCode: "10456"
+              postalCode: "72648"
               city: Tampere
               phoneNumber: 041 2345678
               imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
@@ -2262,10 +2291,17 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Value"
-              example: {}
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Value"
+              example:
+                metadata: {}
+                data:
+                  - {}
         "401":
           description: "error.17: User is not authenticated"
           content:
@@ -2321,44 +2357,50 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
               example:
-                _id: "{{userId}}"
-                displayName: abc
-                city: Tampere
-                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                ownSalesItems:
-                  - _id: "{{ownSalesItemId}}"
-                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-05T18:24:46.045Z
-                    price: 0
-                    previousPrice: null
-                    title: abc
-                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    state: forSale
-                followedUserAccounts:
-                  - _id: "{{followedUserAccountId}}"
+                metadata: {}
+                data:
+                  - _id: "{{userId}}"
                     displayName: abc
                     city: Tampere
                     imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
                     ownSalesItems:
                       - _id: "{{ownSalesItemId}}"
                         createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-05T18:24:46.096Z
+                        lastModifiedTimestamp: 2022-01-13T16:44:11.258Z
                         price: 0
                         previousPrice: null
                         title: abc
                         primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
                         primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
                         state: forSale
-                followingUserAccounts:
-                  - _id: "{{followingUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    followedUserAccounts:
+                      - _id: "{{followedUserAccountId}}"
+                        displayName: abc
+                        city: Tampere
+                        imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                        ownSalesItems:
+                          - _id: "{{ownSalesItemId}}"
+                            createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                            lastModifiedTimestamp: 2022-01-13T16:44:11.321Z
+                            price: 0
+                            previousPrice: null
+                            title: abc
+                            primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                            primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                            state: forSale
+                    followingUserAccounts:
+                      - _id: "{{followingUserAccountId}}"
+                        displayName: abc
+                        city: Tampere
+                        imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2429,42 +2471,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/User"
               example:
-                _id: "{{userId}}"
-                displayName: abc
-                city: Tampere
-                imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                ownSalesItems:
-                  - _id: "{{ownSalesItemId}}"
-                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-05T18:24:46.170Z
-                    price: 0
-                    previousPrice: null
-                    title: abc
-                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    state: forSale
-                followedUserAccounts:
-                  - _id: "{{followedUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    ownSalesItems:
-                      - _id: "{{ownSalesItemId}}"
-                        createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-05T18:24:46.222Z
-                        price: 0
-                        previousPrice: null
-                        title: abc
-                        primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                        state: forSale
-                followingUserAccounts:
-                  - _id: "{{followingUserAccountId}}"
-                    displayName: abc
-                    city: Tampere
-                    imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                metadata: {}
+                data:
+                  _id: "{{userId}}"
+                  displayName: abc
+                  city: Tampere
+                  imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  ownSalesItems:
+                    - _id: "{{ownSalesItemId}}"
+                      createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                      lastModifiedTimestamp: 2022-01-13T16:44:11.398Z
+                      price: 0
+                      previousPrice: null
+                      title: abc
+                      primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      state: forSale
+                  followedUserAccounts:
+                    - _id: "{{followedUserAccountId}}"
+                      displayName: abc
+                      city: Tampere
+                      imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      ownSalesItems:
+                        - _id: "{{ownSalesItemId}}"
+                          createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                          lastModifiedTimestamp: 2022-01-13T16:44:11.453Z
+                          price: 0
+                          previousPrice: null
+                          title: abc
+                          primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                          state: forSale
+                  followingUserAccounts:
+                    - _id: "{{followingUserAccountId}}"
+                      displayName: abc
+                      city: Tampere
+                      imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2571,31 +2619,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SalesItem"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/SalesItem"
               example:
-                _id: "{{salesItemId}}"
-                version: 1
-                createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-05T18:24:46.325Z
-                userAccountId: "{{userAccountId}}"
-                price: 0
-                previousPrice: null
-                shippingCost: 0
-                likeCount: 0
-                title: abc
-                description: abc
-                tags:
-                  - _id: "{{tagId}}"
-                    name: abc
-                area: Area1
-                productDepartment: Vehicles
-                productCategory: Vehicles
-                productSubCategory: Vehicles
-                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                secondaryImageDataUris:
-                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                state: forSale
+                metadata: {}
+                data:
+                  _id: "{{salesItemId}}"
+                  version: 1
+                  createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                  lastModifiedTimestamp: 2022-01-13T16:44:11.558Z
+                  userAccountId: "{{userAccountId}}"
+                  price: 0
+                  previousPrice: null
+                  shippingCost: 0
+                  likeCount: 0
+                  title: abc
+                  description: abc
+                  tags:
+                    - _id: "{{tagId}}"
+                      name: abc
+                  area: Area1
+                  productDepartment: Vehicles
+                  productCategory: Vehicles
+                  productSubCategory: Vehicles
+                  primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  secondaryImageDataUris:
+                    - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  state: forSale
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2700,33 +2754,39 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SalesItem"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SalesItem"
               example:
-                _id: "{{salesItemId}}"
-                version: 1
-                createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-05T18:24:46.433Z
-                userAccountId: "{{userAccountId}}"
-                price: 0
-                previousPrice: null
-                shippingCost: 0
-                likeCount: 0
-                title: abc
-                description: abc
-                tags:
-                  - _id: "{{tagId}}"
-                    name: abc
-                area: Area1
-                productDepartment: Vehicles
-                productCategory: Vehicles
-                productSubCategory: Vehicles
-                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                secondaryImageDataUris:
-                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                state: forSale
+                metadata: {}
+                data:
+                  - _id: "{{salesItemId}}"
+                    version: 1
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2022-01-13T16:44:11.678Z
+                    userAccountId: "{{userAccountId}}"
+                    price: 0
+                    previousPrice: null
+                    shippingCost: 0
+                    likeCount: 0
+                    title: abc
+                    description: abc
+                    tags:
+                      - _id: "{{tagId}}"
+                        name: abc
+                    area: Area1
+                    productDepartment: Vehicles
+                    productCategory: Vehicles
+                    productSubCategory: Vehicles
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    secondaryImageDataUris:
+                      - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    state: forSale
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2800,33 +2860,39 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SalesItem"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SalesItem"
               example:
-                _id: "{{salesItemId}}"
-                version: 1
-                createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-05T18:24:46.497Z
-                userAccountId: "{{userAccountId}}"
-                price: 0
-                previousPrice: null
-                shippingCost: 0
-                likeCount: 0
-                title: abc
-                description: abc
-                tags:
-                  - _id: "{{tagId}}"
-                    name: abc
-                area: Area1
-                productDepartment: Vehicles
-                productCategory: Vehicles
-                productSubCategory: Vehicles
-                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                secondaryImageDataUris:
-                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                state: forSale
+                metadata: {}
+                data:
+                  - _id: "{{salesItemId}}"
+                    version: 1
+                    createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                    lastModifiedTimestamp: 2022-01-13T16:44:11.741Z
+                    userAccountId: "{{userAccountId}}"
+                    price: 0
+                    previousPrice: null
+                    shippingCost: 0
+                    likeCount: 0
+                    title: abc
+                    description: abc
+                    tags:
+                      - _id: "{{tagId}}"
+                        name: abc
+                    area: Area1
+                    productDepartment: Vehicles
+                    productCategory: Vehicles
+                    productSubCategory: Vehicles
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    secondaryImageDataUris:
+                      - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    state: forSale
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2897,17 +2963,23 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/FollowedUserSalesItem"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FollowedUserSalesItem"
               example:
-                _id: "{{salesItemId}}"
-                price: 0
-                previousPrice: null
-                userAccountId: "{{userAccountId}}"
-                title: abc
-                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                displayName: abc
+                metadata: {}
+                data:
+                  - _id: "{{salesItemId}}"
+                    price: 0
+                    previousPrice: null
+                    userAccountId: "{{userAccountId}}"
+                    title: abc
+                    primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                    displayName: abc
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -2978,31 +3050,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SalesItem"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/SalesItem"
               example:
-                _id: "{{salesItemId}}"
-                version: 1
-                createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-05T18:24:46.583Z
-                userAccountId: "{{userAccountId}}"
-                price: 0
-                previousPrice: null
-                shippingCost: 0
-                likeCount: 0
-                title: abc
-                description: abc
-                tags:
-                  - _id: "{{tagId}}"
-                    name: abc
-                area: Area1
-                productDepartment: Vehicles
-                productCategory: Vehicles
-                productSubCategory: Vehicles
-                primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                secondaryImageDataUris:
-                  - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                state: forSale
+                metadata: {}
+                data:
+                  _id: "{{salesItemId}}"
+                  version: 1
+                  createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                  lastModifiedTimestamp: 2022-01-13T16:44:11.832Z
+                  userAccountId: "{{userAccountId}}"
+                  price: 0
+                  previousPrice: null
+                  shippingCost: 0
+                  likeCount: 0
+                  title: abc
+                  description: abc
+                  tags:
+                    - _id: "{{tagId}}"
+                      name: abc
+                  area: Area1
+                  productDepartment: Vehicles
+                  productCategory: Vehicles
+                  productSubCategory: Vehicles
+                  primaryImageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  secondaryImageDataUris:
+                    - data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                  state: forSale
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -3478,16 +3556,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ShoppingCart"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/ShoppingCart"
               example:
-                _id: "{{shoppingCartId}}"
-                userAccountId: "{{userAccountId}}"
-                salesItems:
-                  - _id: "{{shoppingCartOrOrderSalesItemId}}"
-                    price: 0
-                    shippingCost: 0
-                    title: abc
-                    primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                metadata: {}
+                data:
+                  _id: "{{shoppingCartId}}"
+                  userAccountId: "{{userAccountId}}"
+                  salesItems:
+                    - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                      price: 0
+                      shippingCost: 0
+                      title: abc
+                      primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -3798,28 +3882,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Order"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/Order"
               example:
-                _id: "{{orderId}}"
-                version: 1
-                createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-05T18:24:46.739Z
-                userAccountId: "{{userAccountId}}"
-                paymentAmount: null
-                orderItems:
-                  - id: "0"
-                    salesItems:
-                      - _id: "{{shoppingCartOrOrderSalesItemId}}"
-                        price: 0
-                        shippingCost: 0
-                        title: abc
-                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    deliveryTimestamp: null
-                    state: toBeDelivered
-                    trackingUrl: null
-                paymentGateway: Paytrail
-                transactionId: null
-                transactionTimestamp: null
+                metadata: {}
+                data:
+                  _id: "{{orderId}}"
+                  version: 1
+                  createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                  lastModifiedTimestamp: 2022-01-13T16:44:12.001Z
+                  userAccountId: "{{userAccountId}}"
+                  paymentAmount: null
+                  orderItems:
+                    - id: "0"
+                      salesItems:
+                        - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                          price: 0
+                          shippingCost: 0
+                          title: abc
+                          primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      deliveryTimestamp: null
+                      state: toBeDelivered
+                      trackingUrl: null
+                  paymentGateway: Paytrail
+                  transactionId: null
+                  transactionTimestamp: null
         "400":
           description: "error.5: Invalid argument: "
           content:
@@ -3890,28 +3980,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Order"
+                type: object
+                properties:
+                  metadata: {}
+                  data:
+                    $ref: "#/components/schemas/Order"
               example:
-                _id: "{{orderId}}"
-                version: 1
-                createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                lastModifiedTimestamp: 2022-01-05T18:24:46.764Z
-                userAccountId: "{{userAccountId}}"
-                paymentAmount: null
-                orderItems:
-                  - id: "0"
-                    salesItems:
-                      - _id: "{{shoppingCartOrOrderSalesItemId}}"
-                        price: 0
-                        shippingCost: 0
-                        title: abc
-                        primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
-                    deliveryTimestamp: null
-                    state: toBeDelivered
-                    trackingUrl: null
-                paymentGateway: Paytrail
-                transactionId: null
-                transactionTimestamp: null
+                metadata: {}
+                data:
+                  _id: "{{orderId}}"
+                  version: 1
+                  createdAtTimestamp: 1970-01-01T00:01:00.000Z
+                  lastModifiedTimestamp: 2022-01-13T16:44:12.048Z
+                  userAccountId: "{{userAccountId}}"
+                  paymentAmount: null
+                  orderItems:
+                    - id: "0"
+                      salesItems:
+                        - _id: "{{shoppingCartOrOrderSalesItemId}}"
+                          price: 0
+                          shippingCost: 0
+                          title: abc
+                          primaryImageThumbnailDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
+                      deliveryTimestamp: null
+                      state: toBeDelivered
+                      trackingUrl: null
+                  paymentGateway: Paytrail
+                  transactionId: null
+                  transactionTimestamp: null
         "400":
           description: "error.5: Invalid argument: "
           content:

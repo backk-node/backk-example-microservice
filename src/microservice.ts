@@ -25,7 +25,7 @@ class MicroserviceImpl extends Microservice {
   private readonly captchaVerifyService = new CaptchaVerificationServiceImpl();
   private readonly livenessCheckService = new LivenessCheckServiceImpl();
   private readonly responseCacheConfigService = new ResponseCacheConfigServiceImpl();
-  private readonly readinessCheckService = new ReadinessCheckServiceImpl();
+  private readonly readinessCheckService = new ReadinessCheckServiceImpl(this);
   private readonly startupCheckService = new DefaultStartupCheckServiceImpl(dataStore);
 
   private readonly tagService = new TagServiceImpl(dataStore);
