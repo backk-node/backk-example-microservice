@@ -74,14 +74,17 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
       {
         preHooks: {
           shouldSucceedOrBeTrue: async () => {
-            const [usersSellableSalesItemCount, errorInGet] = await this.dataStore.getEntityCount(SalesItem, {
-              userAccountId: salesItem.userAccountId,
-              state: 'forSale',
-            });
+            const [usersSellableSalesItemCount, errorInGetCount] = await this.dataStore.getEntityCount(
+              SalesItem,
+              {
+                userAccountId: salesItem.userAccountId,
+                state: 'forSale',
+              }
+            );
 
             return typeof usersSellableSalesItemCount === 'number'
               ? usersSellableSalesItemCount < 100
-              : errorInGet;
+              : errorInGetCount;
           },
           error: salesItemServiceErrors.maximumSalesItemCountPerUserExceeded,
         },
