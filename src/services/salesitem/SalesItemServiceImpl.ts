@@ -336,6 +336,8 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
       },
       [
         new SqlEqFilter({ state: 'reserved' }),
+        // maxSalesItemReservationDurationInMinutes is safe to use in template string below, because it is validated as integer value in ChangeExpiredReservedSalesItemStatesToForSaleArg
+        // eslint-disable-next-line backk/string-literal-sql-filter-expression
         new SqlFilter(
           `lastmodifiedtimestamp <= current_timestamp - INTERVAL '${maxSalesItemReservationDurationInMinutes}' minute`
         ),
@@ -361,6 +363,8 @@ export default class SalesItemServiceImpl extends CrudEntityService implements S
       },
       [
         new SqlEqFilter({ state: 'forSale' }),
+        // deletableUnsoldSalesItemMinAgeInMonths is safe to use in template string below, because it is validated as integer value in DeleteOldUnsoldSalesItemsArg
+        // eslint-disable-next-line backk/string-literal-sql-filter-expression
         new SqlFilter(
           `createdattimestamp <= current_timestamp - INTERVAL '${deletableUnsoldSalesItemMinAgeInMonths}' month`
         ),

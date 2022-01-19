@@ -323,6 +323,8 @@ export default class OrderServiceImpl extends CrudEntityService implements Order
       },
       [
         new SqlEqFilter({ transactionId: null }),
+        // unpaidOrderTimeToLiveInMinutes is safe to use in template string below, because it is validated as integer value in DeleteUnpaidOrdersArg
+        // eslint-disable-next-line backk/string-literal-sql-filter-expression
         new SqlFilter(
           `lastmodifiedtimestamp <= current_timestamp - INTERVAL '${unpaidOrderTimeToLiveInMinutes}' minute`
         ),
