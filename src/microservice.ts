@@ -8,7 +8,7 @@ import AuditLoggingServiceImpl from './services/auditlogging/AuditLoggingService
 import CaptchaVerificationServiceImpl from './services/captchaverification/CaptchaVerificationServiceImpl';
 import LivenessCheckServiceImpl from './services/livenesscheck/LivenessCheckServiceImpl';
 import OrderServiceImpl from './services/order/OrderServiceImpl';
-import ReadinessCheckServiceImpl from './services/readinesscheckservice/ReadinessCheckServiceImpl';
+import ReadinessCheckServiceImpl from './services/readinesscheck/ReadinessCheckServiceImpl';
 import ResponseCacheConfigServiceImpl from './services/responsecacheconfig/ResponseCacheConfigServiceImpl';
 import SalesItemServiceImpl from './services/salesitem/SalesItemServiceImpl';
 import ShoppingCartServiceImpl from './services/shoppingcart/ShoppingCartServiceImpl';
