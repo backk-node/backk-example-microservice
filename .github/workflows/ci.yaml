@@ -208,13 +208,13 @@ jobs:
       - name: Lint Helm chart
         run: helm lint -f helm/values/values-minikube.yaml helm/backk-example-microservice
 
-      - name: Static code analysis for Helm charts with Checkov
+      - name: Static code analysis for Helm chart with Checkov
         uses: bridgecrewio/checkov-action@master
         with:
           directory: helm/backk-example-microservice
           quiet: true
           framework: kubernetes
-          soft_fail: true
+          soft_fail: false
 
       - name: Configure Git user
         run: |
