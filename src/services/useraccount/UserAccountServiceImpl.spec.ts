@@ -1,5 +1,4 @@
 import { NullDataStore } from 'backk';
-import 'reflect-metadata';
 import UserAccount from './types/entities/UserAccount';
 import UserAccountServiceImpl from './UserAccountServiceImpl';
 
