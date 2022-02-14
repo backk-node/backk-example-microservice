@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: backk-example-microservice API
   description: ""
-  version: 1.1.4
+  version: 1.1.5
 servers:
   - url: http://localhost:3001/backk-example-microservice.default
     description: Local development server
@@ -1491,7 +1491,7 @@ paths:
               lastName: abc
               email: test@test.com
               streetAddress: abc
-              postalCode: "79425"
+              postalCode: "89094"
               city: Tampere
               phoneNumber: 041 2345678
               imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
@@ -1522,7 +1522,7 @@ paths:
                   lastName: abc
                   email: test@test.com
                   streetAddress: abc
-                  postalCode: "79425"
+                  postalCode: "89094"
                   city: Tampere
                   phoneNumber: 041 2345678
                   commissionDiscountPercentage: 0
@@ -1543,7 +1543,7 @@ paths:
                   ownSalesItems:
                     - _id: "{{ownSalesItemId}}"
                       createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                      lastModifiedTimestamp: 2022-01-28T10:04:18.396Z
+                      lastModifiedTimestamp: 2022-02-14T15:36:29.534Z
                       price: 0
                       previousPrice: null
                       title: abc
@@ -1554,7 +1554,7 @@ paths:
                     - _id: "{{orderId}}"
                       version: 1
                       createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                      lastModifiedTimestamp: 2022-01-28T10:04:18.417Z
+                      lastModifiedTimestamp: 2022-02-14T15:36:29.561Z
                       userAccountId: "{{userAccountId}}"
                       paymentAmount: null
                       orderItems:
@@ -1579,7 +1579,7 @@ paths:
                       ownSalesItems:
                         - _id: "{{ownSalesItemId}}"
                           createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                          lastModifiedTimestamp: 2022-01-28T10:04:18.453Z
+                          lastModifiedTimestamp: 2022-02-14T15:36:29.608Z
                           price: 0
                           previousPrice: null
                           title: abc
@@ -1699,7 +1699,7 @@ paths:
                   lastName: abc
                   email: test@test.com
                   streetAddress: abc
-                  postalCode: "79425"
+                  postalCode: "89094"
                   city: Tampere
                   phoneNumber: 041 2345678
                   commissionDiscountPercentage: 0
@@ -1720,7 +1720,7 @@ paths:
                   ownSalesItems:
                     - _id: "{{ownSalesItemId}}"
                       createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                      lastModifiedTimestamp: 2022-01-28T10:04:18.651Z
+                      lastModifiedTimestamp: 2022-02-14T15:36:29.817Z
                       price: 0
                       previousPrice: null
                       title: abc
@@ -1731,7 +1731,7 @@ paths:
                     - _id: "{{orderId}}"
                       version: 1
                       createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                      lastModifiedTimestamp: 2022-01-28T10:04:18.670Z
+                      lastModifiedTimestamp: 2022-02-14T15:36:29.838Z
                       userAccountId: "{{userAccountId}}"
                       paymentAmount: null
                       orderItems:
@@ -1756,7 +1756,7 @@ paths:
                       ownSalesItems:
                         - _id: "{{ownSalesItemId}}"
                           createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                          lastModifiedTimestamp: 2022-01-28T10:04:18.706Z
+                          lastModifiedTimestamp: 2022-02-14T15:36:29.885Z
                           price: 0
                           previousPrice: null
                           title: abc
@@ -2150,7 +2150,7 @@ paths:
               lastName: abc
               email: test@test.com
               streetAddress: abc
-              postalCode: "79425"
+              postalCode: "89094"
               city: Tampere
               phoneNumber: 041 2345678
               imageDataUri: data:image/png;base64,SGVsbG8sIFdvcmxkIQ==
@@ -2380,7 +2380,7 @@ paths:
                     ownSalesItems:
                       - _id: "{{ownSalesItemId}}"
                         createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                        lastModifiedTimestamp: 2022-01-28T10:04:18.943Z
+                        lastModifiedTimestamp: 2022-02-14T15:36:30.141Z
                         price: 0
                         previousPrice: null
                         title: abc
@@ -2395,7 +2395,7 @@ paths:
                         ownSalesItems:
                           - _id: "{{ownSalesItemId}}"
                             createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                            lastModifiedTimestamp: 2022-01-28T10:04:18.979Z
+                            lastModifiedTimestamp: 2022-02-14T15:36:30.183Z
                             price: 0
                             previousPrice: null
                             title: abc
@@ -2492,7 +2492,7 @@ paths:
                   ownSalesItems:
                     - _id: "{{ownSalesItemId}}"
                       createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                      lastModifiedTimestamp: 2022-01-28T10:04:19.033Z
+                      lastModifiedTimestamp: 2022-02-14T15:36:30.247Z
                       price: 0
                       previousPrice: null
                       title: abc
@@ -2507,7 +2507,7 @@ paths:
                       ownSalesItems:
                         - _id: "{{ownSalesItemId}}"
                           createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                          lastModifiedTimestamp: 2022-01-28T10:04:19.072Z
+                          lastModifiedTimestamp: 2022-02-14T15:36:30.294Z
                           price: 0
                           previousPrice: null
                           title: abc
@@ -2636,7 +2636,7 @@ paths:
                   _id: "{{salesItemId}}"
                   version: 1
                   createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                  lastModifiedTimestamp: 2022-01-28T10:04:19.152Z
+                  lastModifiedTimestamp: 2022-02-14T15:36:30.376Z
                   userAccountId: "{{userAccountId}}"
                   price: 0
                   previousPrice: null
@@ -2773,7 +2773,7 @@ paths:
                   - _id: "{{salesItemId}}"
                     version: 1
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-28T10:04:19.257Z
+                    lastModifiedTimestamp: 2022-02-14T15:36:30.484Z
                     userAccountId: "{{userAccountId}}"
                     price: 0
                     previousPrice: null
@@ -2879,7 +2879,7 @@ paths:
                   - _id: "{{salesItemId}}"
                     version: 1
                     createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                    lastModifiedTimestamp: 2022-01-28T10:04:19.307Z
+                    lastModifiedTimestamp: 2022-02-14T15:36:30.535Z
                     userAccountId: "{{userAccountId}}"
                     price: 0
                     previousPrice: null
@@ -3067,7 +3067,7 @@ paths:
                   _id: "{{salesItemId}}"
                   version: 1
                   createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                  lastModifiedTimestamp: 2022-01-28T10:04:19.379Z
+                  lastModifiedTimestamp: 2022-02-14T15:36:30.619Z
                   userAccountId: "{{userAccountId}}"
                   price: 0
                   previousPrice: null
@@ -3899,7 +3899,7 @@ paths:
                   _id: "{{orderId}}"
                   version: 1
                   createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                  lastModifiedTimestamp: 2022-01-28T10:04:19.514Z
+                  lastModifiedTimestamp: 2022-02-14T15:36:30.758Z
                   userAccountId: "{{userAccountId}}"
                   paymentAmount: null
                   orderItems:
@@ -3997,7 +3997,7 @@ paths:
                   _id: "{{orderId}}"
                   version: 1
                   createdAtTimestamp: 1970-01-01T00:01:00.000Z
-                  lastModifiedTimestamp: 2022-01-28T10:04:19.536Z
+                  lastModifiedTimestamp: 2022-02-14T15:36:30.784Z
                   userAccountId: "{{userAccountId}}"
                   paymentAmount: null
                   orderItems:
