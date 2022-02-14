@@ -1,6 +1,6 @@
 {
   "name": "backk-example-microservice",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Example Backk microservice",
   "author": {
     "name": "Petri Silen",
@@ -129,7 +129,9 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.ts"
+    ]
   },
   "lint-staged": {
     "*.ts": [
