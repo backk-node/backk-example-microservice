@@ -1,4 +1,5 @@
 import { NullDataStore } from 'backk';
+import '../../jest.setup';
 import UserAccount from './types/entities/UserAccount';
 import UserAccountServiceImpl from './UserAccountServiceImpl';
 
@@ -16,14 +17,23 @@ describe('UserAccountServiceImpl', () => {
       userAccountService.followUser({ _id, followedUserAccountId });
 
       // THEN
-      expect(dataStore.addSubEntitiesToEntityById).toHaveBeenCalledWith(
+      expect(dataStore.addSubEntitiesToEntityById).toHaveBeenNthCalledWith(
+        1,
         'followedUserAccounts',
         [{ _id: '2' }],
         UserAccount,
         '1',
         {
-          entityPreHooks: expect.any(Function),
+          entityPreHooks: expect.hookToBeCalled(),
         }
+      );
+
+      expect(dataStore.addSubEntitiesToEntityById).toHaveBeenNthCalledWith(
+        2,
+        'followingUserAccounts',
+        [{ _id: '1' }],
+        UserAccount,
+        '2'
       );
     });
   });
