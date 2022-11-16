@@ -94,7 +94,7 @@
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "copyfiles": "^2.4.1",
-    "dev-null-cli": "^1.0.0",
+    "dev-null-cli": "^2.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
